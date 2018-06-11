@@ -15,7 +15,7 @@ export default class Login extends Component {
             <div className='login-parent'>
                 <div className='login-content'>
                     <h1 className='login-title'>On-Target</h1>
-                    <a>
+                    <a href={process.env.REACT_APP_LOGIN} >
                         <button className='login-button'>Login</button>
                     </a>
                 </div> 

@@ -32,20 +32,51 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// passport.use(new Auth0Strategy({
-//     domain: DOMAIN,
-//     clientID: CLIENT_ID,
-//     clientSecret: CLIENT_SECRET,
-//     callbackURL: CALLBACK_URL,
-//     scope: 'openid profile'
-// },
-// (accessToken, refreshToken, extraParams, profile, done) => {
-//     const db = app.get('db');
-// }
+passport.use(new Auth0Strategy({
+    domain: DOMAIN,
+    clientID: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+    callbackURL: CALLBACK_URL,
+    scope: 'openid profile'
+},
+(accessToken, refreshToken, extraParams, profile, done) => {
+    const db = app.get('db');
+    let {picture, nickname} = profile;
+    let first = profile.name.givenName;
+    let last = profile.name.familyName;
+    let authID = profile.id;
+    let email = profile.emails[0].value;
 
-// ))
+    db.find_user([authID]).then(user => {
+        if(user[0]){
+            done(null, user[0].id);
+        } else {
+            db.create_user([first, last, picture, nickname, email, authID])
+            .then(createdUser => {
+                done(null, createdUser[0].id);
+            });
+        }
+    })
+}));
 
+passport.serializeUser((id, done) => {
+    done(null, id);
+});
+passport.deserializeUser((id, done) => {
+    const db = app.get('get');
+    db.find_session_user([id]).then(user => {
+        done(null, user[0]);
+    })
+});
 
+app.get('/auth', passport.authenticate('auth0'));
+app.get('/auth/callback', passport.authenticate('auth0', {
+    successRedirect: `http://localhost:${SERVER_PORT}/#/home`
+}));
+app.get('/auth/logout', (req, res) => {
+    req.logout();
+    res.redirect(`http://localhost:${SERVER_PORT}/#/`)
+});
 
 
 app.listen(SERVER_PORT, () => {
