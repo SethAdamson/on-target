@@ -4,8 +4,11 @@ const express = require('express')
     , massive = require('massive')
     , bodyParser = require('body-parser')
     , passport = require('passport')
-    , Auth0Strategy = require('passport-auth0');
+    , Auth0Strategy = require('passport-auth0')
+    , ctrl = require('./controllers');
 const app = express();
+
+//----------------DotEnv--------------------//
 
 const {
     SERVER_PORT,
@@ -17,7 +20,7 @@ const {
     CONNECTION_STRING
 } = process.env;
 
-//-----------------------------------------------------------//
+//----------------Middleware--------------------//
 
 app.use(bodyParser.json());
 massive(CONNECTION_STRING).then(db => {
@@ -31,6 +34,8 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+//----------------Auth0--------------------//
 
 passport.use(new Auth0Strategy({
     domain: DOMAIN,
@@ -64,11 +69,14 @@ passport.serializeUser((id, done) => {
     done(null, id);
 });
 passport.deserializeUser((id, done) => {
-    const db = app.get('get');
+    const db = app.get('db');
     db.find_session_user([id]).then(user => {
         done(null, user[0]);
     })
 });
+
+//-----------------------------------------------------------//
+
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
@@ -85,6 +93,12 @@ app.get('/auth/user', (req, res) => {
         res.status(401).send('Unauthorized');
     }
 });
+
+app.get('/boards', ctrl.getBoards);
+
+
+
+
 app.listen(SERVER_PORT, () => {
     console.log(`Listening on port: ${SERVER_PORT}`)
 });

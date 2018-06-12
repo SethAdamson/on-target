@@ -18,18 +18,24 @@ let initialState = {
     // card_title: '',
     // card_description: '',
     user: {},
-    teams: {},
-    boards: {},
-    lists: {},
-    cards: {}
+    teams: [],
+    boards: [],
+    lists: [],
+    cards: []
 };
 
+const FULFILLED = '_FULFILLED';
+const PENDING = '_PENDING';
 const GET_USER_DATA = 'GET_USER_DATA';
+const GET_BOARDS = 'GET_BOARDS';
+
 
 export default function reducer(state=initialState, action){
     switch(action.type){
-        case GET_USER_DATA:
-        return Object.assign({}, state, {user: action.payload})
+        case GET_USER_DATA + FULFILLED:
+            return Object.assign({}, state, {user: action.payload})
+        case GET_BOARDS + FULFILLED:
+            return Object.assign({}, state, {boards: action.payload})
         default:
             return state;
     }
@@ -40,5 +46,13 @@ export function getUser() {
     return {
         type: GET_USER_DATA,
         payload: userData
+    }
+}
+
+export function getBoards() {
+    let boardData = axios.get(`/boards`).then(res => res.data);
+    return {
+        type: GET_BOARDS,
+        payload: boardData
     }
 }

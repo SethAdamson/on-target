@@ -3,27 +3,54 @@ import './Home.css';
 import Nav from './Nav/Nav';
 import Header from '../Header/Header';
 import {connect} from 'react-redux';
-import {getUser} from '../../ducks/reducer';
+import {getUser, getBoards} from '../../ducks/reducer';
+import {Link} from 'react-router-dom';
 
 class Home extends Component {
     constructor(){
         super();
 
         this.state = {
-
+            newBoard: {},
+            title: '',
         }
+
+        this.changeHome = this.changeHome.bind(this);
+
     }
 
     componentDidMount(){
         this.props.getUser();
+        this.props.getBoards();
+    }
+
+    changeHome(e){
+        this.setState({[e.target.name]: e.target.value});
     }
 
     render(){
+        console.log(this.props);
+        let display = this.props.boards.map(board => {
+            return (
+                <div className='boards-list' key={board.id}>
+                    <Link to={`/${this.props.user.id}/${board.name}`}>
+                        {board.name}
+                    </Link>
+                </div> 
+            )
+        })
         return(
-            <div>
+            <div className='home-parent'>
                 <Header/>
-                <Nav />
-                Home
+                <div className='home-content'>
+                    <Nav />
+                    <div className='create-board'>
+                        <input type='' className=''/>
+                    </div>
+                    <div className='home-list'>
+                        {display}
+                    </div>  
+                </div> 
             </div> 
         )
     }
@@ -31,8 +58,9 @@ class Home extends Component {
 
 function mapStateToProps(state){
     return {
-        user: state.user
+        user: state.user,
+        boards: state.boards
     }
 }
 
-export default connect(mapStateToProps, {getUser})(Home);
+export default connect(mapStateToProps, {getUser, getBoards})(Home);

@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import './Board.css';
 import List from './List/List';
-import Header from '../Header/Header'
+import Header from '../Header/Header';
+import {connect} from 'react-redux';
 
-export default class Board extends Component {
+class Board extends Component {
     constructor(){
         super();
 
@@ -22,3 +23,12 @@ export default class Board extends Component {
         )
     }
 }
+
+function mapStateToProps(state){
+    return {
+        user: state.user,
+        boards: state.boards
+    }
+}
+
+export default connect(mapStateToProps)(Board);
