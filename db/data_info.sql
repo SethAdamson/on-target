@@ -5,7 +5,7 @@ create table users (
     profile_img text,
     username varchar(255) not null unique,
     email varchar(255) not null unique,
-    auth_id integer not null
+    auth_id text not null
 );
 
 create table teams (

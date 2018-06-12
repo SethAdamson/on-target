@@ -2,14 +2,20 @@ import React, {Component} from 'react';
 import './Home.css';
 import Nav from './Nav/Nav';
 import Header from '../Header/Header';
+import {connect} from 'react-redux';
+import {getUser} from '../../ducks/reducer';
 
-export default class Home extends Component {
+class Home extends Component {
     constructor(){
         super();
 
         this.state = {
 
         }
+    }
+
+    componentDidMount(){
+        this.props.getUser();
     }
 
     render(){
@@ -22,3 +28,11 @@ export default class Home extends Component {
         )
     }
 }
+
+function mapStateToProps(state){
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps, {getUser})(Home);

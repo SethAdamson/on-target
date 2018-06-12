@@ -37,10 +37,11 @@ passport.use(new Auth0Strategy({
     clientID: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
     callbackURL: CALLBACK_URL,
-    scope: 'openid profile'
+    scope: 'openid email profile'
 },
 (accessToken, refreshToken, extraParams, profile, done) => {
     const db = app.get('db');
+    // console.log(profile);
     let {picture, nickname} = profile;
     let first = profile.name.givenName;
     let last = profile.name.familyName;
@@ -71,14 +72,19 @@ passport.deserializeUser((id, done) => {
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: `http://localhost:${SERVER_PORT}/#/home`
+    successRedirect: `http://localhost:3000/#/home`
 }));
 app.get('/auth/logout', (req, res) => {
     req.logout();
-    res.redirect(`http://localhost:${SERVER_PORT}/#/`)
+    res.redirect(`http://localhost:3000/#/`)
 });
-
-
+app.get('/auth/user', (req, res) => {
+    if(req.user){
+        res.status(200).send(req.user);
+    } else {
+        res.status(401).send('Unauthorized');
+    }
+});
 app.listen(SERVER_PORT, () => {
     console.log(`Listening on port: ${SERVER_PORT}`)
 });
