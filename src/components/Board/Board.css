@@ -1,0 +1,20 @@
+.board-parent {
+    height: 100vh;
+    width: 100%;
+}
+
+.board-content {
+    margin: 40px 0 0 0;
+}
+
+.board-list {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.list-parent {
+    background-color: rgb(241,241,241);
+    margin: 5px;
+    border-radius: 10px;
+}
+

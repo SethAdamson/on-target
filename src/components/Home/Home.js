@@ -11,7 +11,6 @@ class Home extends Component {
         super();
 
         this.state = {
-            newBoard: {},
             title: '',
         }
 
@@ -29,11 +28,11 @@ class Home extends Component {
     }
 
     render(){
-        console.log(this.props);
+        // console.log(this.props);
         let display = this.props.boards.map(board => {
             return (
                 <div className='boards-list' key={board.id}>
-                    <Link to={`/${this.props.user.id}/${board.name}`}>
+                    <Link to={`/${this.props.user.id}/${board.id}`}>
                         {board.name}
                     </Link>
                 </div> 
@@ -45,7 +44,9 @@ class Home extends Component {
                 <div className='home-content'>
                     <Nav />
                     <div className='create-board'>
-                        <input type='' className=''/>
+                        <h2 className='create-title'>Get your life On-Target today!</h2>
+                        <input name='title' className='home-create' onChange={this.changeHome}/>
+                        <button className='home-create-button'>Create Your Board</button>
                     </div>
                     <div className='home-list'>
                         {display}

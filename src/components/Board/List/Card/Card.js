@@ -12,9 +12,10 @@ export default class Card extends Component {
     }
 
     render(){
+        let{title} = this.props
         return(
             <div>
-                Card
+                {title}
             </div> 
         )
     }

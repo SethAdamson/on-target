@@ -91,11 +91,14 @@ app.get('/auth/user', (req, res) => {
         res.status(200).send(req.user);
     } else {
         res.status(401).send('Unauthorized');
+        // res.redirect(`http://localhost:3000/#/`);
     }
 });
 
 app.get('/boards', ctrl.getBoards);
-
+app.get('/lists/:id', ctrl.getLists);
+app.get('/cards/:id', ctrl.getCards);
+app.get('/boards/:id', ctrl.getSingleBoard);
 
 
 

@@ -42,7 +42,7 @@ class Header extends Component {
                     <div className='head-nav'>
                         <button className='board-search mini'>New</button>
                         <button className='board-search mini'>Note</button>
-                        <Link to='/profile'>
+                        <Link to={`/profile/${this.props.user.id}`}>
                             <img className='profile-img' src={this.props.user.profile_img} alt='profile' />
                         </Link>
                     </div> 

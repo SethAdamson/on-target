@@ -1,8 +1,9 @@
 import React from 'react';
 import './Nav.css';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 
-export default function Nav() {
+function Nav(props) {
     return(
         <div>
             <ul>
@@ -12,7 +13,7 @@ export default function Nav() {
                 <Link to='/boards'>
                     <li className='nav-button nav-home'>Boards</li>
                 </Link>
-                <Link to='/profile'>
+                <Link to={`/profile/${props.user.id}`}>
                     <li className='nav-button nav-home'>Profile</li>
                 </Link>
 
@@ -20,4 +21,12 @@ export default function Nav() {
         </div> 
     )
 }
+
+function mapStateToProps(state){
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(Nav);
 
