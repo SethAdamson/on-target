@@ -30,12 +30,29 @@ class Home extends Component {
     render(){
         // console.log(this.props);
         let display = this.props.boards.map(board => {
+            console.log(board.background_color);
+            let style = {
+                backgroundColor: board.background_color,
+            }
             return (
-                <div className='boards-list' key={board.id}>
-                    <Link to={`/${this.props.user.id}/${board.id}/${board.name}`}>
-                        {board.name}
-                    </Link>
-                </div> 
+                <Link to={{
+                            pathname: `/${this.props.user.id}/${board.id}`,
+                            state: {
+                                backgroundColor: board.background_color,
+                                boardName: board.name,
+                            }
+                        }} 
+                    style={{textDecoration: 'none'}} 
+                    key={board.id}>
+                    
+                    <div className='boards-list'>
+                        <span className='home-background-piece' style={style}>
+                        </span>
+                        <h3 className='boards-list-name'>
+                            {board.name}
+                        </h3>
+                    </div> 
+                </Link>
             )
         })
         return(
@@ -49,6 +66,7 @@ class Home extends Component {
                         <button className='home-create-button'>Create Your Board</button>
                     </div>
                     <div className='home-list'>
+                        <h2 className='home-list-title'>My Boards</h2>
                         {display}
                     </div>  
                 </div> 

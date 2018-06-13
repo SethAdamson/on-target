@@ -40,6 +40,7 @@
     color: white;
     text-decoration: none;
     font-size: 140px;
+    text-shadow: 5px 0px 0px rgb(205, 205, 205);
 }
 
 .login-button {

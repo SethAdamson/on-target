@@ -3,7 +3,7 @@ import './Board.css';
 import List from './List/List';
 import Header from '../Header/Header';
 import {connect} from 'react-redux';
-import {getLists, getCards, getUser, getBoards, getSingleBoard} from '../../ducks/reducer';
+import {getLists, getCards, getUser, getBoards} from '../../ducks/reducer';
 
 class Board extends Component {
     constructor(){
@@ -19,15 +19,14 @@ class Board extends Component {
         this.props.getBoards();
         this.props.getLists(this.props.match.params.board);
         this.props.getCards(this.props.match.params.board);
-        // this.props.getSingleBoard(this.props.match.params.board);
-        // this.setState({title: this.props.lists[0].board_name});
     }
 
 
 
     render(){
-        let {lists, singleBoard} = this.props
-        console.log(singleBoard);
+        let {backgroundColor, boardName} = this.props.location.state
+        let {lists} = this.props
+        console.log(this.props);
         let listDisplay = lists.map(list => {
             return (
                 <div className='list-parent' key={list.list_id}>
@@ -41,11 +40,11 @@ class Board extends Component {
             )
         })
         return(
-            <div className='board-parent' style={{backgroundColor: '#1ee6aa'}}>
+            <div className='board-parent' style={{backgroundColor: backgroundColor}}>
                 <Header/>
                 <div className='board-content'>
                     <div className='board-header'>
-                        <h2 className='board-name'>{this.props.match.params.boardName}</h2>                    
+                        <h2 className='board-name'>{boardName}</h2>                    
                     </div> 
                     <div className='board-list'>
                         {listDisplay}
@@ -61,8 +60,7 @@ function mapStateToProps(state){
         user: state.user,
         boards: state.boards,
         lists: state.lists,
-        singleBoard: state.singleBoard
     }
 }
 
-export default connect(mapStateToProps,{getLists, getCards, getUser, getBoards, getSingleBoard})(Board);
+export default connect(mapStateToProps,{getLists, getCards, getUser, getBoards})(Board);

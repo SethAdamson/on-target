@@ -28,8 +28,10 @@ class Header extends Component {
                 <div className='head-content'>
                     <div className='head-search'>
                         <button className='board-search'>
-                            <img className='head-target' src={targetWhite} alt='boards' />
-                            Boards
+                            <p className='header-board-menu'>
+                                <FontAwesome className='head-target' name='fas fa-bullseye fa-lg'/>
+                                Boards
+                            </p>
                         </button>
                         <input name='search' className='board-search head-input' onChange={this.changeHeader}/>
                         <FontAwesome  className='search-icon' name="far fa-search"></FontAwesome>
@@ -40,8 +42,12 @@ class Header extends Component {
                         <h1 className='logo-title'>n-Target</h1>
                     </a> 
                     <div className='head-nav'>
-                        <button className='board-search mini'>New</button>
-                        <button className='board-search mini'>Note</button>
+                        <button className='board-search mini'>
+                            <FontAwesome className='head-new' name='far fa-plus-square fa-lg' />
+                        </button>
+                        <button className='board-search mini'>
+                            <FontAwesome className='head-note' name='far fa-at fa-lg' />
+                        </button>
                         <Link to={`/profile/${this.props.user.id}`}>
                             <img className='profile-img' src={this.props.user.profile_img} alt='profile' />
                         </Link>

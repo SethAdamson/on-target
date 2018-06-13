@@ -2,19 +2,30 @@ import React from 'react';
 import './Nav.css';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import FontAwesome from 'react-fontawesome';
+import targetWhite from '../../../images/targetWhite.png';
 
 function Nav(props) {
     return(
-        <div>
-            <ul>
-                <Link to='/home'>
-                    <li className='nav-button nav-home'>Home</li>
+        <div className='nav-content'>
+            <ul className='navbar'>
+                <Link to='/home' style={{textDecoration: 'none'}}>
+                    <span className='nav-list'>
+                        <FontAwesome className='nav-icon' name='far fa-home fa-lg'/>
+                        <li className='nav-button nav-home'>Home</li>
+                    </span>
                 </Link>
-                <Link to='/boards'>
-                    <li className='nav-button nav-home'>Boards</li>
+                <Link to='/boards' style={{textDecoration: 'none'}}>
+                    <span className='nav-list'>
+                        <FontAwesome className='nav-icon' name='fas fa-bullseye fa-lg'/>
+                        <li className='nav-button nav-home'>Boards</li>
+                    </span>
                 </Link>
-                <Link to={`/profile/${props.user.id}`}>
-                    <li className='nav-button nav-home'>Profile</li>
+                <Link to={`/profile/${props.user.id}`} style={{textDecoration: 'none'}}>
+                    <span className='nav-list'>
+                        <FontAwesome className='nav-icon' name='fas fa-user-circle fa-lg'/>
+                        <li className='nav-button nav-home'>Profile</li>
+                    </span>
                 </Link>
 
             </ul>

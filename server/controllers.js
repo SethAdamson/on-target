@@ -39,17 +39,4 @@ module.exports= {
             res.status(500).send(e)
         })
     },
-    getSingleBoard: (req, res) => {
-        const db = req.app.get('db');
-        const {id} = req.params
-
-        db.get_single_board([id])
-        .then(board => {
-            res.status(200).send(board)
-        })
-        .catch((e) => {
-            console.log(e); 
-            res.status(500).send(e)
-        })
-    }
 }

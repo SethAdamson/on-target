@@ -1,3 +1,11 @@
+.header-board-menu {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
 .head-parent {
     width: 100%;
     height: 40px;
@@ -56,7 +64,9 @@
 .head-target {
     width:25px;
     height:25px;
-    margin: 0 5px 0 0;
+    position: relative;
+    top: 5px;
+    left: -5px;
 }
 
 .head-title {

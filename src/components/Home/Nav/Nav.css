@@ -1,0 +1,25 @@
+.nav-content {
+    width: 25%;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-list {
+    display: flex;
+    margin: 10px;
+}
+
+.nav-home {
+    margin: 0 5px;
+}
+
+.nav-icon {
+    width: 20px;
+    height: 20px;
+    color: grey;
+}

@@ -10,7 +10,7 @@ export default (
     <Switch>    
         <Route component={Login} path='/' exact/>
         <Route component={Home} path='/home' />
-        <Route component={Board} path='/:user/:board/:boardName' />
+        <Route component={Board} path='/:user/:board' />
         <Route component={Profile} path='/profile/:user' />
         <Route component={UserBoards} path='/boards' />
     </Switch>

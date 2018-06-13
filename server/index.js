@@ -98,7 +98,7 @@ app.get('/auth/user', (req, res) => {
 app.get('/boards', ctrl.getBoards);
 app.get('/lists/:id', ctrl.getLists);
 app.get('/cards/:id', ctrl.getCards);
-app.get('/boards/:id', ctrl.getSingleBoard);
+
 
 
 
