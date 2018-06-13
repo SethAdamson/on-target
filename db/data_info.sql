@@ -16,9 +16,10 @@ create table teams (
 create table boards (
     id serial primary key,
     name varchar(100) not null,
-    background_color text,
+    background_color text default '#1ee6aa',
     author_id integer references users(id),
-    team_id integer references teams(id)
+    team_id integer references teams(id),
+    background_img text default null
 );
 
 create table lists (
@@ -30,7 +31,7 @@ create table lists (
 create table cards (
     id serial primary key,
     title varchar(255) not null,
-    description varchar(1000),
+    description varchar(1000) default null,
     list_id integer references lists(id),
     author_id integer references users(id)
 );

@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import {RIEInput} from 'riek';
 import _ from 'lodash';
-import {updateListTitle} from '../../../ducks/reducer';
+import {updateListTitle, addCard} from '../../../ducks/reducer';
 
 
 
@@ -14,10 +14,15 @@ class List extends Component {
         super();
 
         this.state = {
-
+            adding: false,
+            newCardTitle: '',
         }
 
         this.changeListTitle = this.changeListTitle.bind(this);
+        this.addingCard = this.addingCard.bind(this);
+        this.changeCard = this.changeCard.bind(this);
+        this.addNewCard = this.addNewCard.bind(this);
+        this.cancelNew = this.cancelNew.bind(this);
 
     }
 
@@ -26,13 +31,36 @@ class List extends Component {
         this.props.updateListTitle(this.props.list_id, {title: val.text, board_id: this.props.board_id});
     }
 
+    addingCard(){
+        this.setState({adding: true})
+    }
+
+    changeCard(e){
+        this.setState({[e.target.name]: e.target.value})
+    }
+
+    addNewCard(){
+        let {newCardTitle} = this.state;
+        let {list_id, author_id, board_id} = this.props;
+        this.props.addCard({newCardTitle, list_id, author_id, board_id})
+        this.cancelNew();
+    }
+
+    cancelNew(){
+        this.setState({adding:false, newCardTitle: ''})
+    }
+
     render(){
-        let {cards, list_id, list_title} = this.props;
+        let {cards, list_id, list_title, editFn} = this.props;
+        let {adding} = this.state;
         let cardDisplay = cards.map(card => {
             // console.log(card.list_id, list_id);
             if(card.list_id === list_id) {
                 return (
-                    <div className='card-parent' key={card.id} >
+                    <div className='card-parent' 
+                        key={card.id} 
+                        onClick={() => editFn({id: card.id, desc: card.description, title: card.card_title})}
+                        >
                         <Card
                          id = {card.id}
                          title = {card.card_title}
@@ -54,10 +82,20 @@ class List extends Component {
                     {/* <h3 className='list-title'>{list_title}</h3> */}
                     <div className='card-list' >
                         {cardDisplay}
-                        <a className=' card-parent add-new'>
+                        {adding ? 
+                        <div>
+                            <input name='newCardTitle' className='list-new-card' onChange={this.changeCard}/>
+                            <a className='delete-footer'>
+                                <button className='add-card-button' onClick={this.addNewCard}>Add Card</button> 
+                                <FontAwesome className='delete'  name='far fa-times fa-lg' onClick={this.cancelNew}/>
+                            </a>
+                        </div> 
+                        :
+                        <a className=' card-parent add-new' onClick={this.addingCard}>
                             <FontAwesome className='add' name="far fa-plus" />
                             Add New Card
                         </a>
+                        }
                     </div>
                 </div> 
         )
@@ -70,4 +108,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, {updateListTitle})(List);
+export default connect(mapStateToProps, {updateListTitle, addCard})(List);

@@ -1,0 +1,15 @@
+.profile-parent {
+    background-color: rgb(240, 240, 240);
+    height: 100vh;
+    width: 100%;
+}
+
+.profile-content {
+    top: 40px;
+    height: 80.5%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 50px 100px;
+}

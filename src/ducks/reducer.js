@@ -19,6 +19,8 @@ const GET_CARDS = 'GET_CARDS';
 const GET_SINGLE_BOARD = 'GET_SINGLE_BOARD';
 const UPDATE_BOARD_NAME = 'UPDATE_BOARD_TITLE';
 const UPDATE_LIST_TITLE = "UPDATE_LIST_TITLE";
+const ADD_CARD = 'ADD_CARD';
+const ADD_BOARD = 'ADD_BOARD';
 
 
 export default function reducer(state=initialState, action){
@@ -37,6 +39,10 @@ export default function reducer(state=initialState, action){
             return Object.assign({}, state, {singleBoard: action.payload})
         case UPDATE_LIST_TITLE + FULFILLED:
             return Object.assign({}, state, {lists: action.payload})
+        case ADD_CARD + FULFILLED:
+            return Object.assign({}, state, {cards: action.payload})
+        case ADD_BOARD + FULFILLED:
+            return Object.assign({}, state, {boards: action.payload})
         default:
             return state;
     }
@@ -95,5 +101,21 @@ export function updateListTitle(id, val){
     return {
         type: UPDATE_LIST_TITLE,
         payload: newTitle,
+    }
+}
+
+export function addCard(val){
+    let newCard = axios.post(`/add/cards`, val).then(res => res.data);
+    return {
+        type: ADD_CARD,
+        payload: newCard,
+    }
+}
+
+export function addBoard(val){
+    let newBoard = axios.post(`/add/boards`, val).then(res => res.data);
+    return {
+        type: ADD_BOARD,
+        payload: newBoard,
     }
 }

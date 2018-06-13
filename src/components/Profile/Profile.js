@@ -13,9 +13,13 @@ export default class Profile extends Component {
 
     render(){
         return(
-            <div>
-                <Header/>
-                Profile
+            <div className='profile-parent'>
+                <div className='home-header'>
+                    <Header/>
+                </div>
+                <div className='profile-content'>
+                    Profile
+                </div> 
             </div> 
         )
     }

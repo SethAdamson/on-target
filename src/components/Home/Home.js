@@ -3,7 +3,7 @@ import './Home.css';
 import Nav from './Nav/Nav';
 import Header from '../Header/Header';
 import {connect} from 'react-redux';
-import {getUser, getBoards} from '../../ducks/reducer';
+import {getUser, getBoards, addBoard} from '../../ducks/reducer';
 import {Link} from 'react-router-dom';
 
 class Home extends Component {
@@ -11,10 +11,11 @@ class Home extends Component {
         super();
 
         this.state = {
-            title: '',
+            newBoardName: '',
         }
 
-        this.changeHome = this.changeHome.bind(this);
+        this.handleHome = this.handleHome.bind(this);
+        this.addNewBoard = this.addNewBoard.bind(this);
 
     }
 
@@ -23,8 +24,13 @@ class Home extends Component {
         this.props.getBoards();
     }
 
-    changeHome(e){
+    handleHome(e){
         this.setState({[e.target.name]: e.target.value});
+    }
+
+    addNewBoard(){
+        let {newBoardName} = this.state;
+        this.props.addBoard({newBoardName, author_id: this.props.user.id})
     }
 
     render(){
@@ -35,7 +41,7 @@ class Home extends Component {
             }
             return (
                 <Link to={{
-                            pathname: `/${this.props.user.id}/${board.id}`,
+                            pathname: `/boards/${this.props.user.id}/${board.id}`,
                             state: {
                                 backgroundColor: board.background_color,
                                 boardName: board.name,
@@ -63,8 +69,8 @@ class Home extends Component {
                     <Nav />
                     <div className='create-board'>
                         <h2 className='create-title'>Get your life On-Target today!</h2>
-                        <input name='title' className='home-create' onChange={this.changeHome}/>
-                        <button className='home-create-button'>Create Your Board</button>
+                        <input name='newBoardName' className='home-create' onChange={this.handleHome}/>
+                        <button className='home-create-button' onClick={this.addNewBoard}>Create Your Board</button>
                     </div>
                     <div className='home-list'>
                         <h2 className='home-list-title'>My Boards</h2>
@@ -83,4 +89,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, {getUser, getBoards})(Home);
+export default connect(mapStateToProps, {getUser, getBoards, addBoard})(Home);
