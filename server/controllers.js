@@ -39,4 +39,47 @@ module.exports= {
             res.status(500).send(e)
         })
     },
+    getSingleBoard: (req, res) => {
+        const db = req.app.get('db');
+        const {id} = req.params
+
+        db.get_single_board([id])
+        .then(board => {
+            res.status(200).send(board)
+        })
+        .catch((e) => {
+            console.log(e); 
+            res.status(500).send(e)
+        })
+    },
+    updateBoardName: (req, res) => {
+        const db = req.app.get('db');
+        const {id} = req.params;
+        const {name} = req.body;
+        // console.log(req.body, id);
+
+        db.update_board_name([name, id])
+        .then(board => {
+            res.status(200).send(board)
+        })
+        .catch((e) => {
+            console.log(e); 
+            res.status(500).send(e)
+        })
+    },
+    updateListTitle: (req, res) => {
+        const db = req.app.get('db');
+        const {id} = req.params;
+        const {title, board_id} = req.body;
+        // console.log(req.body, id);
+
+        db.update_list_title([title, id, board_id])
+        .then(lists => {
+            res.status(200).send(lists)
+        })
+        .catch((e) => {
+            console.log(e); 
+            res.status(500).send(e)
+        })
+    },
 }

@@ -3,7 +3,6 @@ import './Nav.css';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import FontAwesome from 'react-fontawesome';
-import targetWhite from '../../../images/targetWhite.png';
 
 function Nav(props) {
     return(

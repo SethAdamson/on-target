@@ -30,7 +30,6 @@ class Home extends Component {
     render(){
         // console.log(this.props);
         let display = this.props.boards.map(board => {
-            console.log(board.background_color);
             let style = {
                 backgroundColor: board.background_color,
             }
@@ -57,7 +56,9 @@ class Home extends Component {
         })
         return(
             <div className='home-parent'>
-                <Header/>
+                <div className='home-header'>
+                    <Header/>
+                </div>
                 <div className='home-content'>
                     <Nav />
                     <div className='create-board'>

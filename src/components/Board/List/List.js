@@ -3,6 +3,9 @@ import './List.css';
 import Card from './Card/Card'
 import {connect} from 'react-redux';
 import FontAwesome from 'react-fontawesome';
+import {RIEInput} from 'riek';
+import _ from 'lodash';
+import {updateListTitle} from '../../../ducks/reducer';
 
 
 
@@ -13,13 +16,20 @@ class List extends Component {
         this.state = {
 
         }
+
+        this.changeListTitle = this.changeListTitle.bind(this);
+
+    }
+
+    changeListTitle(val){
+        // console.log(val);
+        this.props.updateListTitle(this.props.list_id, {title: val.text, board_id: this.props.board_id});
     }
 
     render(){
-        console.log(this.props);
         let {cards, list_id, list_title} = this.props;
         let cardDisplay = cards.map(card => {
-            console.log(card.list_id, list_id);
+            // console.log(card.list_id, list_id);
             if(card.list_id === list_id) {
                 return (
                     <div className='card-parent' key={card.id} >
@@ -36,7 +46,12 @@ class List extends Component {
         })
         return(
                 <div className='list-content'>
-                    <h3 className='list-title'>{list_title}</h3>
+                    <RIEInput value={list_title} 
+                        propName='text' 
+                        className='list-title'
+                        change={this.changeListTitle} 
+                        validate={_.isString}/>
+                    {/* <h3 className='list-title'>{list_title}</h3> */}
                     <div className='card-list' >
                         {cardDisplay}
                         <a className=' card-parent add-new'>
@@ -55,4 +70,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps)(List);
+export default connect(mapStateToProps, {updateListTitle})(List);
