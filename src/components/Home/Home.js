@@ -32,7 +32,7 @@ class Home extends Component {
         let display = this.props.boards.map(board => {
             return (
                 <div className='boards-list' key={board.id}>
-                    <Link to={`/${this.props.user.id}/${board.id}`}>
+                    <Link to={`/${this.props.user.id}/${board.id}/${board.name}`}>
                         {board.name}
                     </Link>
                 </div> 

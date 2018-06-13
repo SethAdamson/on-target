@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './List.css';
 import Card from './Card/Card'
 import {connect} from 'react-redux';
+import FontAwesome from 'react-fontawesome';
 
 
 
@@ -35,8 +36,14 @@ class List extends Component {
         })
         return(
                 <div className='list-content'>
-                    <h3>{list_title}</h3>
-                    {cardDisplay}
+                    <h3 className='list-title'>{list_title}</h3>
+                    <div className='card-list' >
+                        {cardDisplay}
+                        <a className=' card-parent add-new'>
+                            <FontAwesome className='add' name="far fa-plus" />
+                            Add New Card
+                        </a>
+                    </div>
                 </div> 
         )
     }

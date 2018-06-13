@@ -19,7 +19,7 @@ class Board extends Component {
         this.props.getBoards();
         this.props.getLists(this.props.match.params.board);
         this.props.getCards(this.props.match.params.board);
-        this.props.getSingleBoard(this.props.match.params.board);
+        // this.props.getSingleBoard(this.props.match.params.board);
         // this.setState({title: this.props.lists[0].board_name});
     }
 
@@ -44,9 +44,11 @@ class Board extends Component {
             <div className='board-parent' style={{backgroundColor: '#1ee6aa'}}>
                 <Header/>
                 <div className='board-content'>
-                    <h2 className='board-name'></h2>
+                    <div className='board-header'>
+                        <h2 className='board-name'>{this.props.match.params.boardName}</h2>                    
+                    </div> 
                     <div className='board-list'>
-                    {listDisplay}
+                        {listDisplay}
                     </div> 
                 </div>
             </div> 

@@ -14,7 +14,7 @@ export default class Card extends Component {
     render(){
         let{title} = this.props
         return(
-            <div>
+            <div className='card-content'>
                 {title}
             </div> 
         )

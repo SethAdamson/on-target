@@ -1,0 +1,42 @@
+.list-content {
+    margin: 0;
+    background-color: rgb(220,220,220);
+    border-radius: 5px;
+}
+
+.list-title {
+    margin: 0 0 5px 0;
+    padding: 15px;
+    background-color: rgba(250,250,250);
+    border-radius: 5px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.card-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-parent {
+    width: 94%;
+    background-color: rgba(250,250,250);
+    border-radius: 5px;
+    margin: 3px;
+}
+
+.add-new {
+    width: 92%;
+    color: grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 8px;
+}
+
+.add {
+    color: grey;
+    margin: 5px;
+}
