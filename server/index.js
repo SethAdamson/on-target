@@ -102,6 +102,7 @@ app.get('/boards/:id', ctrl.getSingleBoard);
 app.put('/change/boards/:id', ctrl.updateBoardName);
 app.put('/change/lists/:id', ctrl.updateListTitle);
 app.post('/add/cards', ctrl.addCard);
+app.post('/add/lists', ctrl.addList);
 app.post('/add/boards', ctrl.addBoard);
 
 

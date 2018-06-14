@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import targetWhite from '../../images/targetWhite.png';
 import {Link} from 'react-router-dom';
+import BoardNav from './BoardNav/BoardNav';
+import {withRouter} from 'react-router-dom';
 
 class Header extends Component {
     constructor(){
@@ -11,9 +13,11 @@ class Header extends Component {
 
         this.state = {
             search: '',
+            boardClick: false,
         }
 
         this.changeHeader = this.changeHeader.bind(this);
+        this.boardClickToggle = this.boardClickToggle.bind(this);
 
     }
 
@@ -21,13 +25,17 @@ class Header extends Component {
         this.setState({[e.target.name]: e.target.value});
     }
 
+    boardClickToggle(){
+        this.setState({boardClick: !this.state.boardClick})
+    }
+
     render(){
-        // console.log(this.props);
         return(
             <div className='head-parent'>
                 <div className='head-content'>
                     <div className='head-search'>
-                        <button className='board-search'>
+                        <BoardNav currentBoard = {this.props.currentBoard} boardClick={this.state.boardClick} clickToggle={this.boardClickToggle} className='boardnav' />
+                        <button className='board-search' onClick={this.boardClickToggle}>
                             <p className='header-board-menu'>
                                 <FontAwesome className='head-target' name='fas fa-bullseye fa-lg'/>
                                 Boards
@@ -60,8 +68,9 @@ class Header extends Component {
 
 function mapStateToProps(state){
     return {
-        user: state.user
+        user: state.user,
+        boards: state.board
     }
 }
 
-export default connect(mapStateToProps)(Header);
+export default withRouter(connect(mapStateToProps)(Header));

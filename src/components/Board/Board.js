@@ -8,11 +8,14 @@ import {getLists,
         getUser, 
         getBoards, 
         getSingleBoard,
-        updateBoardName
+        updateBoardName,
+        addList
     } from '../../ducks/reducer';
 import {RIEInput} from 'riek';
 import _ from 'lodash';
 import FontAwesome from 'react-fontawesome';
+import ColorMenu from './ColorMenu/ColorMenu';
+import {withRouter} from 'react-router-dom';
 
 class Board extends Component {
     constructor(){
@@ -25,16 +28,33 @@ class Board extends Component {
             editTitle: '',
             editDesc: '',
             newDesc: '',
+            addingList: false,
+            newListTitle: '',
+            colorMenu: false,
         }
 
         this.changeBoardName = this.changeBoardName.bind(this);
         this.editCard = this.editCard.bind(this);
         this.cancelCardEdit = this.cancelCardEdit.bind(this);
         this.handleBoard = this.handleBoard.bind(this);
+        this.cancelNewList = this.cancelNewList.bind(this);
+        this.addingList = this.addingList.bind(this);
+        this.addNewList = this.addNewList.bind(this);
+        this.editColor = this.editColor.bind(this);
 
     }
 
     componentDidMount(){
+        this.getInfo();
+    }
+
+    componentDidUpdate(props){
+        if (props.match.params.board !== this.props.match.params.board){
+                this.getInfo();
+        };
+    }
+
+    getInfo(){
         let {board} = this.props.match.params
         this.props.getUser();
         this.props.getBoards();
@@ -57,7 +77,7 @@ class Board extends Component {
             cardEditting: true, 
             editID: obj.id,
             editDesc: obj.desc,
-            editTitle: obj.title
+            editTitle: obj.title,
         })
     }
 
@@ -65,10 +85,28 @@ class Board extends Component {
         this.setState({cardEditting: false});
     }
 
+    cancelNewList(){
+        this.setState({addingList:false, newListTitle: ''})
+    }
+
+    addingList(){
+        this.setState({addingList:true})
+    }
+
+    addNewList(){
+        let {newListTitle} = this.state;
+        this.props.addList({newListTitle, board_id :this.props.singleBoard.id})
+        this.cancelNewList();
+    }
+
+    editColor(){
+        this.setState({colorMenu: !this.state.colorMenu})
+    }
+
     render(){
         // let {backgroundColor, boardName} = this.props.location.state
         let {lists, singleBoard} = this.props;
-        let {title, cardEditting, editDesc, editTitle} = this.state;
+        let {title, cardEditting, editDesc, editTitle, addingList, colorMenu} = this.state;
         let listDisplay = lists.map(list => {
             return (
                 <div className='list-parent' key={list.list_id}>
@@ -105,7 +143,7 @@ class Board extends Component {
                     <section className='no-edit'>
                     </section>
                 }
-                <Header/>
+                <Header currentBoard = {singleBoard.id}/>
                 <div className='board-content'>
                     <div className='board-header'>
                         <RIEInput value={singleBoard.name ? singleBoard.name : title} 
@@ -113,9 +151,27 @@ class Board extends Component {
                                 className='board-name'
                                 change={this.changeBoardName} 
                                 validate={_.isString}/>
+                        <p className='colormenu-button' onClick={this.editColor}>
+                            Change Background
+                        </p>
+                        <ColorMenu colorClick={colorMenu}/>
                     </div> 
                     <div className='board-list'>
                         {listDisplay}
+                        {addingList ? 
+                            <div>
+                                <input name='newListTitle' className='new-list-input' onChange={this.handleBoard}/>
+                                <a className='delete-footer'>
+                                    <button className='add-list-button' onClick={this.addNewList}>Add List</button> 
+                                    <FontAwesome className='delete'  name='far fa-times fa-lg' onClick={this.cancelNewList}/>
+                                </a>
+                            </div> 
+                            :
+                            <a className='list-parent' onClick={this.addingList}>
+                                <FontAwesome className='add' name="far fa-plus" />
+                                Add New List
+                            </a>
+                        }
                     </div> 
                 </div>
             </div> 
@@ -132,4 +188,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps,{getLists, getCards, getUser, getBoards, getSingleBoard, updateBoardName})(Board);
+export default withRouter(connect(mapStateToProps,{addList, getLists, getCards, getUser, getBoards, getSingleBoard, updateBoardName})(Board));

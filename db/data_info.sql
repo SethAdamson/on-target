@@ -34,4 +34,4 @@ create table cards (
     description varchar(1000) default null,
     list_id integer references lists(id),
     author_id integer references users(id)
-);
+);`

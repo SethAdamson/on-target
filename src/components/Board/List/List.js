@@ -79,7 +79,6 @@ class List extends Component {
                         className='list-title'
                         change={this.changeListTitle} 
                         validate={_.isString}/>
-                    {/* <h3 className='list-title'>{list_title}</h3> */}
                     <div className='card-list' >
                         {cardDisplay}
                         {adding ? 

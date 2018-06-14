@@ -95,6 +95,19 @@ module.exports= {
             res.status(500).send(e)
         })
     },
+    addList: (req, res) => {
+        const db = req.app.get('db');
+        const {newListTitle, board_id} = req.body;
+
+        db.add_list([newListTitle, board_id])
+        .then(lists => {
+            res.status(200).send(lists)
+        })
+        .catch((e) => {
+            console.log(e); 
+            res.status(500).send(e)
+        })
+    },
     addBoard: (req, res) => {
         const db = req.app.get('db');
         const {newBoardName, author_id} = req.body;

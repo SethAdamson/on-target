@@ -2,6 +2,8 @@
     background-color: rgb(240, 240, 240);
     height: 100vh;
     width: 100%;
+    position: relative;
+    z-index: 1;
 }
 
 .home-header {
@@ -9,6 +11,7 @@
     width: 100%;
     background-color: #1ee6aa;
     position: fixed;
+    z-index: 10;
 }
 
 ul {
@@ -21,6 +24,7 @@ ul {
     position: relative;
     display: flex;
     flex-direction: row;
+    z-index: 2;
     justify-content: space-between;
     padding: 50px 100px;
 }
@@ -45,6 +49,8 @@ ul {
 }
 
 .boards-list{
+    position: relative;
+    z-index: 2;
     display: flex;
     margin: 10px;
     align-items: center;

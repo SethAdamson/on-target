@@ -1,5 +1,7 @@
 .nav-content {
     width: 25%;
+    position: relative;
+    z-index: 2;
 }
 
 .navbar {
@@ -7,11 +9,15 @@
     flex-direction: column;
     margin: 0;
     padding: 0;
+    position: relative;
+    z-index: 2;
 }
 
 .nav-list {
     display: flex;
     margin: 10px;
+    position: relative;
+    z-index: 2;
 }
 
 .nav-home {
