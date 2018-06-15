@@ -17,7 +17,7 @@ const GET_BOARDS = 'GET_BOARDS';
 const GET_LISTS = 'GET_LISTS';
 const GET_CARDS = 'GET_CARDS';
 const GET_SINGLE_BOARD = 'GET_SINGLE_BOARD';
-const UPDATE_BOARD_NAME = 'UPDATE_BOARD_TITLE';
+const UPDATE_BOARD = 'UPDATE_BOARD_TITLE';
 const UPDATE_LIST_TITLE = "UPDATE_LIST_TITLE";
 const ADD_CARD = 'ADD_CARD';
 const ADD_BOARD = 'ADD_BOARD';
@@ -36,7 +36,7 @@ export default function reducer(state=initialState, action){
             return Object.assign({}, state, {cards: action.payload})
         case GET_SINGLE_BOARD + FULFILLED:
             return Object.assign({}, state, {singleBoard: action.payload})
-        case UPDATE_BOARD_NAME + FULFILLED:
+        case UPDATE_BOARD + FULFILLED:
             return Object.assign({}, state, {singleBoard: action.payload})
         case UPDATE_LIST_TITLE + FULFILLED:
             return Object.assign({}, state, {lists: action.payload})
@@ -91,11 +91,11 @@ export function getSingleBoard(id){
     }
 }
 
-export function updateBoardName(id, val){
-    let newName = axios.put(`/change/boards/${id}`, val).then(res => res.data[0]);
+export function updateBoard(id, val){
+    let newBoard = axios.put(`/change/boards/${id}`, val).then(res => res.data[0]);
     return {
-        type: UPDATE_BOARD_NAME,
-        payload: newName,
+        type: UPDATE_BOARD,
+        payload: newBoard,
     }
 }
 

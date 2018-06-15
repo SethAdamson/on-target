@@ -52,20 +52,39 @@ module.exports= {
             res.status(500).send(e)
         })
     },
-    updateBoardName: (req, res) => {
+    updateBoard: (req, res) => {
         const db = req.app.get('db');
         const {id} = req.params;
-        const {name} = req.body;
         // console.log(req.body, id);
 
-        db.update_board_name([name, id])
-        .then(board => {
-            res.status(200).send(board)
-        })
-        .catch((e) => {
-            console.log(e); 
-            res.status(500).send(e)
-        })
+        if(req.body.name){
+            db.update_board_name([req.body.name, id])
+            .then(board => {
+                res.status(200).send(board)
+            })
+            .catch((e) => {
+                console.log(e); 
+                res.status(500).send(e)
+            })
+        } else if (req.body.bg_color) {
+            db.update_board_color([req.body.bg_color, id])
+            .then(board => {
+                res.status(200).send(board)
+            })
+            .catch((e) => {
+                console.log(e); 
+                res.status(500).send(e)
+            })
+        } else if (req.body.bg_img){
+            db.update_board_img([req.body.bg_img, id])
+            .then(board => {
+                res.status(200).send(board)
+            })
+            .catch((e) => {
+                console.log(e); 
+                res.status(500).send(e)
+            })
+        }
     },
     updateListTitle: (req, res) => {
         const db = req.app.get('db');

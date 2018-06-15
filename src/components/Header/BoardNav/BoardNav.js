@@ -18,13 +18,16 @@ class BoardNav extends Component {
             boardsList = boards.filter(board => board.id !== currentBoard);
         } 
         let display = boardsList.map(board => {
-            let style = {
-                backgroundColor: board.background_color,
+            let bgstyle = {};
+            if(board.background_img){
+                bgstyle = {backgroundImage: `url(${board.background_img})`};
+            } else {
+                bgstyle = {backgroundColor: board.background_color};
             }
             return (
                 <Link to={`/boards/${this.props.user.id}/${board.id}`} key={board.id}>
                     <div className={`board-display`}  onClick={this.props.clickToggle}>
-                            <span className='home-background-piece' style={style}>
+                            <span className='home-background-piece' style={bgstyle}>
                             </span>
                             <h3 className='boards-list-name'>
                                 {board.name}

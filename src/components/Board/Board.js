@@ -8,7 +8,7 @@ import {getLists,
         getUser, 
         getBoards, 
         getSingleBoard,
-        updateBoardName,
+        updateBoard,
         addList
     } from '../../ducks/reducer';
 import {RIEInput} from 'riek';
@@ -56,15 +56,15 @@ class Board extends Component {
 
     getInfo(){
         let {board} = this.props.match.params
-        this.props.getUser();
-        this.props.getBoards();
+        // this.props.getUser();
+        // this.props.getBoards();
         this.props.getLists(board);
         this.props.getCards(board);
         this.props.getSingleBoard(board);
     }
 
     changeBoardName(val){
-        this.props.updateBoardName(this.props.singleBoard.id, {name: val.text});
+        this.props.updateBoard(this.props.singleBoard.id, {name: val.text});
     }
 
     handleBoard(e){
@@ -83,6 +83,10 @@ class Board extends Component {
 
     cancelCardEdit(){
         this.setState({cardEditting: false});
+    }
+
+    stopPropCard(e){
+        e.stopPropagation();
     }
 
     cancelNewList(){
@@ -104,9 +108,18 @@ class Board extends Component {
     }
 
     render(){
+        console.log(this.props);
         // let {backgroundColor, boardName} = this.props.location.state
         let {lists, singleBoard} = this.props;
         let {title, cardEditting, editDesc, editTitle, addingList, colorMenu} = this.state;
+
+        let bgstyle = {};
+        if(singleBoard.background_img){
+            bgstyle = {backgroundImage: `url(${singleBoard.background_img})`};
+        } else {
+            bgstyle = {backgroundColor: singleBoard.background_color};
+        }
+
         let listDisplay = lists.map(list => {
             return (
                 <div className='list-parent' key={list.list_id}>
@@ -122,10 +135,10 @@ class Board extends Component {
             )
         })
         return(
-            <div className='board-parent' style={{backgroundColor: singleBoard.background_color}}>
+            <div className={singleBoard.background_img ? 'board-parent board-image' : 'board-parent'} style={bgstyle}>
                 {cardEditting ?
-                    <div className='edit-card' > 
-                        <section className='edit-content'>
+                    <div className='edit-card' onClick={this.cancelCardEdit}> 
+                        <section className='edit-content' onClick={(e) => this.stopPropCard(e)}>
                             <div className='edit-title'>
                                 {editTitle}
                                 <FontAwesome className='delete'  name='far fa-times fa-lg' onClick={this.cancelCardEdit}/>
@@ -154,7 +167,7 @@ class Board extends Component {
                         <p className='colormenu-button' onClick={this.editColor}>
                             Change Background
                         </p>
-                        <ColorMenu colorClick={colorMenu}/>
+                        <ColorMenu colorClick={colorMenu} currentID={singleBoard.id}/>
                     </div> 
                     <div className='board-list'>
                         {listDisplay}
@@ -188,4 +201,4 @@ function mapStateToProps(state){
     }
 }
 
-export default withRouter(connect(mapStateToProps,{addList, getLists, getCards, getUser, getBoards, getSingleBoard, updateBoardName})(Board));
+export default withRouter(connect(mapStateToProps,{addList, getLists, getCards, getUser, getBoards, getSingleBoard, updateBoard})(Board));

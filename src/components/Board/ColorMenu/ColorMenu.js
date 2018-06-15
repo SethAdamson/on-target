@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './ColorMenu.css';
 import {connect} from 'react-redux';
+import {updateBoard} from '../../../ducks/reducer';
 import FontAwesome from 'react-fontawesome';
 
 
@@ -22,13 +23,24 @@ class ColorMenu extends Component {
             ],
 
             images: [
-                {name:'dog', img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWnXMUZsuoM_kfIfM900t7vH5uOiqqMUtVOqZ9aXRqhojoxbc4'},
+                {name:'dog', img:'http://www.ultrahdfreewallpapers.com/uploads/large/animals/dog-hd-wallpaper-0018.jpg'},
                 {name: 'giraffe', img:'https://newevolutiondesigns.com/images/freebies/animals-background-6.jpg'},
-                // {name: 'waterDrop', img:'http://www.kinyu-z.net/data/wallpapers/76/969432.jpg'},
-                {name: 'beach', img:'http://www.intrawallpaper.com/static/images/Hawaii-Beach-Wallpaper-HD_8pA2vrZ.jpg'},
+                {name: 'waterDrop', img:'http://www.kinyu-z.net/data/wallpapers/76/969432.jpg'},
+                // {name: 'beach', img:'http://www.intrawallpaper.com/static/images/Hawaii-Beach-Wallpaper-HD_8pA2vrZ.jpg'},
             ]
-
         }
+
+        this.updateColor = this.updateColor.bind(this);
+        this.updateImage = this.updateImage.bind(this);
+
+    }
+
+    updateColor(val){
+            this.props.updateBoard(this.props.currentID, {bg_color: val});
+    }
+
+    updateImage(val){
+            this.props.updateBoard(this.props.currentID, {bg_img: val});
     }
 
     render() {
@@ -43,7 +55,7 @@ class ColorMenu extends Component {
                     value={bgcolor.name}  
                     style={style} 
                     key={i}
-                    // onClick={this.props.updateColor(bgcolor.color)}
+                    onClick={() => this.updateColor(bgcolor.color)}
                      ></span>
             )
         })
@@ -52,7 +64,11 @@ class ColorMenu extends Component {
                 backgroundImage: `url(${image.img})`,
             }
             return(
-                <span className='colormenu-choice' value={images.name}  style={style} key={i}></span>
+                <span className='colormenu-choice' 
+                    value={images.name}  
+                    style={style}
+                    key={i} 
+                    onClick={() => this.updateImage(image.img)}></span>
             )
         })
         return (
@@ -82,4 +98,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps)(ColorMenu);
+export default connect(mapStateToProps, {updateBoard})(ColorMenu);
