@@ -33,5 +33,7 @@ create table cards (
     title varchar(255) not null,
     description varchar(1000) default null,
     list_id integer references lists(id),
-    author_id integer references users(id)
-);`
+    author_id integer references users(id),
+    card_img text default null,
+    card_file text default null,
+);

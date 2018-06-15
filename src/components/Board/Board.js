@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './Board.css';
 import List from './List/List';
 import Header from '../Header/Header';
+import CardEdit from './List/CardEdit/CardEdit';
 import {connect} from 'react-redux';
 import {getLists, 
         getCards, 
@@ -28,6 +29,8 @@ class Board extends Component {
             editID: 0,
             editTitle: '',
             editDesc: '',
+            editImg: '',
+            editFile: '',
             newDesc: '',
             addingList: false,
             newListTitle: '',
@@ -58,8 +61,8 @@ class Board extends Component {
     getInfo(){
         let {board} = this.props.match.params;
         let {getUser, getBoards, getCards, getLists, getSingleBoard} = this.props;
-        axios.all([getUser(), getBoards(), getLists(board), getCards(board), getSingleBoard(board)])
-        .then();
+        axios.all([getUser(), getBoards(), getLists(board), getCards(board), getSingleBoard(board)]);
+        
     }
 
     changeBoardName(val){
@@ -77,6 +80,9 @@ class Board extends Component {
             editID: obj.id,
             editDesc: obj.desc,
             editTitle: obj.title,
+            editImg: obj.card_img,
+            editFile: obj.card_file,
+            editLocation: obj.list
         })
     }
 
@@ -107,9 +113,10 @@ class Board extends Component {
     }
 
     render(){
+        console.log(this.props);
         // let {backgroundColor, boardName} = this.props.location.state
         let {lists, singleBoard} = this.props;
-        let {title, cardEditting, editDesc, editTitle, addingList, colorMenu} = this.state;
+        let {title, cardEditting, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation} = this.state;
 
         let bgstyle = {};
         if(singleBoard.background_img){
@@ -135,21 +142,15 @@ class Board extends Component {
         return(
             <div className={singleBoard.background_img ? 'board-parent board-image' : 'board-parent'} style={bgstyle}>
                 {cardEditting ?
-                    <div className='edit-card' onClick={this.cancelCardEdit}> 
-                        <section className='edit-content' onClick={(e) => this.stopPropCard(e)}>
-                            <div className='edit-title'>
-                                {editTitle}
-                                <FontAwesome className='delete'  name='far fa-times fa-lg' onClick={this.cancelCardEdit}/>
-                            </div> 
-                            <div className='description'>
-                                {editDesc ? 
-                                    {editDesc}
-                                :
-                                    <input name='newDesc' className='new-desc' onChange={this.handleBoard} />      
-                                }
-                            </div>
-                        </section>
-                    </div>
+                    <CardEdit handleBoard={this.handleBoard} 
+                        editDesc={editDesc} 
+                        editTitle={editTitle} 
+                        cancelCardEdit={this.cancelCardEdit}
+                        stopPropCard={this.stopPropCard}
+                        editLocation={editLocation}
+                        editImg={editImg}
+                        editFile={editFile}
+                        />
                     :
                     <section className='no-edit'>
                     </section>
@@ -178,7 +179,7 @@ class Board extends Component {
                                 </a>
                             </div> 
                             :
-                            <a className='list-parent add-new' onClick={this.addingList}>
+                            <a className='list-parent add-new add-list' onClick={this.addingList}>
                                 <FontAwesome className='add' name="far fa-plus" />
                                 Add New List
                             </a>

@@ -1,0 +1,19 @@
+.edit-title {
+    text-align: left;
+}
+
+
+.cardedit-delete {
+    position: relative;
+    top: 0px;
+    color: grey;
+    float: right;
+}
+
+.cardedit-title {
+    margin: 5px;
+}
+
+.cardedit-location {
+    margin: 5px;
+}

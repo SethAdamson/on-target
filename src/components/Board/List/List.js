@@ -59,7 +59,14 @@ class List extends Component {
                 return (
                     <div className='card-parent' 
                         key={card.id} 
-                        onClick={() => editFn({id: card.id, desc: card.description, title: card.card_title})}
+                        onClick={() => editFn({
+                                        id: card.id, 
+                                        desc: card.description, 
+                                        title: card.card_title, 
+                                        card_img: card.card_img, 
+                                        card_file: card.card_file,
+                                        list: {list_id: card.list_id, list_title: card.list_title }
+                                    })}
                         >
                         <Card
                          id = {card.id}

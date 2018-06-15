@@ -13,3 +13,23 @@
     justify-content: space-between;
     padding: 50px 100px;
 }
+
+.profile-section {
+    width: 600px;
+}
+
+.profile-display {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-picture {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+.profile-info {
+    margin: 10px;
+}

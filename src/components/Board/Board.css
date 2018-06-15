@@ -38,11 +38,10 @@
     min-width: 250px;
 }
 
-
 .edit-card {
     position: fixed;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
@@ -52,12 +51,17 @@
 .edit-content {
     width: 50%;
     height: 50%;
+    padding: 15px;
     background-color: rgb(250,250,250);
 }
 
 .colormenu-button {
     color: white;
     margin: 15px;
+}
+
+.add-list {
+    width: 250px;
 }
 
 ::-webkit-scrollbar {
