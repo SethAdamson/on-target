@@ -12,6 +12,7 @@ class Home extends Component {
 
         this.state = {
             newBoardName: '',
+            redirect: false,
         }
 
         this.handleHome = this.handleHome.bind(this);

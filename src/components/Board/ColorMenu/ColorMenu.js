@@ -74,13 +74,18 @@ class ColorMenu extends Component {
         return (
             <div className={this.props.colorClick ? 'colormenu-shown' : 'colormenu-hidden'}>
                 <div className='colormenu-content'>
-                    <h2 className='colormenu-title'>
+                    <div className='colormenu-header'>
+                        <h1 className='colormenu-title'>Select Background</h1>
+                        <FontAwesome className='delete'  name='far fa-times fa-lg' onClick={this.props.editColorFn}/>
+                    </div>
+                    <hr />
+                    <h2 className='colormenu-section'>
                     Colors
                     </h2>
                     <div className='options-table'>
                         {displayColors}
                     </div>
-                    <h2 className='colormenu-title'>
+                    <h2 className='colormenu-section'>
                     Photos
                     </h2>
                     <div className='options-table'>

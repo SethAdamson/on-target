@@ -9,13 +9,14 @@ import {getLists,
         getBoards, 
         getSingleBoard,
         updateBoard,
-        addList
+        addList,
     } from '../../ducks/reducer';
 import {RIEInput} from 'riek';
 import _ from 'lodash';
 import FontAwesome from 'react-fontawesome';
 import ColorMenu from './ColorMenu/ColorMenu';
 import {withRouter} from 'react-router-dom';
+import axios from 'axios';
 
 class Board extends Component {
     constructor(){
@@ -55,12 +56,10 @@ class Board extends Component {
     }
 
     getInfo(){
-        let {board} = this.props.match.params
-        // this.props.getUser();
-        // this.props.getBoards();
-        this.props.getLists(board);
-        this.props.getCards(board);
-        this.props.getSingleBoard(board);
+        let {board} = this.props.match.params;
+        let {getUser, getBoards, getCards, getLists, getSingleBoard} = this.props;
+        axios.all([getUser(), getBoards(), getLists(board), getCards(board), getSingleBoard(board)])
+        .then();
     }
 
     changeBoardName(val){
@@ -108,7 +107,6 @@ class Board extends Component {
     }
 
     render(){
-        console.log(this.props);
         // let {backgroundColor, boardName} = this.props.location.state
         let {lists, singleBoard} = this.props;
         let {title, cardEditting, editDesc, editTitle, addingList, colorMenu} = this.state;
@@ -167,7 +165,7 @@ class Board extends Component {
                         <p className='colormenu-button' onClick={this.editColor}>
                             Change Background
                         </p>
-                        <ColorMenu colorClick={colorMenu} currentID={singleBoard.id}/>
+                        <ColorMenu colorClick={colorMenu} currentID={singleBoard.id} editColorFn={this.editColor}/>
                     </div> 
                     <div className='board-list'>
                         {listDisplay}
@@ -180,7 +178,7 @@ class Board extends Component {
                                 </a>
                             </div> 
                             :
-                            <a className='list-parent' onClick={this.addingList}>
+                            <a className='list-parent add-new' onClick={this.addingList}>
                                 <FontAwesome className='add' name="far fa-plus" />
                                 Add New List
                             </a>

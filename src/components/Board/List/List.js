@@ -90,7 +90,7 @@ class List extends Component {
                             </a>
                         </div> 
                         :
-                        <a className=' card-parent add-new' onClick={this.addingCard}>
+                        <a className='add-new' onClick={this.addingCard}>
                             <FontAwesome className='add' name="far fa-plus" />
                             Add New Card
                         </a>

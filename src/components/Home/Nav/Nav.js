@@ -14,7 +14,7 @@ function Nav(props) {
                         <li className='nav-button nav-home'>Home</li>
                     </span>
                 </Link>
-                <Link to='/boards' style={{textDecoration: 'none'}}>
+                <Link to='/myboards' style={{textDecoration: 'none'}}>
                     <span className='nav-list'>
                         <FontAwesome className='nav-icon' name='fas fa-bullseye fa-lg'/>
                         <li className='nav-button nav-home'>Boards</li>

@@ -30,11 +30,12 @@ class Header extends Component {
     }
 
     render(){
+        let {currentBoard} = this.props;
         return(
-            <div className='head-parent'>
+            <div className='head-parent image-head1'>
                 <div className='head-content'>
                     <div className='head-search'>
-                        <BoardNav currentBoard = {this.props.currentBoard} boardClick={this.state.boardClick} clickToggle={this.boardClickToggle} className='boardnav' />
+                        <BoardNav currentBoard = {currentBoard} boardClick={this.state.boardClick} clickToggle={this.boardClickToggle} className='boardnav' />
                         <button className='board-search' onClick={this.boardClickToggle}>
                             <p className='header-board-menu'>
                                 <FontAwesome className='head-target' name='fas fa-bullseye fa-lg'/>
