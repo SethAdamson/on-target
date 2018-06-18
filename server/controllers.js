@@ -147,4 +147,17 @@ module.exports= {
         })
         })
     },
+    removeCard: (req, res) => {
+        const db = req.app.get('db');
+        const {board, card} = req.params;
+
+        db.remove_card([board, card])
+        .then(cards => {
+            res.status(200).send(cards)
+        })
+        .catch((e) => {
+            console.log(e); 
+            res.status(500).send(e)
+        })
+    },
 }

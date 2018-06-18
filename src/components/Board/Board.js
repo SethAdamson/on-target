@@ -11,6 +11,7 @@ import {getLists,
         getSingleBoard,
         updateBoard,
         addList,
+        removeCard
     } from '../../ducks/reducer';
 import {RIEInput} from 'riek';
 import _ from 'lodash';
@@ -116,7 +117,7 @@ class Board extends Component {
         console.log(this.props);
         // let {backgroundColor, boardName} = this.props.location.state
         let {lists, singleBoard} = this.props;
-        let {title, cardEditting, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation} = this.state;
+        let {title, cardEditting, editID, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation} = this.state;
 
         let bgstyle = {};
         if(singleBoard.background_img){
@@ -144,12 +145,15 @@ class Board extends Component {
                 {cardEditting ?
                     <CardEdit handleBoard={this.handleBoard} 
                         editDesc={editDesc} 
+                        editID={editID} 
                         editTitle={editTitle} 
                         cancelCardEdit={this.cancelCardEdit}
                         stopPropCard={this.stopPropCard}
                         editLocation={editLocation}
                         editImg={editImg}
                         editFile={editFile}
+                        removeCard={this.props.removeCard}
+                        board_id={singleBoard.id}
                         />
                     :
                     <section className='no-edit'>
@@ -200,4 +204,4 @@ function mapStateToProps(state){
     }
 }
 
-export default withRouter(connect(mapStateToProps,{addList, getLists, getCards, getUser, getBoards, getSingleBoard, updateBoard})(Board));
+export default withRouter(connect(mapStateToProps,{removeCard, addList, getLists, getCards, getUser, getBoards, getSingleBoard, updateBoard})(Board));

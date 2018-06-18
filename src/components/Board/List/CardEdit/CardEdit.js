@@ -3,7 +3,7 @@ import './CardEdit.css';
 import FontAwesome from 'react-fontawesome';
 
 export default function CardEdit(props) {
-    let {editDesc, editTitle, handleBoard, cancelCardEdit, stopPropCard, editLocation} = props;
+    let {board_id, editDesc, editTitle, editID, handleBoard, cancelCardEdit, stopPropCard, editLocation, removeCard} = props;
     return (
         <div className='edit-card' onClick={cancelCardEdit}> 
             <section className='edit-content' onClick={(e) => stopPropCard(e)}>
@@ -19,6 +19,10 @@ export default function CardEdit(props) {
                         <input name='newDesc' className='new-desc' onChange={handleBoard} />      
                     }
                 </div>
+                <div className='cardedit-delete' onClick={() => removeCard(board_id, editID)}>
+                    <h3 className='cardedit-delete-title'>Remove Card</h3>
+                    <FontAwesome className='cardedit-trash'  name='far fa-trash-alt fa-lg' />
+                </div> 
             </section>
         </div>
     )

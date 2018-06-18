@@ -6,8 +6,30 @@ import FontAwesome from 'react-fontawesome';
 import {RIEInput} from 'riek';
 import _ from 'lodash';
 import {updateListTitle, addCard} from '../../../ducks/reducer';
+import {DropTarget} from 'react-dnd';
+import {Types} from '../../../constants';
 
+const ListDropTarget = {
+    hover(props, monitor, component){
+        const canDrop = monitor.canDrop();
+    },
+    drop(props, monitor, component){
+        if(monitor.didDrop()){
+            return;
+        }
+        const item = monitor.getItem();
+    }
+};
 
+function collect(connect, monitor){
+    return {
+        connectDropTarget: connect.dropTarget(),
+        isOver: monitor.isOver(),
+        isOverCurrent: monitor.isOver({shallow: true}),
+        canDrop: monitor.canDrop(),
+        itemType:monitor.getItemType()
+    }
+};
 
 class List extends Component {
     constructor(){
@@ -114,4 +136,6 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, {updateListTitle, addCard})(List);
+let TargetList = DropTarget(Types.CARD, ListDropTarget, collect)(List);
+
+export default connect(mapStateToProps, {updateListTitle, addCard})(TargetList);

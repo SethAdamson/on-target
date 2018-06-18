@@ -104,6 +104,7 @@ app.put('/change/lists/:id', ctrl.updateListTitle);
 app.post('/add/cards', ctrl.addCard);
 app.post('/add/lists', ctrl.addList);
 app.post('/add/boards', ctrl.addBoard);
+app.delete('/remove/card/:board/:card', ctrl.removeCard);
 
 
 
