@@ -93,7 +93,7 @@ class List extends Component {
                             <input name='newCardTitle' className='list-new-card' onChange={this.changeCard}/>
                             <a className='delete-footer'>
                                 <button className='add-card-button' onClick={this.addNewCard}>Add Card</button> 
-                                <FontAwesome className='delete'  name='far fa-times fa-lg' onClick={this.cancelNew}/>
+                                <FontAwesome className='exit'  name='far fa-times fa-lg' onClick={this.cancelNew}/>
                             </a>
                         </div> 
                         :

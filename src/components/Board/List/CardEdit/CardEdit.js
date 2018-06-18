@@ -8,7 +8,7 @@ export default function CardEdit(props) {
         <div className='edit-card' onClick={cancelCardEdit}> 
             <section className='edit-content' onClick={(e) => stopPropCard(e)}>
                 <div className='edit-title'>
-                    <FontAwesome className='cardedit-delete'  name='far fa-times fa-lg' onClick={cancelCardEdit}/>
+                    <FontAwesome className='cardedit-exit'  name='far fa-times fa-lg' onClick={cancelCardEdit}/>
                     <h1 className='cardedit-title'>{editTitle}</h1>
                     <h3 className='cardedit-location'>{editLocation.list_title}</h3>
                 </div> 
