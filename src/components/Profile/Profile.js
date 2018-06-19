@@ -4,6 +4,8 @@ import Header from '../Header/Header';
 import Nav from '../Home/Nav/Nav';
 import {connect} from 'react-redux';
 import {getUser, getBoards} from '../../ducks/reducer';
+import {RIEInput} from 'riek';
+import _ from 'lodash';
 
 class Profile extends Component {
     constructor(){
@@ -38,6 +40,11 @@ class Profile extends Component {
                             <div className='profile-input'>
                                 Name:
                                 {`${first_name} ${last_name}`}
+                                {/* <RIEInput value={`${first_name} ${last_name}`}
+                                    propName='text' 
+                                    className='profile-name-input'
+                                    change={this.changeProfileName} 
+                                    validate={_.isString}/> */}
                             </div>    
                             <div className='profile-input'>
                                 Username:

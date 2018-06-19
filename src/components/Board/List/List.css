@@ -15,6 +15,12 @@
     text-align: left;
     font-size: 14px;
     box-shadow: inset 0 0 5px grey; 
+    display: flex;
+    justify-content: space-between;
+}
+
+.delete-icon{
+    color: rgba(128, 128, 128, 0.25);
 }
 
 span {

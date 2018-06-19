@@ -1,4 +1,4 @@
-.colormenu-shown {
+.boardmenu-shown {
     transition: .25s;
     position: absolute;
     top: 40px;
@@ -20,7 +20,7 @@
     top: -5px;
 }
 
-.colormenu-hidden {
+.boardmenu-hidden {
     transition: .25s;
     position: absolute;
     top: 40px;
@@ -32,7 +32,7 @@
     z-index: 10;
 }
 
-.colormenu-choice {
+.boardmenu-choice {
     height: 50px;
     width: 50px;
     margin: 15px;
@@ -41,18 +41,19 @@
     border-radius: 5px;
 }
 
-.colormenu-header {
+.boardmenu-header {
     display: flex;
     justify-content: space-around;
     align-items: center;
     color: grey;
 }
 
-.colormenu-title {
+.boardmenu-title {
     font-size: 20px;
+    color: grey;
 }
 
-.colormenu-section {
+.boardmenu-section {
     color: grey;
     margin: 5px 0;
 }

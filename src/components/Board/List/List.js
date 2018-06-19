@@ -5,7 +5,11 @@ import {connect} from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import {RIEInput} from 'riek';
 import _ from 'lodash';
-import {updateListTitle, addCard} from '../../../ducks/reducer';
+import {
+        updateListTitle,
+        addCard,
+        removeList
+    } from '../../../ducks/reducer';
 import {DropTarget} from 'react-dnd';
 import {Types} from '../../../constants';
 
@@ -45,6 +49,7 @@ class List extends Component {
         this.changeCard = this.changeCard.bind(this);
         this.addNewCard = this.addNewCard.bind(this);
         this.cancelNew = this.cancelNew.bind(this);
+        this.removeList = this.removeList.bind(this);
 
     }
 
@@ -70,6 +75,11 @@ class List extends Component {
 
     cancelNew(){
         this.setState({adding:false, newCardTitle: ''})
+    }
+
+    removeList(){
+        let {list_id, board_id} = this.props
+        this.props.removeList(board_id, list_id);
     }
 
     render(){
@@ -103,11 +113,14 @@ class List extends Component {
         })
         return(
                 <div className='list-content'>
+                <div className='list-title'>
                     <RIEInput value={list_title} 
                         propName='text' 
-                        className='list-title'
+                        className='list-title-input'
                         change={this.changeListTitle} 
                         validate={_.isString}/>
+                    <FontAwesome className='delete-icon'  name='far fa-trash fa-lg' onClick={this.removeList}/>
+                </div> 
                     <div className='card-list' >
                         {cardDisplay}
                         {adding ? 
@@ -138,4 +151,4 @@ function mapStateToProps(state){
 
 let TargetList = DropTarget(Types.CARD, ListDropTarget, collect)(List);
 
-export default connect(mapStateToProps, {updateListTitle, addCard})(TargetList);
+export default connect(mapStateToProps, {updateListTitle, addCard, removeList})(TargetList);

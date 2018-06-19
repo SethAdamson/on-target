@@ -147,17 +147,37 @@ module.exports= {
         })
         })
     },
-    removeCard: (req, res) => {
+    removeItem: (req, res) => {
         const db = req.app.get('db');
-        const {board, card} = req.params;
+        const {board} = req.params;
 
-        db.remove_card([board, card])
-        .then(cards => {
-            res.status(200).send(cards)
-        })
-        .catch((e) => {
-            console.log(e); 
-            res.status(500).send(e)
-        })
+        if(req.params.card){
+            db.remove_card([board, req.params.card])
+            .then(cards => {
+                res.status(200).send(cards)
+            })
+            .catch((e) => {
+                console.log(e); 
+                res.status(500).send(e)
+            })
+        } else if (req.params.list){
+            db.remove_list([board, req.params.list])
+            .then(lists => {
+                res.status(200).send(lists)
+            })
+            .catch((e) => {
+                console.log(e); 
+                res.status(500).send(e)
+            })
+        } else {
+            db.remove_board([board, req.user.id])
+            .then(boards => {
+                res.status(200).send(boards)
+            })
+            .catch((e) => {
+                console.log(e); 
+                res.status(500).send(e)
+            })
+        }
     },
 }

@@ -2,7 +2,6 @@
     text-align: left;
 }
 
-
 .cardedit-exit {
     position: relative;
     top: 0px;
@@ -16,4 +15,12 @@
 
 .cardedit-location {
     margin: 5px;
+}
+
+.cardedit-delete{
+    display: flex;
+}
+
+.cardedit-trash {
+    font-size: 16px;
 }

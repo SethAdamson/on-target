@@ -16,7 +16,7 @@ import {getLists,
 import {RIEInput} from 'riek';
 import _ from 'lodash';
 import FontAwesome from 'react-fontawesome';
-import ColorMenu from './ColorMenu/ColorMenu';
+import BoardMenu from './BoardMenu/BoardMenu';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 
@@ -167,10 +167,11 @@ class Board extends Component {
                                 className='board-name'
                                 change={this.changeBoardName} 
                                 validate={_.isString}/>
-                        <p className='colormenu-button' onClick={this.editColor}>
-                            Change Background
+                        <p className='boardmenu-button' onClick={this.editColor}>
+                            <FontAwesome className='menu-icon'  name='fas fa-ellipsis-v fa-lg' />
+                            Menu
                         </p>
-                        <ColorMenu colorClick={colorMenu} currentID={singleBoard.id} editColorFn={this.editColor}/>
+                        <BoardMenu colorClick={colorMenu} currentID={singleBoard.id} currentName={singleBoard.name} editColorFn={this.editColor}/>
                     </div> 
                     <div className='board-list'>
                         {listDisplay}
@@ -183,7 +184,7 @@ class Board extends Component {
                                 </a>
                             </div> 
                             :
-                            <a className='list-parent add-new add-list' onClick={this.addingList}>
+                            <a className='add-list' onClick={this.addingList}>
                                 <FontAwesome className='add' name="far fa-plus" />
                                 Add New List
                             </a>

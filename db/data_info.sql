@@ -25,15 +25,17 @@ create table boards (
 create table lists (
     id serial primary key,
     title varchar(50) not null,
-    board_id integer references boards(id)
+    board_id integer references boards(id) on delete cascade
+    board_location integer default null;
 );
 
 create table cards (
     id serial primary key,
     title varchar(255) not null,
     description varchar(1000) default null,
-    list_id integer references lists(id),
+    list_id integer references lists(id) on delete cascade,
     author_id integer references users(id),
     card_img text default null,
     card_file text default null,
+    list_location integer default null;
 );
