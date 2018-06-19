@@ -8,9 +8,11 @@ const cardSource = {
     //     return props.isReady;
     // }
     isDragging(props, monitor){
-        return monitor.getItem().id === props.id
+        console.log(props);
+        return monitor.getItem().id === props.id;
     },
     beginDrag(props, monitor, component){
+        console.log(props);
         const item = {id: props.id};
         return item;
     },
@@ -20,6 +22,7 @@ const cardSource = {
         }
         const item = monitor.getItem();
         const dropResult = monitor.getDropResult();
+        console.log(item, dropResult);
         
         // CardActions.moveCardToList(item.id, dropResult.listId);
     }
@@ -28,7 +31,7 @@ const cardSource = {
 function collect(connect, monitor){
     return {
         connectDragSource: connect.dragSource(),
-        isDragging: monitor.isDragging()
+        isDragging: monitor.isDragging(),
     };
 }
 
@@ -43,11 +46,14 @@ class Card extends Component {
     }
 
     render(){
-        let{title} = this.props
-        return(
-            <a className='card-content'>
-                {title}
-            </a> 
+        console.log(this.props);
+        let{title, isDragging, connectDragSource} = this.props
+        return connectDragSource(
+            <div className='card-content' >
+                <a className='card-title'>
+                    {title}
+                </a> 
+            </div> 
         )
     }
 }

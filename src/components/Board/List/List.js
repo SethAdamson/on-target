@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './List.css';
-import Card from './Card/Card'
+import Card from './Card/Card';
+import CardList from './Card/CardList';
 import {connect} from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import {RIEInput} from 'riek';
@@ -10,30 +11,30 @@ import {
         addCard,
         removeList
     } from '../../../ducks/reducer';
-import {DropTarget} from 'react-dnd';
-import {Types} from '../../../constants';
+// import {DropTarget} from 'react-dnd';
+// import {Types} from '../../../constants';
 
-const ListDropTarget = {
-    hover(props, monitor, component){
-        const canDrop = monitor.canDrop();
-    },
-    drop(props, monitor, component){
-        if(monitor.didDrop()){
-            return;
-        }
-        const item = monitor.getItem();
-    }
-};
+// const listDropTarget = {
+//     hover(props, monitor, component){
+//         const canDrop = monitor.canDrop();
+//     },
+//     drop(props, monitor, component){
+//         if(monitor.didDrop()){
+//             return;
+//         }
+//         const item = monitor.getItem();
+//         console.log(item);
+//     }
+// };
 
-function collect(connect, monitor){
-    return {
-        connectDropTarget: connect.dropTarget(),
-        isOver: monitor.isOver(),
-        isOverCurrent: monitor.isOver({shallow: true}),
-        canDrop: monitor.canDrop(),
-        itemType:monitor.getItemType()
-    }
-};
+// function listDropCollect(connect, monitor){
+//     return {
+//         connectDropTarget: connect.dropTarget(),
+//         isOver: monitor.isOver(),
+//         canDrop: monitor.canDrop(),
+//         item:monitor.getItem()
+//     }
+// };
 
 class List extends Component {
     constructor(){
@@ -83,46 +84,21 @@ class List extends Component {
     }
 
     render(){
-        let {cards, list_id, list_title, editFn} = this.props;
+        let {cards, list_id, list_title, editFn, connectDropTarget} = this.props;
         let {adding} = this.state;
-        let cardDisplay = cards.map(card => {
-            // console.log(card.list_id, list_id);
-            if(card.list_id === list_id) {
-                return (
-                    <div className='card-parent' 
-                        key={card.id} 
-                        onClick={() => editFn({
-                                        id: card.id, 
-                                        desc: card.description, 
-                                        title: card.card_title, 
-                                        card_img: card.card_img, 
-                                        card_file: card.card_file,
-                                        list: {list_id: card.list_id, list_title: card.list_title }
-                                    })}
-                        >
-                        <Card
-                         id = {card.id}
-                         title = {card.card_title}
-                         desc = {card.description}
-                         list_id = {card.list_id}
-                         author_id = {card.author_id}
-                        />
-                    </div> 
-                )
-            }
-        })
-        return(
+        console.log(this.props);
+        return (
                 <div className='list-content'>
-                <div className='list-title'>
-                    <RIEInput value={list_title} 
-                        propName='text' 
-                        className='list-title-input'
-                        change={this.changeListTitle} 
-                        validate={_.isString}/>
-                    <FontAwesome className='delete-icon'  name='far fa-trash fa-lg' onClick={this.removeList}/>
-                </div> 
-                    <div className='card-list' >
-                        {cardDisplay}
+                    <div className='list-title'>
+                        <RIEInput value={list_title} 
+                            propName='text' 
+                            className='list-title-input'
+                            change={this.changeListTitle} 
+                            validate={_.isString}/>
+                        <FontAwesome className='delete-icon'  name='far fa-trash fa-lg' onClick={this.removeList}/>
+                    </div> 
+                    <CardList list_id={list_id} editFn={editFn} />
+                    <div className='card-list-add' >
                         {adding ? 
                         <div>
                             <input name='newCardTitle' className='list-new-card' onChange={this.changeCard}/>
@@ -149,6 +125,6 @@ function mapStateToProps(state){
     }
 }
 
-let TargetList = DropTarget(Types.CARD, ListDropTarget, collect)(List);
+// let TargetList = DropTarget(Types.CARD, listDropTarget, listDropCollect)(List);
 
-export default connect(mapStateToProps, {updateListTitle, addCard, removeList})(TargetList);
+export default connect(mapStateToProps, {updateListTitle, addCard, removeList})(List);

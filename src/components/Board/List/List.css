@@ -28,7 +28,15 @@ span {
     padding: 0;
 }
 
-.card-list {
+.cardlist-outside {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-list-add {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -39,7 +47,12 @@ span {
     width: 94%;
     background-color: rgba(250,250,250);
     border-radius: 5px;
-    margin: 5px 3px;
+    margin: 5px;
+    min-height: 75px;
+}
+
+.card-content {
+    width: 100%;
     min-height: 75px;
 }
 

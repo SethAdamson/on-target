@@ -31,7 +31,17 @@ class Home extends Component {
 
     addNewBoard(){
         let {newBoardName} = this.state;
-        this.props.addBoard({newBoardName, author_id: this.props.user.id})
+        let {boards, user, addBoard} = this.props;
+        addBoard({newBoardName, author_id: user.id}).then(res => {
+            // console.log(res);
+            let newID = 0;
+            res.value.forEach(e => {
+                if(e.id > newID){
+                    newID = e.id;
+                }
+            })
+            this.props.history.push(`/boards/${user.id}/${newID}`)
+        })   
     }
 
     render(){
