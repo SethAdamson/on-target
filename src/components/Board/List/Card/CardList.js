@@ -29,7 +29,7 @@ function cardListDropCollect(connect, monitor){
 class CardList extends Component {
     render(){
         let {cards, list_id, editFn, connectDropTarget} = this.props;
-        let cardDisplay = cards.map(card => {
+        let cardDisplay = cards.map((card, i) => {
             if(card.list_id === list_id) {
                 return (
                     <div className='card-parent' 
@@ -44,11 +44,12 @@ class CardList extends Component {
                                     })}
                         >
                         <Card
-                         id = {card.id}
-                         title = {card.card_title}
-                         desc = {card.description}
-                         list_id = {card.list_id}
-                         author_id = {card.author_id}
+                         id={card.id}
+                         title={card.card_title}
+                         desc={card.description}
+                         list_id={card.list_id}
+                         author_id={card.author_id}
+                         card_x={i}
                         />
                     </div> 
                 )

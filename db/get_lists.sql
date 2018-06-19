@@ -3,7 +3,8 @@ author_id,
 team_id,
 lists.id as list_id,
 title as list_title,
-name as board_name
+name as board_name,
+board_location
 from boards
 
 join lists on boards.id = lists.board_id

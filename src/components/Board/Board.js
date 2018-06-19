@@ -126,7 +126,7 @@ class Board extends Component {
             bgstyle = {backgroundColor: singleBoard.background_color};
         }
 
-        let listDisplay = lists.map(list => {
+        let listDisplay = lists.map((list, i) => {
             return (
                 <div className='list-parent' key={list.list_id}>
                     <List 
@@ -136,6 +136,7 @@ class Board extends Component {
                     team_id={list.team_id}
                     board_id={singleBoard.id}
                     editFn={this.editCard}
+                    list_x={i}
                     />
                 </div> 
             )
