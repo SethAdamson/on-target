@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './Card.css';
 import {DragSource} from 'react-dnd';
 import {Types} from '../../../../constants';
+import axios from 'axios';
 
 const cardSource = {
     // canDrag(props){
@@ -13,8 +14,9 @@ const cardSource = {
     },
     beginDrag(props, monitor, component){
         console.log(props);
-        const item = {id: props.id};
-        return item;
+        const {id, title, card_x, list_id} = props;
+        const item = {id, title};
+        return {item, card_x, list_id};
     },
     endDrag(props, monitor, component){
         if(!monitor.didDrop()) {
@@ -37,16 +39,21 @@ function collect(connect, monitor){
 
 
 class Card extends Component {
-    constructor(){
-        super();
+    // constructor(){
+    //     super();
 
-        this.state = {
+    //     this.state = {
 
-        }
+    //     }
+    // }
+
+    componentDidMount(){
+        let {card_x, id} = this.props;
+        axios.put(`/cards/update/${id}`, {card_x: card_x}).then();
     }
 
     render(){
-        console.log(this.props);
+        // console.log(this.props);
         let{title, isDragging, connectDragSource} = this.props
         return connectDragSource(
             <div className='card-content' >

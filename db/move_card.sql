@@ -1,3 +1,7 @@
+update cards
+set list_id = $2
+where id = $1;
+
 select
 cards.id,
 cards.title as card_title,
@@ -12,5 +16,5 @@ card_file
 from cards
 
 join lists on cards.list_id = lists.id
-where board_id = $1
+where board_id = $3
 order by list_location;

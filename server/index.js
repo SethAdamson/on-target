@@ -101,6 +101,8 @@ app.get('/cards/:id', ctrl.getCards);
 app.get('/boards/:id', ctrl.getSingleBoard);
 app.put('/change/boards/:id', ctrl.updateBoard);
 app.put('/change/lists/:id', ctrl.updateListTitle);
+app.put('/cards/update/:id', ctrl.updateCardLocation);
+app.put('/move/card/:id', ctrl.moveCard);
 app.post('/add/cards', ctrl.addCard);
 app.post('/add/lists', ctrl.addList);
 app.post('/add/boards', ctrl.addBoard);

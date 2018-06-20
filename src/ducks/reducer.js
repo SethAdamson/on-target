@@ -25,6 +25,7 @@ const ADD_LIST = 'ADD_LIST';
 const REMOVE_CARD = 'REMOVE_CARD';
 const REMOVE_LIST = 'REMOVE_LIST';
 const REMOVE_BOARD = 'REMOVE_BOARD';
+const MOVE_CARD = 'MOVE_CARD';
 
 
 export default function reducer(state=initialState, action){
@@ -55,6 +56,8 @@ export default function reducer(state=initialState, action){
             return Object.assign({}, state, {lists: action.payload})
         case REMOVE_BOARD + FULFILLED:
             return Object.assign({}, state, {boards: action.payload})
+        case MOVE_CARD + FULFILLED:
+            return Object.assign({}, state, {cards: action.payload})
         default:
             return state;
     }
@@ -161,5 +164,13 @@ export function removeBoard(board_id){
     return {
         type: REMOVE_BOARD,
         payload: updatedBoards,
+    }
+}
+
+export function moveCard(card_id, nextList, board_id){
+    let moveCard = axios.put(`/move/card/${card_id}`, {nextList, board_id}).then(res => res.data);
+    return {
+        type: MOVE_CARD,
+        payload: moveCard,
     }
 }

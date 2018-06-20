@@ -54,7 +54,7 @@ class Board extends Component {
     }
 
     componentDidUpdate(props){
-        if (props.match.params.board !== this.props.match.params.board){
+        if (props.match.params.board !== this.props.match.params.board || props.cards !== this.props.cards){
                 this.getInfo();
         };
     }
@@ -75,7 +75,7 @@ class Board extends Component {
     }
 
     editCard(obj){
-        console.log(obj);
+        // console.log(obj);
         this.setState({
             cardEditting: true, 
             editID: obj.id,
@@ -114,7 +114,7 @@ class Board extends Component {
     }
 
     render(){
-        console.log(this.props);
+        // console.log(this.props);
         // let {backgroundColor, boardName} = this.props.location.state
         let {lists, singleBoard} = this.props;
         let {title, cardEditting, editID, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation} = this.state;

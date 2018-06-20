@@ -84,9 +84,9 @@ class List extends Component {
     }
 
     render(){
-        let {cards, list_id, list_title, editFn, connectDropTarget} = this.props;
+        let {cards, list_id, list_title, editFn, connectDropTarget, board_id} = this.props;
         let {adding} = this.state;
-        console.log(this.props);
+        // console.log(this.props);
         return (
                 <div className='list-content'>
                     <div className='list-title'>
@@ -97,7 +97,7 @@ class List extends Component {
                             validate={_.isString}/>
                         <FontAwesome className='delete-icon'  name='far fa-trash fa-lg' onClick={this.removeList}/>
                     </div> 
-                    <CardList list_id={list_id} editFn={editFn} />
+                    <CardList list_id={list_id} editFn={editFn} board_id={board_id}/>
                     <div className='card-list-add' >
                         {adding ? 
                         <div>
@@ -119,12 +119,12 @@ class List extends Component {
     }
 }
 
-function mapStateToProps(state){
-    return {
-        cards: state.cards
-    }
-}
+// function mapStateToProps(state){
+//     return {
+//         cards: state.cards
+//     }
+// }
 
 // let TargetList = DropTarget(Types.CARD, listDropTarget, listDropCollect)(List);
 
-export default connect(mapStateToProps, {updateListTitle, addCard, removeList})(List);
+export default connect(null, {updateListTitle, addCard, removeList})(List);

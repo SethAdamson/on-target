@@ -101,6 +101,21 @@ module.exports= {
             res.status(500).send(e)
         })
     },
+    updateCardLocation: (req, res) => {
+        const db = req.app.get('db');
+        const {id} = req.params;
+        const {card_x} = req.body;
+        // console.log(req.body, id);
+
+        db.update_card_location([id, card_x])
+        .then(cards => {
+            res.status(200).send('Updated');
+        })
+        .catch((e) => {
+            console.log(e); 
+            res.status(500).send(e)
+        })
+    },
     addCard: (req, res) => {
         const db = req.app.get('db');
         const {newCardTitle, list_id, author_id, board_id} = req.body;
@@ -179,5 +194,20 @@ module.exports= {
                 res.status(500).send(e)
             })
         }
+    },
+    moveCard: (req, res) => {
+        const db = req.app.get('db');
+        const {id} = req.params;
+        const {nextList, board_id} = req.body;
+        // console.log(id, req.body);
+
+        db.move_card([id, nextList, board_id])
+        .then(cards => {
+            res.status(200).send(cards)
+        })
+        .catch((e) => {
+            console.log(e); 
+            res.status(500).send(e)
+        })
     },
 }
