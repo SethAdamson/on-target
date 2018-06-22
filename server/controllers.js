@@ -198,10 +198,10 @@ module.exports= {
     moveCard: (req, res) => {
         const db = req.app.get('db');
         const {id} = req.params;
-        const {nextList, board_id} = req.body;
+        const {nextList, drop_x, board_id} = req.body;
         // console.log(id, req.body);
 
-        db.move_card([id, nextList, board_id])
+        db.move_card([id, nextList, drop_x, board_id])
         .then(cards => {
             res.status(200).send(cards)
         })

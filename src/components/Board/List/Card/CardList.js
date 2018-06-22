@@ -22,8 +22,10 @@ const cardListDropTarget = {
         const item = monitor.getItem();
         console.log(props);
         let {id} = item.item;
+        let {drop_x} = component.state;
+        console.log(drop_x);
 
-        props.moveCard(id, nextList, props.board_id);
+        props.moveCard(id, nextList, drop_x, props.board_id);
     }
 };
 
@@ -37,15 +39,24 @@ function cardListDropCollect(connect, monitor){
 };
 
 class CardList extends Component {
-    // constructor(){
-    //     super();
+    constructor(){
+        super();
 
-    //     this.state = {
-    //     }
-    // }
+        this.state = {
+            drop_x: undefined,
+            dropPreview: false,
+        }
 
-    // componentDidMount(){
-    // }
+        this.updateDropX = this.updateDropX.bind(this);
+
+    }
+
+    updateDropX(val){
+        this.setState({drop_x: val})
+    }
+
+    componentDidMount(){
+    }
 
     render(){
         // console.log(this.props);
@@ -71,6 +82,7 @@ class CardList extends Component {
                         list_id={card.list_id}
                         author_id={card.author_id}
                         card_x={i}
+                        updateDropX = {this.updateDropX}
                     />
                 </div> 
             )

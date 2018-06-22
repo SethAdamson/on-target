@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Card.css';
-import {DragSource} from 'react-dnd';
+import {DragSource, DropTarget} from 'react-dnd';
 import {Types} from '../../../../constants';
 import axios from 'axios';
 
@@ -30,10 +30,29 @@ const cardSource = {
     }
 };
 
-function collect(connect, monitor){
+const cardTarget = {
+    hover(props, monitor, component){
+        const hover_x = props.card_x;
+        console.log(hover_x);
+        props.updateDropX(hover_x);
+    },
+    drop(props, monitor, component){
+        const drop_x = props.card_x;
+        console.log(drop_x);
+        props.updateDropX(drop_x);
+    }
+}
+
+function sourceCollect(connect, monitor){
     return {
         connectDragSource: connect.dragSource(),
         isDragging: monitor.isDragging(),
+    };
+}
+
+function dropCollect(connect, monitor){
+    return {
+        connectDropTarget: connect.dropTarget(),
     };
 }
 
@@ -54,15 +73,16 @@ class Card extends Component {
 
     render(){
         // console.log(this.props);
-        let{title, isDragging, connectDragSource} = this.props
-        return connectDragSource(
+        let{title, isDragging, connectDragSource, connectDropTarget} = this.props
+        return connectDragSource(connectDropTarget(
             <div className='card-content' >
                 <a className='card-title'>
                     {title}
                 </a> 
             </div> 
-        )
+        ))
     }
 }
 
-export default DragSource(Types.CARD, cardSource, collect)(Card);
+let sourcing = DragSource(Types.CARD, cardSource, sourceCollect)(Card);
+export default DropTarget(Types.CARD, cardTarget, dropCollect)(sourcing);

@@ -167,8 +167,8 @@ export function removeBoard(board_id){
     }
 }
 
-export function moveCard(card_id, nextList, board_id){
-    let moveCard = axios.put(`/move/card/${card_id}`, {nextList, board_id}).then(res => res.data);
+export function moveCard(card_id, nextList, drop_x, board_id){
+    let moveCard = axios.put(`/move/card/${card_id}`, {nextList, drop_x, board_id}).then(res => res.data);
     return {
         type: MOVE_CARD,
         payload: moveCard,

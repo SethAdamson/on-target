@@ -1,6 +1,10 @@
 update cards
-set list_id = $2
+set list_id = $2, list_location = $3
 where id = $1;
+
+update cards
+set list_location = list_location+1
+where list_location >= $3 and id !=$1;
 
 select
 cards.id,
@@ -16,5 +20,5 @@ card_file
 from cards
 
 join lists on cards.list_id = lists.id
-where board_id = $3
+where board_id = $4
 order by list_location;
