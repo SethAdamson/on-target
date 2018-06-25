@@ -36,6 +36,9 @@ class Board extends Component {
             addingList: false,
             newListTitle: '',
             colorMenu: false,
+            listPlaceIdx: undefined,
+            listIsOver: false,
+            listCanDrop: false,
         }
 
         this.changeBoardName = this.changeBoardName.bind(this);
@@ -46,6 +49,8 @@ class Board extends Component {
         this.addingList = this.addingList.bind(this);
         this.addNewList = this.addNewList.bind(this);
         this.editColor = this.editColor.bind(this);
+        this.setPlaceIdx = this.setPlaceIdx.bind(this);
+        this.setDropValues = this.setDropValues.bind(this);
 
     }
 
@@ -72,6 +77,14 @@ class Board extends Component {
 
     handleBoard(e){
         this.setState({[e.target.name]: e.target.value})
+    }
+
+    setPlaceIdx(val){
+        this.setState({listPlaceIdx: val});
+    }
+
+    setDropValues(val1, val2){
+        this.setState({listIsOver:val1, listCanDrop:val2})
     }
 
     editCard(obj){
@@ -114,21 +127,34 @@ class Board extends Component {
     }
 
     render(){
-        // console.log(this.props);
         // let {backgroundColor, boardName} = this.props.location.state
         let {lists, singleBoard} = this.props;
-        let {title, cardEditting, editID, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation} = this.state;
-
+        let {title, cardEditting, editID, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation, listPlaceIdx, listCanDrop, listIsOver} = this.state;
+        
         let bgstyle = {};
         if(singleBoard.background_img){
             bgstyle = {backgroundImage: `url(${singleBoard.background_img})`};
         } else {
             bgstyle = {backgroundColor: singleBoard.background_color};
         }
+        
+        console.log(listCanDrop, listIsOver, listPlaceIdx);
+        let isPlaceHold = false;
+        let listDisplay = [];
 
-        let listDisplay = lists.map((list, i) => {
-            return (
-                <div className='list-parent' key={list.list_id}>
+
+        lists.forEach((list, i) => {
+          if (listCanDrop) {
+            isPlaceHold = false;
+            if (i === 0 && listPlaceIdx === -1) {
+              listDisplay.push(<div key="placeholder" className="list-parent list-placeholder" />);
+            } else if (listPlaceIdx > i) {
+              isPlaceHold = true;
+            }
+          }
+          if (list !== undefined) {
+            listDisplay.push(
+                <div className='list-parent' key={list.list_id} id={list.list_id}>
                     <List 
                     list_id={list.list_id}                                                                                                                                                                                                                                      
                     list_title={list.list_title}
@@ -137,10 +163,39 @@ class Board extends Component {
                     board_id={singleBoard.id}
                     editFn={this.editCard}
                     list_x={i}
+                    setPlaceIdx={this.setPlaceIdx}
+                    setDropValues={this.setDropValues}
                     />
                 </div> 
-            )
-        })
+            );
+          }
+          if (listCanDrop && listPlaceIdx === i) {
+            listDisplay.push(<div key="placeholder" className="list-parent list-placeholder" />);
+          }
+        });
+    
+        // if placeholder index is greater than array.length, display placeholder as last
+        if (isPlaceHold) {
+          listDisplay.push(<div key="placeholder" className="list-parent list-placeholder" />);
+        }
+
+
+        // let listDisplay = lists.map((list, i) => {
+        //     return (
+        //         <div className='list-parent' key={list.list_id}>
+        //             <List 
+        //             list_id={list.list_id}                                                                                                                                                                                                                                      
+        //             list_title={list.list_title}
+        //             author_id={list.author_id}
+        //             team_id={list.team_id}
+        //             board_id={singleBoard.id}
+        //             editFn={this.editCard}
+        //             list_x={i}
+        //             setPlaceIdx={this.setPlaceIdx}
+        //             />
+        //         </div> 
+        //     )
+        // })
         return(
             <div className={singleBoard.background_img ? 'board-parent board-image' : 'board-parent'} style={bgstyle}>
                 {cardEditting ?

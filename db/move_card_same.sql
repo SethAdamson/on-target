@@ -1,10 +1,10 @@
 update cards
-set list_id = $2, list_location = $3
+set list_location = $3
 where id = $1;
 
--- update cards
--- set list_location = list_location+1
--- where list_location >= $3 and id !=$1;
+update cards
+set list_location = list_location-1
+where list_location <= $3 and list_location > $2 and id !=$1;
 
 select
 cards.id,

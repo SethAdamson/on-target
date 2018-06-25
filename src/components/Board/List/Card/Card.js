@@ -61,13 +61,13 @@ function dropCollect(connect, monitor){
 
 
 class Card extends Component {
-    // constructor(){
-    //     super();
+    constructor(props){
+        super(props);
 
-    //     this.state = {
+        this.state = {
 
-    //     }
-    // }
+        }
+    }
 
     componentDidMount(){
         let {card_x, id} = this.props;
@@ -77,8 +77,15 @@ class Card extends Component {
         });
     }
 
+    // componentDidUpdate(props){
+    //     if(props.card_x !== this.props.card_x){
+    //         let {card_x, id} = this.props;
+    //         axios.put(`/cards/update/${id}`, {card_x}).then();
+    //     }
+    // }
+
     render(){
-        // console.log(this.props);
+        console.log(this.props);
         let{title, isDragging, connectDragSource, connectDropTarget, connectDragPreview} = this.props
         return connectDragSource(connectDropTarget(
             <div className='card-content'>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './List.css';
-import Card from './Card/Card';
+import {findDOMNode} from 'react-dom';
 import CardList from './Card/CardList';
 import {connect} from 'react-redux';
 import FontAwesome from 'react-fontawesome';
@@ -11,30 +11,82 @@ import {
         addCard,
         removeList
     } from '../../../ducks/reducer';
-// import {DropTarget} from 'react-dnd';
-// import {Types} from '../../../constants';
+import {DragSource, DropTarget} from 'react-dnd';
+import {Types, OFFSET_WIDTH, LIST_WIDTH, LIST_MARGIN} from '../../../constants';
+import axios from 'axios';
 
-// const listDropTarget = {
-//     hover(props, monitor, component){
-//         const canDrop = monitor.canDrop();
-//     },
-//     drop(props, monitor, component){
-//         if(monitor.didDrop()){
-//             return;
-//         }
-//         const item = monitor.getItem();
-//         console.log(item);
-//     }
-// };
+function getPlaceIndex(x, scrollX) {
+    // shift placeholder if y position more than card height / 2
+    const xPos = x - OFFSET_WIDTH + scrollX;
+    let placeIdx;
+    if (xPos < LIST_WIDTH / 2) {
+      placeIdx = -1; // place at the start
+    } else {
+      placeIdx = Math.floor((xPos - LIST_WIDTH / 2) / (LIST_WIDTH + LIST_MARGIN));
+    }
+    return placeIdx;
+  }
 
-// function listDropCollect(connect, monitor){
-//     return {
-//         connectDropTarget: connect.dropTarget(),
-//         isOver: monitor.isOver(),
-//         canDrop: monitor.canDrop(),
-//         item:monitor.getItem()
-//     }
-// };
+const listSource = {
+    // canDrag(props){
+    //     return props.isReady;
+    // }
+    isDragging(props, monitor){
+        console.log(props);
+        return monitor.getItem().id === props.id;
+    },
+    beginDrag(props, monitor, component){
+        console.log(props);
+        const {list_id, title, list_x, board_id} = props;
+        return {list_id, title, list_x, board_id};
+    },
+    endDrag(props, monitor, component){
+        if(!monitor.didDrop()) {
+            return;
+        }
+        const item = monitor.getItem();
+        const dropResult = monitor.getDropResult();
+        console.log(item, dropResult);
+    }
+};
+
+const listTarget = {
+    hover(props, monitor, component){
+        const hover_x = props.list_x;
+        let item = monitor.getItem();
+        const placeIdx = getPlaceIndex(
+            monitor.getClientOffset().x,
+            findDOMNode(component).scrollLeft
+          );
+        props.setPlaceIdx(placeIdx);
+        document.getElementById(item.list_id).style.display = 'none';
+        console.log(hover_x);
+    },
+    drop(props, monitor, component){
+        const drop_x = props.list_x;
+        let item = monitor.getItem();
+        document.getElementById(item.list_id).style.display = 'block';
+        console.log(drop_x);
+    }
+}
+
+function listSourceCollect(connect, monitor){
+    return {
+        connectDragSource: connect.dragSource(),
+        connectDragPreview: connect.dragPreview(),
+        isDragging: monitor.isDragging(),
+    };
+}
+
+function listDropCollect(connect, monitor){
+    return {
+        connectDropTarget: connect.dropTarget(),
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop(),
+        item:monitor.getItem()
+    };
+}
+
 
 class List extends Component {
     constructor(){
@@ -52,6 +104,11 @@ class List extends Component {
         this.cancelNew = this.cancelNew.bind(this);
         this.removeList = this.removeList.bind(this);
 
+    }
+
+    componentDidMount(){
+        let {list_x, list_id} = this.props;
+        axios.put(`/lists/update/${list_id}`, {list_x}).then();
     }
 
     changeListTitle(val){
@@ -84,10 +141,11 @@ class List extends Component {
     }
 
     render(){
-        let {cards, list_id, list_title, editFn, connectDropTarget, board_id} = this.props;
+        let {list_id, list_title, editFn, connectDropTarget, connectDragSource, board_id, isOver, canDrop, setDropValues} = this.props;
         let {adding} = this.state;
-        // console.log(this.props);
-        return (
+        setDropValues(isOver, canDrop);
+        console.log(this.props);
+        return connectDragSource(connectDropTarget(
                 <div className='list-content'>
                     <div className='list-title'>
                         <RIEInput value={list_title} 
@@ -115,7 +173,7 @@ class List extends Component {
                         }
                     </div>
                 </div> 
-        )
+        ))
     }
 }
 
@@ -125,6 +183,6 @@ class List extends Component {
 //     }
 // }
 
-// let TargetList = DropTarget(Types.CARD, listDropTarget, listDropCollect)(List);
+let dndList = DropTarget(Types.LIST, listTarget, listDropCollect)(DragSource(Types.LIST, listSource, listSourceCollect)(List));
 
-export default connect(null, {updateListTitle, addCard, removeList})(List);
+export default connect(null, {updateListTitle, addCard, removeList})(dndList);

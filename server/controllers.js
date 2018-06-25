@@ -116,6 +116,21 @@ module.exports= {
             res.status(500).send(e)
         })
     },
+    updateListLocation: (req, res) => {
+        const db = req.app.get('db');
+        const {id} = req.params;
+        const {list_x} = req.body;
+        // console.log(req.body, id);
+
+        db.update_list_location([id, list_x])
+        .then(lists => {
+            res.status(200).send('Updated');
+        })
+        .catch((e) => {
+            console.log(e); 
+            res.status(500).send(e)
+        })
+    },
     addCard: (req, res) => {
         const db = req.app.get('db');
         const {newCardTitle, list_id, author_id, board_id} = req.body;
@@ -195,13 +210,28 @@ module.exports= {
             })
         }
     },
-    moveCard: (req, res) => {
+    moveCardList: (req, res) => {
         const db = req.app.get('db');
         const {id} = req.params;
-        const {nextList, drop_x, board_id} = req.body;
+        const {newList, lastList, lastCard_x, drop_x, board_id} = req.body;
         // console.log(id, req.body);
 
-        db.move_card([id, nextList, drop_x, board_id])
+        db.move_card_list([id, newList, lastList, lastCard_x, drop_x, board_id])
+        .then(cards => {
+            res.status(200).send(cards)
+        })
+        .catch((e) => {
+            console.log(e); 
+            res.status(500).send(e)
+        })
+    },
+    moveCardSame: (req, res) => {
+        const db = req.app.get('db');
+        const {id} = req.params;
+        const {lastCard_x, drop_x, board_id} = req.body;
+        // console.log(id, req.body);
+
+        db.move_card_same([id, lastCard_x, drop_x, board_id])
         .then(cards => {
             res.status(200).send(cards)
         })

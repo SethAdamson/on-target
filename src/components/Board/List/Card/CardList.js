@@ -4,7 +4,7 @@ import {findDOMNode} from 'react-dom';
 import {DropTarget} from 'react-dnd';
 import {Types, CARD_HEIGHT, CARD_MARGIN, OFFSET_HEIGHT} from '../../../../constants';
 import {connect} from 'react-redux';
-import {moveCard} from '../../../../ducks/reducer';
+import {moveCardSame, moveCardList} from '../../../../ducks/reducer';
 
 function getPlaceIndex(y, scrollY) {
     // shift placeholder if y position more than card height / 2
@@ -36,21 +36,26 @@ const cardListDropTarget = {
         const lastCard_x = monitor.getItem().card_x;
         const lastList = monitor.getItem().list_id;
         const nextList = props.list_id;
+        let drop_x = component.state.placeIdx;
+        let {id} = item;
         // const nextCard_x = 
 
 
         if(monitor.didDrop()){
             return;
         }
-        console.log(props);
-        let {id} = item;
-        let drop_x = component.state.placeIdx;
         if(drop_x === -1){
             drop_x = 0;
         }
-        console.log(id, nextList, drop_x, props.board_id);
+        if(lastList === nextList && lastCard_x === drop_x){
+            return;
+        } else if (lastList !== nextList){
+            props.moveCardList(id, nextList, lastList, lastCard_x, drop_x, props.board_id);
+        } else if(lastList === nextList){
+            props.moveCardSame(id, lastCard_x, drop_x, props.board_id);
+        }
+        console.log(id, nextList, lastList, lastCard_x, drop_x, props.board_id);
 
-        props.moveCard(id, nextList, drop_x, props.board_id);
     }
 };
 
@@ -84,6 +89,7 @@ class CardList extends Component {
     }
 
     render(){
+        console.log(this.props.cards);
         let {cards, list_id, editFn, connectDropTarget, isOver, canDrop} = this.props;
         let {drop_x, placeIdx} = this.state;
         console.log(isOver, canDrop, drop_x, placeIdx);
@@ -193,4 +199,4 @@ function mapStateToProps(state){
 
 const DropCards = DropTarget(Types.CARD, cardListDropTarget, cardListDropCollect)(CardList);
 
-export default connect(mapStateToProps, {moveCard})(DropCards);
+export default connect(mapStateToProps, {moveCardSame, moveCardList})(DropCards);

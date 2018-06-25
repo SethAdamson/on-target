@@ -25,7 +25,8 @@ const ADD_LIST = 'ADD_LIST';
 const REMOVE_CARD = 'REMOVE_CARD';
 const REMOVE_LIST = 'REMOVE_LIST';
 const REMOVE_BOARD = 'REMOVE_BOARD';
-const MOVE_CARD = 'MOVE_CARD';
+const MOVE_CARD_SAME = 'MOVE_CARD_SAME';
+const MOVE_CARD_LIST = 'MOVE_CARD_LIST';
 
 
 export default function reducer(state=initialState, action){
@@ -56,7 +57,9 @@ export default function reducer(state=initialState, action){
             return Object.assign({}, state, {lists: action.payload})
         case REMOVE_BOARD + FULFILLED:
             return Object.assign({}, state, {boards: action.payload})
-        case MOVE_CARD + FULFILLED:
+        case MOVE_CARD_SAME + FULFILLED:
+            return Object.assign({}, state, {cards: action.payload})
+        case MOVE_CARD_LIST + FULFILLED:
             return Object.assign({}, state, {cards: action.payload})
         default:
             return state;
@@ -167,10 +170,18 @@ export function removeBoard(board_id){
     }
 }
 
-export function moveCard(card_id, nextList, drop_x, board_id){
-    let moveCard = axios.put(`/move/card/${card_id}`, {nextList, drop_x, board_id}).then(res => res.data);
+export function moveCardSame(card_id, lastCard_x, drop_x, board_id){
+    let moveCardSame = axios.put(`/move/card/${card_id}`, {lastCard_x, drop_x, board_id}).then(res => res.data);
     return {
-        type: MOVE_CARD,
-        payload: moveCard,
+        type: MOVE_CARD_SAME,
+        payload: moveCardSame,
+    }
+}
+
+export function moveCardList(card_id, newList, lastList, lastCard_x, drop_x, board_id){
+    let moveCardList = axios.put(`/move/cardlist/${card_id}`, {newList, lastList, lastCard_x, drop_x, board_id}).then(res => res.data);
+    return {
+        type: MOVE_CARD_LIST,
+        payload: moveCardList,
     }
 }

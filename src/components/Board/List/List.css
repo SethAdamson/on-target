@@ -31,10 +31,11 @@ span {
 .cardlist-outside {
     width: 100%;
     min-height: 5px;
+    max-height: 68vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    overflow: auto;
 }
 
 .card-list-add {
