@@ -110,7 +110,7 @@ class BoardList extends Component{
         //   }
           if (list !== undefined) {
             listDisplay.push(
-                <div className='list-parent' key={list.list_id} id={list.list_id}>
+                <div className='list-parent' key={list.list_id} id={`list${list.list_id}`}>
                     <List 
                     list_id={list.list_id}                                                                                                                                                                                                                                      
                     list_title={list.list_title}

@@ -27,12 +27,12 @@ const cardListDropTarget = {
             findDOMNode(component).scrollTop
           );
         component.setState({placeIdx});
-        document.getElementById(item.id).style.display = 'none';
+        document.getElementById(`card${item.id}`).style.display = 'none';
 
     },
     drop(props, monitor, component){
         const item = monitor.getItem();
-        document.getElementById(item.id).style.display = 'block';
+        document.getElementById(`card${item.id}`).style.display = 'block';
         const lastCard_x = monitor.getItem().card_x;
         const lastList = monitor.getItem().list_id;
         const nextList = props.list_id;
@@ -44,8 +44,8 @@ const cardListDropTarget = {
         if(monitor.didDrop()){
             return;
         }
-        if(drop_x === -1){
-            drop_x = 0;
+        if(lastList !== nextList){
+            drop_x += 1;
         }
         if(lastList === nextList && lastCard_x === drop_x){
             return;
@@ -92,7 +92,7 @@ class CardList extends Component {
         // console.log(this.props.cards);
         let {cards, list_id, editFn, connectDropTarget, isOver, canDrop} = this.props;
         let {drop_x, placeIdx} = this.state;
-        // console.log(isOver, canDrop, drop_x, placeIdx);
+        console.log(isOver, canDrop, drop_x, placeIdx);
 
         let isPlaceHold = false;
         let cardList = [];
@@ -102,7 +102,7 @@ class CardList extends Component {
           if (isOver && canDrop) {
             isPlaceHold = false;
             if (i === 0 && placeIdx === -1) {
-              cardList.push(<div key="placeholder" className="card-parent placeholder" />);
+              cardList.push(<div key={"placeholder"+i} className="card-parent placeholder" />);
             } else if (placeIdx > i) {
               isPlaceHold = true;
             }
@@ -111,7 +111,7 @@ class CardList extends Component {
             cardList.push(
                 <div className='card-parent' 
                     key={card.id} 
-                    id = {card.id}
+                    id = {`card${card.id}`}
                     onClick={() => editFn({
                         id: card.id, 
                         desc: card.description, 
@@ -134,7 +134,7 @@ class CardList extends Component {
             );
           }
           if (isOver && canDrop && placeIdx === i) {
-            cardList.push(<div key="placeholder" className="card-parent placeholder" />);
+            cardList.push(<div key={"placeholder"+i} className="card-parent placeholder" />);
           }
         });
     
