@@ -105,6 +105,7 @@ app.put('/cards/update/:id', ctrl.updateCardLocation);
 app.put('/lists/update/:id', ctrl.updateListLocation);
 app.put('/move/cardlist/:id', ctrl.moveCardList);
 app.put('/move/card/:id', ctrl.moveCardSame);
+app.put('/move/list/:id', ctrl.moveList);
 app.post('/add/cards', ctrl.addCard);
 app.post('/add/lists', ctrl.addList);
 app.post('/add/boards', ctrl.addBoard);

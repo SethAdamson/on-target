@@ -52,9 +52,9 @@ const cardListDropTarget = {
         } else if (lastList !== nextList){
             props.moveCardList(id, nextList, lastList, lastCard_x, drop_x, props.board_id);
         } else if(lastList === nextList){
-            props.moveCardSame(id, lastCard_x, drop_x, props.board_id);
+            props.moveCardSame(id, lastCard_x, drop_x, lastList, props.board_id);
         }
-        console.log(id, nextList, lastList, lastCard_x, drop_x, props.board_id);
+        // console.log(id, nextList, lastList, lastCard_x, drop_x, props.board_id);
 
     }
 };
@@ -89,10 +89,10 @@ class CardList extends Component {
     }
 
     render(){
-        console.log(this.props.cards);
+        // console.log(this.props.cards);
         let {cards, list_id, editFn, connectDropTarget, isOver, canDrop} = this.props;
         let {drop_x, placeIdx} = this.state;
-        console.log(isOver, canDrop, drop_x, placeIdx);
+        // console.log(isOver, canDrop, drop_x, placeIdx);
 
         let isPlaceHold = false;
         let cardList = [];

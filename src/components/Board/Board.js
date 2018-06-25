@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Board.css';
-import List from './List/List';
+import BoardList from './List/BoardList';
 import Header from '../Header/Header';
 import CardEdit from './List/CardEdit/CardEdit';
 import {connect} from 'react-redux';
@@ -36,9 +36,6 @@ class Board extends Component {
             addingList: false,
             newListTitle: '',
             colorMenu: false,
-            listPlaceIdx: undefined,
-            listIsOver: false,
-            listCanDrop: false,
         }
 
         this.changeBoardName = this.changeBoardName.bind(this);
@@ -49,8 +46,6 @@ class Board extends Component {
         this.addingList = this.addingList.bind(this);
         this.addNewList = this.addNewList.bind(this);
         this.editColor = this.editColor.bind(this);
-        this.setPlaceIdx = this.setPlaceIdx.bind(this);
-        this.setDropValues = this.setDropValues.bind(this);
 
     }
 
@@ -77,14 +72,6 @@ class Board extends Component {
 
     handleBoard(e){
         this.setState({[e.target.name]: e.target.value})
-    }
-
-    setPlaceIdx(val){
-        this.setState({listPlaceIdx: val});
-    }
-
-    setDropValues(val1, val2){
-        this.setState({listIsOver:val1, listCanDrop:val2})
     }
 
     editCard(obj){
@@ -137,48 +124,6 @@ class Board extends Component {
         } else {
             bgstyle = {backgroundColor: singleBoard.background_color};
         }
-        
-        console.log(listCanDrop, listIsOver, listPlaceIdx);
-        let isPlaceHold = false;
-        let listDisplay = [];
-
-
-        lists.forEach((list, i) => {
-          if (listCanDrop) {
-            isPlaceHold = false;
-            if (i === 0 && listPlaceIdx === -1) {
-              listDisplay.push(<div key="placeholder" className="list-parent list-placeholder" />);
-            } else if (listPlaceIdx > i) {
-              isPlaceHold = true;
-            }
-          }
-          if (list !== undefined) {
-            listDisplay.push(
-                <div className='list-parent' key={list.list_id} id={list.list_id}>
-                    <List 
-                    list_id={list.list_id}                                                                                                                                                                                                                                      
-                    list_title={list.list_title}
-                    author_id={list.author_id}
-                    team_id={list.team_id}
-                    board_id={singleBoard.id}
-                    editFn={this.editCard}
-                    list_x={i}
-                    setPlaceIdx={this.setPlaceIdx}
-                    setDropValues={this.setDropValues}
-                    />
-                </div> 
-            );
-          }
-          if (listCanDrop && listPlaceIdx === i) {
-            listDisplay.push(<div key="placeholder" className="list-parent list-placeholder" />);
-          }
-        });
-    
-        // if placeholder index is greater than array.length, display placeholder as last
-        if (isPlaceHold) {
-          listDisplay.push(<div key="placeholder" className="list-parent list-placeholder" />);
-        }
-
 
         // let listDisplay = lists.map((list, i) => {
         //     return (
@@ -229,8 +174,8 @@ class Board extends Component {
                         </p>
                         <BoardMenu colorClick={colorMenu} currentID={singleBoard.id} currentName={singleBoard.name} editColorFn={this.editColor}/>
                     </div> 
-                    <div className='board-list'>
-                        {listDisplay}
+                    <div className='board-list-outer'>
+                        <BoardList board_id={singleBoard.id} editFn={this.editCard}/>
                         {addingList ? 
                             <div>
                                 <input name='newListTitle' className='new-list-input' onChange={this.handleBoard}/>

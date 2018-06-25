@@ -11,11 +11,11 @@ const cardSource = {
     //     return props.isReady;
     // }
     isDragging(props, monitor){
-        console.log(props);
+        // console.log(props);
         return monitor.getItem().id === props.id;
     },
     beginDrag(props, monitor, component){
-        console.log(props);
+        // console.log(props);
         const {id, title, card_x, list_id} = props;
         const {clientWidth, clientHeight} = findDOMNode(component);
         return {id, title, card_x, list_id, clientHeight, clientWidth};
@@ -26,7 +26,7 @@ const cardSource = {
         }
         const item = monitor.getItem();
         const dropResult = monitor.getDropResult();
-        console.log(item, dropResult);
+        // console.log(item, dropResult);
         
         // CardActions.moveCardToList(item.id, dropResult.listId);
     }
@@ -35,12 +35,12 @@ const cardSource = {
 const cardTarget = {
     hover(props, monitor, component){
         const hover_x = props.card_x;
-        console.log(hover_x);
+        // console.log(hover_x);
         props.updateDropX(hover_x);
     },
     drop(props, monitor, component){
         const drop_x = props.card_x;
-        console.log(drop_x);
+        // console.log(drop_x);
         props.updateDropX(drop_x);
     }
 }
@@ -85,7 +85,7 @@ class Card extends Component {
     // }
 
     render(){
-        console.log(this.props);
+        // console.log(this.props);
         let{title, isDragging, connectDragSource, connectDropTarget, connectDragPreview} = this.props
         return connectDragSource(connectDropTarget(
             <div className='card-content'>

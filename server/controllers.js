@@ -228,16 +228,53 @@ module.exports= {
     moveCardSame: (req, res) => {
         const db = req.app.get('db');
         const {id} = req.params;
-        const {lastCard_x, drop_x, board_id} = req.body;
+        const {lastCard_x, drop_x, list_id, board_id} = req.body;
         // console.log(id, req.body);
 
-        db.move_card_same([id, lastCard_x, drop_x, board_id])
-        .then(cards => {
-            res.status(200).send(cards)
-        })
-        .catch((e) => {
-            console.log(e); 
-            res.status(500).send(e)
-        })
+        if(lastCard_x<drop_x){
+            db.move_card_down([id, lastCard_x, drop_x, list_id, board_id])
+            .then(cards => {
+                res.status(200).send(cards)
+            })
+            .catch((e) => {
+                console.log(e); 
+                res.status(500).send(e)
+            })
+        } else if (lastCard_x>drop_x){
+            db.move_card_up([id, lastCard_x, drop_x, list_id, board_id])
+            .then(cards => {
+                res.status(200).send(cards)
+            })
+            .catch((e) => {
+                console.log(e); 
+                res.status(500).send(e)
+            })
+        }
+    },
+    moveList: (req, res) => {
+        const db = req.app.get('db');
+        const {id} = req.params;
+        const {lastList_x, drop_x, board_id} = req.body;
+        // console.log(id, req.body);
+
+        if(lastList_x<drop_x){
+            db.move_list_increase([id, lastList_x, drop_x, board_id])
+            .then(lists => {
+                res.status(200).send(lists)
+            })
+            .catch((e) => {
+                console.log(e); 
+                res.status(500).send(e)
+            })
+        } else if (lastList_x>drop_x){
+            db.move_list_decrease([id, lastList_x, drop_x, board_id])
+            .then(lists => {
+                res.status(200).send(lists)
+            })
+            .catch((e) => {
+                console.log(e); 
+                res.status(500).send(e)
+            })
+        }
     },
 }

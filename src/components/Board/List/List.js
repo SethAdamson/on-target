@@ -9,23 +9,12 @@ import _ from 'lodash';
 import {
         updateListTitle,
         addCard,
-        removeList
+        removeList,
+        moveList
     } from '../../../ducks/reducer';
 import {DragSource, DropTarget} from 'react-dnd';
-import {Types, OFFSET_WIDTH, LIST_WIDTH, LIST_MARGIN} from '../../../constants';
+import {Types} from '../../../constants';
 import axios from 'axios';
-
-function getPlaceIndex(x, scrollX) {
-    // shift placeholder if y position more than card height / 2
-    const xPos = x - OFFSET_WIDTH + scrollX;
-    let placeIdx;
-    if (xPos < LIST_WIDTH / 2) {
-      placeIdx = -1; // place at the start
-    } else {
-      placeIdx = Math.floor((xPos - LIST_WIDTH / 2) / (LIST_WIDTH + LIST_MARGIN));
-    }
-    return placeIdx;
-  }
 
 const listSource = {
     // canDrag(props){
@@ -54,19 +43,16 @@ const listTarget = {
     hover(props, monitor, component){
         const hover_x = props.list_x;
         let item = monitor.getItem();
-        const placeIdx = getPlaceIndex(
-            monitor.getClientOffset().x,
-            findDOMNode(component).scrollLeft
-          );
-        props.setPlaceIdx(placeIdx);
-        document.getElementById(item.list_id).style.display = 'none';
-        console.log(hover_x);
+        props.setDropValue(hover_x)
+        console.log(hover_x, item.list_x);
     },
     drop(props, monitor, component){
         const drop_x = props.list_x;
         let item = monitor.getItem();
-        document.getElementById(item.list_id).style.display = 'block';
+        let {board_id, list_x, list_id} = item;
+        props.setDropValue(drop_x)
         console.log(drop_x);
+        props.moveList(list_id, list_x, drop_x, board_id)
     }
 }
 
@@ -143,7 +129,6 @@ class List extends Component {
     render(){
         let {list_id, list_title, editFn, connectDropTarget, connectDragSource, board_id, isOver, canDrop, setDropValues} = this.props;
         let {adding} = this.state;
-        setDropValues(isOver, canDrop);
         console.log(this.props);
         return connectDragSource(connectDropTarget(
                 <div className='list-content'>
@@ -185,4 +170,4 @@ class List extends Component {
 
 let dndList = DropTarget(Types.LIST, listTarget, listDropCollect)(DragSource(Types.LIST, listSource, listSourceCollect)(List));
 
-export default connect(null, {updateListTitle, addCard, removeList})(dndList);
+export default connect(null, {updateListTitle, addCard, removeList, moveList})(dndList);

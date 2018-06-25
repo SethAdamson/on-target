@@ -23,12 +23,17 @@
     font-style: italic;
 }
 
-.board-list {
+.board-list-outer {
     display: flex;
     min-height: 85vh;
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
+}
+
+.board-list-parent {
+    display: flex;
+    min-height: 85vh;
 }
 
 .list-parent {
