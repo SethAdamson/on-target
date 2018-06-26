@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {moveList} from '../../../ducks/reducer';
 import {DropTarget} from 'react-dnd';
 import {Types, OFFSET_WIDTH, LIST_WIDTH, LIST_MARGIN} from '../../../constants';
+import _ from 'lodash';
 
 function getPlaceIndex(x, scrollX) {
     // shift placeholder if y position more than card height / 2
@@ -35,14 +36,20 @@ const listTarget = {
         let drop_x = component.state.listPlaceIdx;
         let item = monitor.getItem();
         let {board_id, list_x, list_id} = item;
+        let boardLists = [...props.lists];
+        _.orderBy(boardLists,['board_location'])
+        let dragList = boardLists[list_x];
         document.getElementById(`list${item.list_id}`).style.display = 'block';
 
 
         if(list_x>drop_x){
             drop_x+=1;
         }
-        console.log('List Drop values', list_id, list_x, drop_x, board_id);
-        props.moveList(list_id, list_x, drop_x, board_id);
+        console.log('List Drop values', list_id, list_x, drop_x, board_id, props.lists);
+        boardLists.splice(list_x, 1);
+        boardLists.splice(drop_x, 0 , dragList)
+        props.moveList(list_id, list_x, drop_x, board_id, boardLists);
+        component.setPlaceIdx(undefined);
     }
 };
 
@@ -62,7 +69,6 @@ class BoardList extends Component{
 
         this.state = {
             listPlaceIdx: undefined,
-            listDrop: undefined
         }
 
         this.setPlaceIdx = this.setPlaceIdx.bind(this);
@@ -80,8 +86,8 @@ class BoardList extends Component{
 
     render(){
         let {lists, connectDropTarget, canDrop, isOver} = this.props;
-        let {listPlaceIdx, listDrop} = this.state;
-        // console.log(listPlaceIdx, listDrop);
+        let {listPlaceIdx} = this.state;
+        console.log(listPlaceIdx);
 
         let isPlaceHold = false;
         let listDisplay = [];

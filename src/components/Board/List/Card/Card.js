@@ -71,7 +71,7 @@ class Card extends Component {
 
     componentDidMount(){
         let {card_x, id} = this.props;
-        axios.put(`/cards/update/${id}`, {card_x});
+        // axios.put(`/cards/update/${id}`, {card_x});
         this.props.connectDragPreview(getEmptyImage(), {
             captureDraggingState: true
         });

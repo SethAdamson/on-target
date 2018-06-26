@@ -62,7 +62,7 @@ export default function reducer(state=initialState, action){
             return Object.assign({}, state, {cards: action.payload})
         case MOVE_CARD_LIST + FULFILLED:
             return Object.assign({}, state, {cards: action.payload})
-        case MOVE_LIST + FULFILLED:
+        case MOVE_LIST:
             return Object.assign({}, state, {lists: action.payload})
         default:
             return state;
@@ -70,7 +70,7 @@ export default function reducer(state=initialState, action){
 }
 
 export function getUser() {
-    let userData = axios.get('/auth/user').then(res => res.data);
+    let userData = axios.get('/auth/user').then(res => res.data).catch(e => console.log(e));
     return {
         type: GET_USER_DATA,
         payload: userData
@@ -78,7 +78,7 @@ export function getUser() {
 }
 
 export function getBoards() {
-    let boardData = axios.get(`/boards`).then(res => res.data);
+    let boardData = axios.get(`/boards`).then(res => res.data).catch(e => console.log(e));
     return {
         type: GET_BOARDS,
         payload: boardData
@@ -86,7 +86,7 @@ export function getBoards() {
 }
 
 export function getLists(id){
-    let listsData = axios.get(`/lists/${id}`).then(res => res.data);
+    let listsData = axios.get(`/lists/${id}`).then(res => res.data).catch(e => console.log(e));
     return {
         type: GET_LISTS,
         payload: listsData
@@ -94,7 +94,7 @@ export function getLists(id){
 }
 
 export function getCards(id){
-    let cardsData = axios.get(`/cards/${id}`).then(res => res.data);
+    let cardsData = axios.get(`/cards/${id}`).then(res => res.data).catch(e => console.log(e));
     return {
         type: GET_CARDS,
         payload: cardsData
@@ -102,7 +102,7 @@ export function getCards(id){
 }
 
 export function getSingleBoard(id){
-    let singleData = axios.get(`/boards/${id}`).then(res => res.data[0]);
+    let singleData = axios.get(`/boards/${id}`).then(res => res.data[0]).catch(e => console.log(e));
     return {
         type: GET_SINGLE_BOARD,
         payload: singleData
@@ -110,7 +110,7 @@ export function getSingleBoard(id){
 }
 
 export function updateBoard(id, val){
-    let newBoard = axios.put(`/change/boards/${id}`, val).then(res => res.data[0]);
+    let newBoard = axios.put(`/change/boards/${id}`, val).then(res => res.data[0]).catch(e => console.log(e));
     return {
         type: UPDATE_BOARD,
         payload: newBoard,
@@ -118,7 +118,7 @@ export function updateBoard(id, val){
 }
 
 export function updateListTitle(id, val){
-    let newTitle = axios.put(`/change/lists/${id}`, val).then(res => res.data);
+    let newTitle = axios.put(`/change/lists/${id}`, val).then(res => res.data).catch(e => console.log(e));
     return {
         type: UPDATE_LIST_TITLE,
         payload: newTitle,
@@ -126,7 +126,7 @@ export function updateListTitle(id, val){
 }
 
 export function addCard(val){
-    let newCard = axios.post(`/add/cards`, val).then(res => res.data);
+    let newCard = axios.post(`/add/cards`, val).then(res => res.data).catch(e => console.log(e));
     return {
         type: ADD_CARD,
         payload: newCard,
@@ -134,7 +134,7 @@ export function addCard(val){
 }
 
 export function addList(val){
-    let newList = axios.post(`/add/lists`, val).then(res => res.data);
+    let newList = axios.post(`/add/lists`, val).then(res => res.data).catch(e => console.log(e));
     return {
         type: ADD_LIST,
         payload: newList,
@@ -142,7 +142,7 @@ export function addList(val){
 }
 
 export function addBoard(val){
-    let newBoard = axios.post(`/add/boards`, val).then(res => res.data);
+    let newBoard = axios.post(`/add/boards`, val).then(res => res.data).catch(e => console.log(e));
     return {
         type: ADD_BOARD,
         payload: newBoard,
@@ -150,7 +150,7 @@ export function addBoard(val){
 }
 
 export function removeCard(board_id, card_id){
-    let updatedCards = axios.delete(`/remove/card/${board_id}/${card_id}`).then(res => res.data);
+    let updatedCards = axios.delete(`/remove/card/${board_id}/${card_id}`).then(res => res.data).catch(e => console.log(e));
     return {
         type: REMOVE_CARD,
         payload: updatedCards,
@@ -158,7 +158,7 @@ export function removeCard(board_id, card_id){
 }
 
 export function removeList(board_id, list_id){
-    let updatedLists = axios.delete(`/remove/list/${board_id}/${list_id}`).then(res => res.data);
+    let updatedLists = axios.delete(`/remove/list/${board_id}/${list_id}`).then(res => res.data).catch(e => console.log(e));
     return {
         type: REMOVE_LIST,
         payload: updatedLists,
@@ -166,7 +166,7 @@ export function removeList(board_id, list_id){
 }
 
 export function removeBoard(board_id){
-    let updatedBoards = axios.delete(`/remove/board/${board_id}`).then(res => res.data);
+    let updatedBoards = axios.delete(`/remove/board/${board_id}`).then(res => res.data).catch(e => console.log(e));
     return {
         type: REMOVE_BOARD,
         payload: updatedBoards,
@@ -174,7 +174,7 @@ export function removeBoard(board_id){
 }
 
 export function moveCardSame(card_id, lastCard_x, drop_x, list_id, board_id){
-    let moveCardSame = axios.put(`/move/card/${card_id}`, {lastCard_x, drop_x, list_id, board_id}).then(res => res.data);
+    let moveCardSame = axios.put(`/move/card/${card_id}`, {lastCard_x, drop_x, list_id, board_id}).then(res => res.data).catch(e => console.log(e));
     return {
         type: MOVE_CARD_SAME,
         payload: moveCardSame,
@@ -182,19 +182,17 @@ export function moveCardSame(card_id, lastCard_x, drop_x, list_id, board_id){
 }
 
 export function moveCardList(card_id, newList, lastList, lastCard_x, drop_x, board_id){
-    let moveCardList = axios.put(`/move/cardlist/${card_id}`, {newList, lastList, lastCard_x, drop_x, board_id}).then(res => res.data);
+    let moveCardList = axios.put(`/move/cardlist/${card_id}`, {newList, lastList, lastCard_x, drop_x, board_id}).then(res => res.data).catch(e => console.log(e));
     return {
         type: MOVE_CARD_LIST,
         payload: moveCardList,
     }
 }
 
-export function moveList(list_id, lastList_x, drop_x, board_id){
-    console.log('Reducer List Drop values', list_id, lastList_x, drop_x, board_id);
-    let moveList = axios.put(`/move/list/${list_id}`, {lastList_x, drop_x, board_id}).then(res => res.data);
-    console.log(moveList);
+export function moveList(list_id, lastList_x, drop_x, board_id, boardLists){
+    axios.put(`/move/list/${list_id}`, {lastList_x, drop_x, board_id}).then(res => res.data).catch(e => console.log(e));
     return {
         type: MOVE_LIST,
-        payload: moveList,
+        payload: boardLists,
     }
 }
