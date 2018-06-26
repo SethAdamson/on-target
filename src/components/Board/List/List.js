@@ -21,11 +21,11 @@ const listSource = {
     //     return props.isReady;
     // }
     isDragging(props, monitor){
-        console.log(props);
+        // console.log(props);
         return monitor.getItem().id === props.id;
     },
     beginDrag(props, monitor, component){
-        console.log(props);
+        // console.log(props);
         const {list_id, title, list_x, board_id} = props;
         return {list_id, title, list_x, board_id};
     },
@@ -35,7 +35,7 @@ const listSource = {
         }
         const item = monitor.getItem();
         const dropResult = monitor.getDropResult();
-        console.log(item, dropResult);
+        // console.log(item, dropResult);
     }
 };
 
@@ -44,15 +44,15 @@ const listTarget = {
         const hover_x = props.list_x;
         let item = monitor.getItem();
         props.setDropValue(hover_x)
-        console.log(hover_x, item.list_x);
+        // console.log(hover_x, item.list_x);
     },
     drop(props, monitor, component){
         const drop_x = props.list_x;
         let item = monitor.getItem();
         let {board_id, list_x, list_id} = item;
         props.setDropValue(drop_x)
-        console.log(drop_x);
-        props.moveList(list_id, list_x, drop_x, board_id)
+        // console.log(drop_x);
+        // props.moveList(list_id, list_x, drop_x, board_id)
     }
 }
 
@@ -129,7 +129,7 @@ class List extends Component {
     render(){
         let {list_id, list_title, editFn, connectDropTarget, connectDragSource, board_id, isOver, canDrop, setDropValues} = this.props;
         let {adding} = this.state;
-        console.log(this.props);
+        // console.log(this.props);
         return connectDragSource(connectDropTarget(
                 <div className='list-content'>
                     <div className='list-title'>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import List from './List';
 import {findDOMNode} from 'react-dom';
 import {connect} from 'react-redux';
-import {moveCardSame, moveCardList} from '../../../ducks/reducer';
+import {moveList} from '../../../ducks/reducer';
 import {DropTarget} from 'react-dnd';
 import {Types, OFFSET_WIDTH, LIST_WIDTH, LIST_MARGIN} from '../../../constants';
 
@@ -26,16 +26,22 @@ const listTarget = {
             monitor.getClientOffset().x,
             findDOMNode(component).scrollLeft
             );
-        console.log(placeIdx);
+        // console.log(placeIdx);
         component.setPlaceIdx(placeIdx);
-        document.getElementById(item.list_id).style.display = 'none';
-        console.log(hover_x);
+        document.getElementById(`list${item.list_id}`).style.display = 'none';
+        // console.log(hover_x);
     },
     drop(props, monitor, component){
-        const drop_x = props.list_x;
+        let drop_x = component.state.listPlaceIdx;
         let item = monitor.getItem();
-        document.getElementById(item.list_id).style.display = 'block';
-        console.log(drop_x);
+        let {board_id, list_x, list_id} = item;
+        document.getElementById(`list${item.list_id}`).style.display = 'block';
+
+
+        if(list_x>drop_x){
+            drop_x+=1;
+        }
+        props.moveList(list_id, list_x, drop_x, board_id)
     }
 };
 
@@ -74,7 +80,7 @@ class BoardList extends Component{
     render(){
         let {lists, connectDropTarget, canDrop, isOver} = this.props;
         let {listPlaceIdx, listDrop} = this.state;
-        console.log(listPlaceIdx);
+        console.log(listPlaceIdx, listDrop);
 
         let isPlaceHold = false;
         let listDisplay = [];
@@ -100,14 +106,14 @@ class BoardList extends Component{
         //     }
 
         // })
-        //   if (canDrop) {
-        //     isPlaceHold = false;
-        //     if (i === 0 && listDrop === 0) {
-        //       listDisplay.push(<div key="placeholder" className="list-parent list-placeholder" />);
-        //     } else if (listDrop > i) {
-        //       isPlaceHold = true;
-        //     }
-        //   }
+          if (canDrop) {
+            isPlaceHold = false;
+            if (i === 0 && listPlaceIdx === -1) {
+              listDisplay.push(<div key="placeholder" className="list-parent placeholder" />);
+            } else if (listPlaceIdx > i) {
+              isPlaceHold = true;
+            }
+          }
           if (list !== undefined) {
             listDisplay.push(
                 <div className='list-parent' key={list.list_id} id={`list${list.list_id}`}>
@@ -125,17 +131,17 @@ class BoardList extends Component{
                 </div> 
             );
           }
-        //   if (canDrop && listDrop === i) {
-        //     listDisplay.push(<div key="placeholder" className="list-parent list-placeholder" />);
-        //   }
+          if (canDrop && listPlaceIdx === i) {
+            listDisplay.push(<div key="placeholder" className="list-parent placeholder" />);
+          }
         });
     
-        // // if placeholder index is greater than array.length, display placeholder as last
-        // if (isPlaceHold) {
-        //   listDisplay.push(<div key="placeholder" className="list-parent list-placeholder" />);
-        // }
+        // if placeholder index is greater than array.length, display placeholder as last
+        if (isPlaceHold) {
+          listDisplay.push(<div key="placeholder" className="list-parent placeholder" />);
+        }
 
-        return(
+        return connectDropTarget(
             <div className='board-list-parent'>
                 {listDisplay}
             </div>
@@ -151,4 +157,4 @@ function mapStateToProps(state){
 
 let dndBoardList = DropTarget(Types.LIST, listTarget, listDropCollect)(BoardList);
 
-export default connect(mapStateToProps,{})(dndBoardList);
+export default connect(mapStateToProps,{moveList})(dndBoardList);

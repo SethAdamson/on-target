@@ -8,4 +8,4 @@ export const OFFSET_HEIGHT = 150; // height offset from the top of the page
 
 export const LIST_WIDTH = 250;
 export const LIST_MARGIN = 5;  
-export const OFFSET_WIDTH = 0;
+export const OFFSET_WIDTH = 20;
