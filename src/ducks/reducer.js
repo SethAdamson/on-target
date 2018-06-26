@@ -190,7 +190,9 @@ export function moveCardList(card_id, newList, lastList, lastCard_x, drop_x, boa
 }
 
 export function moveList(list_id, lastList_x, drop_x, board_id){
+    console.log('Reducer List Drop values', list_id, lastList_x, drop_x, board_id);
     let moveList = axios.put(`/move/list/${list_id}`, {lastList_x, drop_x, board_id}).then(res => res.data);
+    console.log(moveList);
     return {
         type: MOVE_LIST,
         payload: moveList,

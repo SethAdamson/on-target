@@ -54,7 +54,7 @@ class Board extends Component {
     }
 
     componentDidUpdate(props){
-        if (props.match.params.board !== this.props.match.params.board || props.cards !== this.props.cards){
+        if (props.match.params.board !== this.props.match.params.board){
                 this.getInfo();
         };
     }

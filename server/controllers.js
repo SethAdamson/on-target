@@ -255,7 +255,7 @@ module.exports= {
         const db = req.app.get('db');
         const {id} = req.params;
         const {lastList_x, drop_x, board_id} = req.body;
-        // console.log(id, req.body);
+        console.log('move list ctrl', id, req.body);
 
         if(lastList_x<drop_x){
             db.move_list_increase([id, lastList_x, drop_x, board_id])
@@ -269,6 +269,16 @@ module.exports= {
         } else if (lastList_x>drop_x){
             db.move_list_decrease([id, lastList_x, drop_x, board_id])
             .then(lists => {
+                res.status(200).send(lists)
+            })
+            .catch((e) => {
+                console.log(e); 
+                res.status(500).send(e)
+            })
+        } else {
+            db.get_lists([board_id])
+            .then(lists => {
+                // console.log('ctrl', lists);
                 res.status(200).send(lists)
             })
             .catch((e) => {

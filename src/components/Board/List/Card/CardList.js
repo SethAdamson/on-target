@@ -92,7 +92,7 @@ class CardList extends Component {
         // console.log(this.props.cards);
         let {cards, list_id, editFn, connectDropTarget, isOver, canDrop} = this.props;
         let {drop_x, placeIdx} = this.state;
-        console.log(isOver, canDrop, drop_x, placeIdx);
+        // console.log(isOver, canDrop, drop_x, placeIdx);
 
         let isPlaceHold = false;
         let cardList = [];

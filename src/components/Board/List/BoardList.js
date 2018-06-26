@@ -41,7 +41,8 @@ const listTarget = {
         if(list_x>drop_x){
             drop_x+=1;
         }
-        props.moveList(list_id, list_x, drop_x, board_id)
+        console.log('List Drop values', list_id, list_x, drop_x, board_id);
+        props.moveList(list_id, list_x, drop_x, board_id);
     }
 };
 
@@ -80,7 +81,7 @@ class BoardList extends Component{
     render(){
         let {lists, connectDropTarget, canDrop, isOver} = this.props;
         let {listPlaceIdx, listDrop} = this.state;
-        console.log(listPlaceIdx, listDrop);
+        // console.log(listPlaceIdx, listDrop);
 
         let isPlaceHold = false;
         let listDisplay = [];
