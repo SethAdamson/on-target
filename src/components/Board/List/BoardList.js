@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import {moveList} from '../../../ducks/reducer';
 import {DropTarget} from 'react-dnd';
 import {Types, OFFSET_WIDTH, LIST_WIDTH, LIST_MARGIN} from '../../../constants';
-import _ from 'lodash';
 
 function getPlaceIndex(x, scrollX) {
     // shift placeholder if y position more than card height / 2
@@ -37,7 +36,6 @@ const listTarget = {
         let item = monitor.getItem();
         let {board_id, list_x, list_id} = item;
         let boardLists = [...props.lists];
-        _.orderBy(boardLists,['board_location'])
         let dragList = boardLists[list_x];
         document.getElementById(`list${item.list_id}`).style.display = 'block';
 
@@ -45,7 +43,7 @@ const listTarget = {
         if(list_x>drop_x){
             drop_x+=1;
         }
-        console.log('List Drop values', list_id, list_x, drop_x, board_id, props.lists);
+        // console.log('List Drop values', list_id, list_x, drop_x, board_id, props.lists);
         boardLists.splice(list_x, 1);
         boardLists.splice(drop_x, 0 , dragList)
         props.moveList(list_id, list_x, drop_x, board_id, boardLists);
@@ -94,25 +92,6 @@ class BoardList extends Component{
 
 
         lists.forEach((list, i) => {
-        //     listDisplay.push(
-        //         <div className='list-parent' key={list.list_id} id={list.list_id}>
-        //             <List 
-        //             list_id={list.list_id}                                                                                                                                                                                                                                      
-        //             list_title={list.list_title}
-        //             author_id={list.author_id}
-        //             team_id={list.team_id}
-        //             board_id={this.props.board_id}
-        //             editFn={this.props.editFn}
-        //             list_x={i}
-        //             setPlaceIdx={this.setPlaceIdx}
-        //             setDropValue={this.setDropValue}
-        //             />
-        //         </div>)
-        //     if(listDrop){
-        //         listDisplay.splice(listDrop, 0, <div key="placeholder" className="list-parent list-placeholder" />)
-        //     }
-
-        // })
           if (canDrop) {
             isPlaceHold = false;
             if (i === 0 && listPlaceIdx === -1) {

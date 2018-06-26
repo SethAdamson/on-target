@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 
 let initialState = {
     user: {},
@@ -58,9 +59,9 @@ export default function reducer(state=initialState, action){
             return Object.assign({}, state, {lists: action.payload})
         case REMOVE_BOARD + FULFILLED:
             return Object.assign({}, state, {boards: action.payload})
-        case MOVE_CARD_SAME + FULFILLED:
+        case MOVE_CARD_SAME:
             return Object.assign({}, state, {cards: action.payload})
-        case MOVE_CARD_LIST + FULFILLED:
+        case MOVE_CARD_LIST:
             return Object.assign({}, state, {cards: action.payload})
         case MOVE_LIST:
             return Object.assign({}, state, {lists: action.payload})
@@ -173,16 +174,56 @@ export function removeBoard(board_id){
     }
 }
 
-export function moveCardSame(card_id, lastCard_x, drop_x, list_id, board_id){
-    let moveCardSame = axios.put(`/move/card/${card_id}`, {lastCard_x, drop_x, list_id, board_id}).then(res => res.data).catch(e => console.log(e));
+export function moveCardSame(card_id, lastCard_x, drop_x, list_id, board_id, boardCards){
+    let newCards = [];
+    if(drop_x > lastCard_x){
+        newCards = boardCards.map(card => {
+            if(card.id === card_id){
+                card.list_location = drop_x;
+            } else if (card.list_id === list_id && card.list_location <= drop_x && card.list_location > lastCard_x && card.id !== card_id){
+                card.list_location--;
+            }
+            return card;
+        })
+    } else if (drop_x < lastCard_x){
+        newCards = boardCards.map(card => {
+            if(card.id === card_id){
+                card.list_location = drop_x + 1;
+            } else if (card.list_id === list_id && card.list_location >= drop_x && card.list_location < lastCard_x && card.id !== card_id){
+                card.list_location++;
+            }
+            return card;
+        })
+    }
+    
+    let moveCardSame = _.orderBy(newCards, 'list_location');
+    console.log(moveCardSame);
+    
+    axios.put(`/move/card/${card_id}`, {lastCard_x, drop_x, list_id, board_id}).then(res => res.data).catch(e => console.log(e));
     return {
         type: MOVE_CARD_SAME,
         payload: moveCardSame,
     }
 }
 
-export function moveCardList(card_id, newList, lastList, lastCard_x, drop_x, board_id){
-    let moveCardList = axios.put(`/move/cardlist/${card_id}`, {newList, lastList, lastCard_x, drop_x, board_id}).then(res => res.data).catch(e => console.log(e));
+export function moveCardList(card_id, newList, lastList, lastCard_x, drop_x, board_id, boardCards){
+    let newCardsList = boardCards.map(card => {
+        if(card.id === card_id){
+            card.list_location = drop_x;
+            card.list_id = newList;
+        } else if(card.list_id === lastList && card.list_location > lastCard_x){
+            card.list_location++;
+        } else if(card.list_id === newList && card.list_location >= drop_x && card.id !== card_id){
+            card.list_location--;
+        }
+        return card;
+    })
+
+
+    let moveCardList = _.orderBy(newCardsList, 'list_location');
+    console.log(moveCardList);
+
+    axios.put(`/move/cardlist/${card_id}`, {newList, lastList, lastCard_x, drop_x, board_id}).then(res => res.data).catch(e => console.log(e));
     return {
         type: MOVE_CARD_LIST,
         payload: moveCardList,
