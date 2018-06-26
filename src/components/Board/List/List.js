@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './List.css';
-import Card from './Card/Card';
 import CardList from './Card/CardList';
 import {connect} from 'react-redux';
 import FontAwesome from 'react-fontawesome';
@@ -9,32 +8,43 @@ import _ from 'lodash';
 import {
         updateListTitle,
         addCard,
-        removeList
+        removeList,
     } from '../../../ducks/reducer';
-// import {DropTarget} from 'react-dnd';
-// import {Types} from '../../../constants';
+import {DragSource} from 'react-dnd';
+import {Types} from '../../../constants';
+import axios from 'axios';
 
-// const listDropTarget = {
-//     hover(props, monitor, component){
-//         const canDrop = monitor.canDrop();
-//     },
-//     drop(props, monitor, component){
-//         if(monitor.didDrop()){
-//             return;
-//         }
-//         const item = monitor.getItem();
-//         console.log(item);
-//     }
-// };
+const listSource = {
+    // canDrag(props){
+    //     return props.isReady;
+    // }
+    isDragging(props, monitor){
+        // console.log(props);
+        return monitor.getItem().id === props.id;
+    },
+    beginDrag(props, monitor, component){
+        // console.log(props);
+        const {list_id, title, list_x, board_id} = props;
+        return {list_id, title, list_x, board_id};
+    },
+    endDrag(props, monitor, component){
+        if(!monitor.didDrop()) {
+            return;
+        }
+        const item = monitor.getItem();
+        const dropResult = monitor.getDropResult();
+        // console.log(item, dropResult);
+    }
+};
 
-// function listDropCollect(connect, monitor){
-//     return {
-//         connectDropTarget: connect.dropTarget(),
-//         isOver: monitor.isOver(),
-//         canDrop: monitor.canDrop(),
-//         item:monitor.getItem()
-//     }
-// };
+function listSourceCollect(connect, monitor){
+    return {
+        connectDragSource: connect.dragSource(),
+        connectDragPreview: connect.dragPreview(),
+        isDragging: monitor.isDragging(),
+    };
+}
+
 
 class List extends Component {
     constructor(){
@@ -52,6 +62,11 @@ class List extends Component {
         this.cancelNew = this.cancelNew.bind(this);
         this.removeList = this.removeList.bind(this);
 
+    }
+
+    componentDidMount(){
+        let {list_x, list_id} = this.props;
+        axios.put(`/lists/update/${list_id}`, {list_x});
     }
 
     changeListTitle(val){
@@ -84,10 +99,10 @@ class List extends Component {
     }
 
     render(){
-        let {cards, list_id, list_title, editFn, connectDropTarget} = this.props;
+        let {list_id, list_title, editFn, connectDragSource, board_id} = this.props;
         let {adding} = this.state;
-        console.log(this.props);
-        return (
+        // console.log(this.props);
+        return connectDragSource(
                 <div className='list-content'>
                     <div className='list-title'>
                         <RIEInput value={list_title} 
@@ -97,7 +112,7 @@ class List extends Component {
                             validate={_.isString}/>
                         <FontAwesome className='delete-icon'  name='far fa-trash fa-lg' onClick={this.removeList}/>
                     </div> 
-                    <CardList list_id={list_id} editFn={editFn} />
+                    <CardList list_id={list_id} editFn={editFn} board_id={board_id}/>
                     <div className='card-list-add' >
                         {adding ? 
                         <div>
@@ -119,12 +134,12 @@ class List extends Component {
     }
 }
 
-function mapStateToProps(state){
-    return {
-        cards: state.cards
-    }
-}
+// function mapStateToProps(state){
+//     return {
+//         cards: state.cards
+//     }
+// }
 
-// let TargetList = DropTarget(Types.CARD, listDropTarget, listDropCollect)(List);
+let dndList = DragSource(Types.LIST, listSource, listSourceCollect)(List);
 
-export default connect(mapStateToProps, {updateListTitle, addCard, removeList})(List);
+export default connect(null, {updateListTitle, addCard, removeList})(dndList);

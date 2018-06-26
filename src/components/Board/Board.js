@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Board.css';
-import List from './List/List';
+import BoardList from './List/BoardList';
 import Header from '../Header/Header';
 import CardEdit from './List/CardEdit/CardEdit';
 import {connect} from 'react-redux';
@@ -75,7 +75,7 @@ class Board extends Component {
     }
 
     editCard(obj){
-        console.log(obj);
+        // console.log(obj);
         this.setState({
             cardEditting: true, 
             editID: obj.id,
@@ -114,11 +114,10 @@ class Board extends Component {
     }
 
     render(){
-        console.log(this.props);
         // let {backgroundColor, boardName} = this.props.location.state
         let {lists, singleBoard} = this.props;
-        let {title, cardEditting, editID, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation} = this.state;
-
+        let {title, cardEditting, editID, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation, listPlaceIdx, listCanDrop, listIsOver} = this.state;
+        
         let bgstyle = {};
         if(singleBoard.background_img){
             bgstyle = {backgroundImage: `url(${singleBoard.background_img})`};
@@ -126,21 +125,22 @@ class Board extends Component {
             bgstyle = {backgroundColor: singleBoard.background_color};
         }
 
-        let listDisplay = lists.map((list, i) => {
-            return (
-                <div className='list-parent' key={list.list_id}>
-                    <List 
-                    list_id={list.list_id}                                                                                                                                                                                                                                      
-                    list_title={list.list_title}
-                    author_id={list.author_id}
-                    team_id={list.team_id}
-                    board_id={singleBoard.id}
-                    editFn={this.editCard}
-                    list_x={i}
-                    />
-                </div> 
-            )
-        })
+        // let listDisplay = lists.map((list, i) => {
+        //     return (
+        //         <div className='list-parent' key={list.list_id}>
+        //             <List 
+        //             list_id={list.list_id}                                                                                                                                                                                                                                      
+        //             list_title={list.list_title}
+        //             author_id={list.author_id}
+        //             team_id={list.team_id}
+        //             board_id={singleBoard.id}
+        //             editFn={this.editCard}
+        //             list_x={i}
+        //             setPlaceIdx={this.setPlaceIdx}
+        //             />
+        //         </div> 
+        //     )
+        // })
         return(
             <div className={singleBoard.background_img ? 'board-parent board-image' : 'board-parent'} style={bgstyle}>
                 {cardEditting ?
@@ -174,8 +174,8 @@ class Board extends Component {
                         </p>
                         <BoardMenu colorClick={colorMenu} currentID={singleBoard.id} currentName={singleBoard.name} editColorFn={this.editColor}/>
                     </div> 
-                    <div className='board-list'>
-                        {listDisplay}
+                    <div className='board-list-outer'>
+                        <BoardList board_id={singleBoard.id} editFn={this.editCard}/>
                         {addingList ? 
                             <div>
                                 <input name='newListTitle' className='new-list-input' onChange={this.handleBoard}/>

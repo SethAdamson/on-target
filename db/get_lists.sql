@@ -9,4 +9,4 @@ from boards
 
 join lists on boards.id = lists.board_id
 where boards.id = $1
-order by list_id;
+order by board_location;

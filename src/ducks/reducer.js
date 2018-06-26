@@ -25,6 +25,9 @@ const ADD_LIST = 'ADD_LIST';
 const REMOVE_CARD = 'REMOVE_CARD';
 const REMOVE_LIST = 'REMOVE_LIST';
 const REMOVE_BOARD = 'REMOVE_BOARD';
+const MOVE_CARD_SAME = 'MOVE_CARD_SAME';
+const MOVE_CARD_LIST = 'MOVE_CARD_LIST';
+const MOVE_LIST = 'MOVE_LIST';
 
 
 export default function reducer(state=initialState, action){
@@ -55,6 +58,12 @@ export default function reducer(state=initialState, action){
             return Object.assign({}, state, {lists: action.payload})
         case REMOVE_BOARD + FULFILLED:
             return Object.assign({}, state, {boards: action.payload})
+        case MOVE_CARD_SAME + FULFILLED:
+            return Object.assign({}, state, {cards: action.payload})
+        case MOVE_CARD_LIST + FULFILLED:
+            return Object.assign({}, state, {cards: action.payload})
+        case MOVE_LIST + FULFILLED:
+            return Object.assign({}, state, {lists: action.payload})
         default:
             return state;
     }
@@ -161,5 +170,31 @@ export function removeBoard(board_id){
     return {
         type: REMOVE_BOARD,
         payload: updatedBoards,
+    }
+}
+
+export function moveCardSame(card_id, lastCard_x, drop_x, list_id, board_id){
+    let moveCardSame = axios.put(`/move/card/${card_id}`, {lastCard_x, drop_x, list_id, board_id}).then(res => res.data);
+    return {
+        type: MOVE_CARD_SAME,
+        payload: moveCardSame,
+    }
+}
+
+export function moveCardList(card_id, newList, lastList, lastCard_x, drop_x, board_id){
+    let moveCardList = axios.put(`/move/cardlist/${card_id}`, {newList, lastList, lastCard_x, drop_x, board_id}).then(res => res.data);
+    return {
+        type: MOVE_CARD_LIST,
+        payload: moveCardList,
+    }
+}
+
+export function moveList(list_id, lastList_x, drop_x, board_id){
+    console.log('Reducer List Drop values', list_id, lastList_x, drop_x, board_id);
+    let moveList = axios.put(`/move/list/${list_id}`, {lastList_x, drop_x, board_id}).then(res => res.data);
+    console.log(moveList);
+    return {
+        type: MOVE_LIST,
+        payload: moveList,
     }
 }

@@ -1,6 +1,10 @@
 update lists
-set title = $1
-where id = $2;
+set board_location = $3
+where id = $1;
+
+update lists
+set board_location = board_location+1
+where board_location >= $3 and board_location < $2 and id !=$1 and board_id=$4;
 
 select 
 author_id,
@@ -12,5 +16,5 @@ board_location
 from boards
 
 join lists on boards.id = lists.board_id
-where boards.id = $3
+where boards.id = $4
 order by board_location;

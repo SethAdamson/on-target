@@ -23,7 +23,7 @@
     font-style: italic;
 }
 
-.board-list {
+.board-list-outer {
     display: flex;
     min-height: 85vh;
     width: 100%;
@@ -31,11 +31,17 @@
     overflow-y: hidden;
 }
 
+.board-list-parent {
+    display: flex;
+    min-height: 85vh;
+}
+
 .list-parent {
     background-color: transparent;
     margin: 0 5px;
     width: 250px;
     min-width: 250px;
+    border-radius: 5px;
 }
 
 .edit-card {
