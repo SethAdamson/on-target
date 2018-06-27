@@ -4,6 +4,7 @@ import './App.css';
 import {HashRouter} from 'react-router-dom';
 import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import CustomDragLayer from './components/Board/List/Card/CardDND/CustomDragLayer';
 
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
       <HashRouter>
         <div className="App">
             {routes}
+            <CustomDragLayer />
         </div>
       </HashRouter>
     );
