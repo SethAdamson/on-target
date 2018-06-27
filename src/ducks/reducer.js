@@ -175,6 +175,15 @@ export function removeBoard(board_id){
 }
 
 export function moveCardSame(card_id, lastCard_x, drop_x, list_id, board_id, boardCards){
+    let cardsByList = _.groupBy(boardCards, 'list_id');
+    let dragCard = cardsByList[list_id].splice(lastCard_x, 1);
+    dragCard[0].list_location = drop_x;
+    cardsByList[list_id].splice(drop_x, 0, dragCard[0]);
+    cardsByList[list_id].map((e, i) => e.list_location = i);
+    let newCards = [].concat(...Object.values(cardsByList));
+
+    console.log(cardsByList, dragCard[0], newCards);
+
     let moveCardSame = axios.put(`/move/card/${card_id}`, {lastCard_x, drop_x, list_id, board_id}).then(res => res.data).catch(e => console.log(e));
     return {
         type: MOVE_CARD_SAME,
@@ -183,6 +192,17 @@ export function moveCardSame(card_id, lastCard_x, drop_x, list_id, board_id, boa
 }
 
 export function moveCardList(card_id, newList, lastList, lastCard_x, drop_x, board_id, boardCards){
+    let cardsByList = _.groupBy(boardCards, 'list_id')
+    let dragCard = cardsByList[lastList].splice(lastCard_x, 1);
+    dragCard[0].list_id = newList;
+    dragCard[0].list_location = drop_x;
+    cardsByList[newList].splice(drop_x, 0 , dragCard[0]);
+    cardsByList[newList].map((e, i) => e.list_location = i );
+    cardsByList[lastList].map((e, i) => e.list_location = i );
+    let newCards = [].concat(...Object.values(cardsByList));
+
+    console.log(cardsByList, dragCard[0], newCards);
+
     let moveCardList = axios.put(`/move/cardlist/${card_id}`, {newList, lastList, lastCard_x, drop_x, board_id}).then(res => res.data).catch(e => console.log(e));
     return {
         type: MOVE_CARD_LIST,

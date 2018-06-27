@@ -5,6 +5,7 @@ import {DropTarget} from 'react-dnd';
 import {Types, CARD_HEIGHT, CARD_MARGIN, OFFSET_HEIGHT} from '../../../../constants';
 import {connect} from 'react-redux';
 import {moveCardSame, moveCardList} from '../../../../ducks/reducer';
+import _ from 'lodash';
 
 function getPlaceIndex(y, scrollY) {
     // shift placeholder if y position more than card height / 2
@@ -98,9 +99,10 @@ class CardList extends Component {
 
         let isPlaceHold = false;
         let cardList = [];
+        let cardsToSort = _.orderBy(cards, 'list_location');
 
 
-        cards.filter(e => e.list_id === list_id).forEach((card, i) => {
+        cardsToSort.filter(e => e.list_id === list_id).forEach((card, i) => {
           if (isOver && canDrop) {
             isPlaceHold = false;
             if (i === 0 && placeIdx === -1) {
