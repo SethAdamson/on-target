@@ -46,6 +46,9 @@ const cardListDropTarget = {
         if(lastList !== nextList){
             drop_x += 1;
         }
+        if(lastCard_x > drop_x){
+            drop_x +=1;
+        }
         if(lastList === nextList && lastCard_x === drop_x){
             return;
         } else if (lastList !== nextList){
