@@ -6,7 +6,8 @@ const express = require('express')
     , passport = require('passport')
     , Auth0Strategy = require('passport-auth0')
     , ctrl = require('./controllers')
-    , nodemailer = require('nodemailer');
+    , nodemailer = require('nodemailer')
+    , smtpTransport = require('nodemailer-smtp-transport');
 const app = express();
 
 //----------------DotEnv--------------------//
@@ -117,20 +118,21 @@ app.delete('/remove/list/:board/:list', ctrl.removeItem);
 app.delete('/remove/board/:board', ctrl.removeItem);
 
 app.post('/send/email', function(req, res, next){
-    let {name, email} = req.body.user;
-    const transporter = nodemailer.createTransport({
+    let {user, message, emailSubject} = req.body;
+    const transporter = nodemailer.createTransport(smtpTransport({
       service: 'gmail',
+      host: 'smtp.gmail.com',
       auth: {
         user: APP_ADDRESS,
         pass: APP_PASSWORD
       }
-    })
+    }));
     const mailOptions = {
-      from: `${email}`,
+      from: `${user.email}`,
       to: APP_ADDRESS,
-      subject: `${name}`,
-      text: `${req.body.message}`,
-      replyTo: `${email}`
+      subject: `${emailSubject}`,
+      text: `${message}`,
+      replyTo: `${user.email}`
     }
     transporter.sendMail(mailOptions, function(err, res) {
       if (err) {

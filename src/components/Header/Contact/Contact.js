@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Contact.css';
 import {connect} from 'react-redux';
+import axios from 'axios';
 
 class Contact extends Component {
     constructor(){
@@ -12,11 +13,20 @@ class Contact extends Component {
         }
 
         this.handleContact = this.handleContact.bind(this);
+        this.sendEmail = this.sendEmail.bind(this);
 
     }
 
     handleContact(e){
         this.setState({[e.target.name]: e.target.value})
+    }
+
+    sendEmail(){
+        let {user, contactToggle} = this.props;
+        let {message, emailSubject} = this.state;
+        axios.post('/send/email', {user, message, emailSubject});
+        this.setState({message: '', emailSubject:''})
+        contactToggle();
     }
 
     render(){
@@ -29,7 +39,8 @@ class Contact extends Component {
                     <h3 className='contact-section'>Subject:</h3>
                     <input name='emailSubject' className='email-subject' onChange={this.handleContact}/>
                     <h3 className='contact-section'>Message:</h3>
-                    <input name='message' className='email-message' onChange={this.handleContact}/>
+                    <textarea name='message' className='email-message' rows='10' cols='45' onChange={this.handleContact} />
+                    <button className='send-email' onClick={this.sendEmail}>Send Email</button>
                 </div> 
             </div> 
         )
