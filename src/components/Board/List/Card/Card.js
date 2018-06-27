@@ -69,13 +69,13 @@ class Card extends Component {
         }
     }
 
-    componentDidMount(){
-        let {card_x, id} = this.props;
-        // axios.put(`/cards/update/${id}`, {card_x}).catch(e => console.log(e));
-        this.props.connectDragPreview(getEmptyImage(), {
-            captureDraggingState: true,
-        })
-    }
+    // componentDidMount(){
+    //     let {card_x, id} = this.props;
+    //     axios.put(`/cards/update/${id}`, {card_x}).catch(e => console.log(e));
+    //     this.props.connectDragPreview(getEmptyImage(), {
+    //         captureDraggingState: true,
+    //     })
+    // }
 
     // componentDidUpdate(props){
     //     if(props.card_x !== this.props.card_x){
@@ -85,7 +85,7 @@ class Card extends Component {
     // }
 
     render(){
-        let{title, isDragging, connectDragSource, connectDropTarget} = this.props
+        let{title, connectDragSource, connectDropTarget} = this.props
         // console.log(isDragging);
         return connectDragSource(connectDropTarget(
             <div className='card-content' >

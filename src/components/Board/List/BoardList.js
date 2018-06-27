@@ -83,7 +83,7 @@ class BoardList extends Component{
     }
 
     render(){
-        let {lists, connectDropTarget, canDrop, isOver} = this.props;
+        let {lists, connectDropTarget, canDrop} = this.props;
         let {listPlaceIdx} = this.state;
         console.log(listPlaceIdx);
 

@@ -5,6 +5,7 @@ import FontAwesome from 'react-fontawesome';
 import targetWhite from '../../images/targetWhite.png';
 import {Link} from 'react-router-dom';
 import BoardNav from './BoardNav/BoardNav';
+import Contact from './Contact/Contact';
 import {withRouter} from 'react-router-dom';
 
 class Header extends Component {
@@ -14,10 +15,12 @@ class Header extends Component {
         this.state = {
             search: '',
             boardClick: false,
+            contactClick: false,
         }
 
         this.changeHeader = this.changeHeader.bind(this);
         this.boardClickToggle = this.boardClickToggle.bind(this);
+        this.contactClickToggle = this.contactClickToggle.bind(this);
 
     }
 
@@ -29,13 +32,18 @@ class Header extends Component {
         this.setState({boardClick: !this.state.boardClick})
     }
 
+    contactClickToggle(){
+        this.setState({contactClick: !this.state.contactClick})
+    }
+
     render(){
         let {currentBoard} = this.props;
+        let {boardClick, contactClick} = this.state;
         return(
             <div className='head-parent image-head1'>
                 <div className='head-content'>
                     <div className='head-search'>
-                        <BoardNav currentBoard = {currentBoard} boardClick={this.state.boardClick} clickToggle={this.boardClickToggle} className='boardnav' />
+                        <BoardNav currentBoard = {currentBoard} boardClick={boardClick} clickToggle={this.boardClickToggle} className='boardnav' />
                         <button className='board-search' onClick={this.boardClickToggle}>
                             <p className='header-board-menu'>
                                 <FontAwesome className='head-target' name='fas fa-bullseye fa-lg'/>
@@ -54,9 +62,10 @@ class Header extends Component {
                         <button className='board-search mini'>
                             <FontAwesome className='head-new' name='far fa-plus-square fa-lg' />
                         </button>
-                        <button className='board-search mini'>
+                        <button className='board-search mini' onClick={this.contactClickToggle}>
                             <FontAwesome className='head-note' name='far fa-at fa-lg' />
                         </button>
+                        <Contact contactClick={contactClick} contactToggle={this.contactClickToggle} />
                         <Link to={`/profile/${this.props.user.id}`}>
                             <img className='profile-img' src={this.props.user.profile_img} alt='profile' />
                         </Link>

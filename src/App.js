@@ -12,8 +12,8 @@ class App extends Component {
     return (
       <HashRouter>
         <div className="App">
-            {routes}
-            <CustomDragLayer />
+          {routes}
+          {/* <CustomDragLayer />  */}
         </div>
       </HashRouter>
     );

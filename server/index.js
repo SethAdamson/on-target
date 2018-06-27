@@ -5,7 +5,8 @@ const express = require('express')
     , bodyParser = require('body-parser')
     , passport = require('passport')
     , Auth0Strategy = require('passport-auth0')
-    , ctrl = require('./controllers');
+    , ctrl = require('./controllers')
+    , nodemailer = require('nodemailer');
 const app = express();
 
 //----------------DotEnv--------------------//
@@ -17,7 +18,9 @@ const {
     CLIENT_ID,
     CLIENT_SECRET,
     CALLBACK_URL,
-    CONNECTION_STRING
+    CONNECTION_STRING,
+    APP_ADDRESS,
+    APP_PASSWORD
 } = process.env;
 
 //----------------Middleware--------------------//
@@ -113,6 +116,30 @@ app.delete('/remove/card/:board/:card', ctrl.removeItem);
 app.delete('/remove/list/:board/:list', ctrl.removeItem);
 app.delete('/remove/board/:board', ctrl.removeItem);
 
+app.post('/send/email', function(req, res, next){
+    let {name, email} = req.body.user;
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: APP_ADDRESS,
+        pass: APP_PASSWORD
+      }
+    })
+    const mailOptions = {
+      from: `${email}`,
+      to: APP_ADDRESS,
+      subject: `${name}`,
+      text: `${req.body.message}`,
+      replyTo: `${email}`
+    }
+    transporter.sendMail(mailOptions, function(err, res) {
+      if (err) {
+        console.error('there was an error: ', err);
+      } else {
+        console.log('here is the res: ', res)
+      }
+    })
+});
 
 
 app.listen(SERVER_PORT, () => {

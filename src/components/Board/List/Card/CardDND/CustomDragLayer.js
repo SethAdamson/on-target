@@ -2,6 +2,14 @@ import * as React from 'react';
 import { DragLayer, XYCoord } from 'react-dnd';
 import {Types} from '../../../../../constants';
 import CardDragPreview from './CardDragPreview';
+import _ from 'lodash';
+
+// function snapToGrid(x, y) {
+//     const snappedX = Math.round(x / 16) * 16;
+//     const snappedY = Math.round(y / 16) * 16;
+  
+//     return [snappedX, snappedY];
+// }
 
 const layerStyles = {
 	position: 'fixed',
@@ -11,7 +19,11 @@ const layerStyles = {
 	top: 0,
 	width: '100%',
 	height: '100%',
-}
+};
+
+let subscribedToOffsetChange = false;
+
+let dragPreviewRef = null;
 
 function getItemStyles(props) {
 	const { initialOffset, currentOffset } = props
@@ -23,6 +35,13 @@ function getItemStyles(props) {
 
     let { x, y } = currentOffset;
     
+    // if (props.snapToGrid) {
+    //     x -= initialOffset.x;
+    //     y -= initialOffset.y;
+    //     [x, y] = snapToGrid(x, y);
+    //     x += initialOffset.x;
+    //     y += initialOffset.y;
+    // }
 
 	const transform = `translate(${x}px, ${y}px)`
 	return {
@@ -53,10 +72,22 @@ function CustomDragLayer (props) {
 	)
 }
 
-export default DragLayer(monitor => ({
-	item: monitor.getItem(),
-	itemType: monitor.getItemType(),
-	initialOffset: monitor.getInitialSourceClientOffset(),
-	currentOffset: monitor.getSourceClientOffset(),
-	isDragging: monitor.isDragging(),
-}))(CustomDragLayer)
+let updates = 0;
+export default DragLayer(monitor => {
+    if(updates++ %10 === 0){
+        return {
+            item: monitor.getItem(),
+            itemType: monitor.getItemType(),
+            initialOffset: monitor.getInitialSourceClientOffset(),
+            currentOffset: setInterval(monitor.getSourceClientOffset, 100),
+            isDragging: monitor.isDragging(),
+        }
+    } else {
+        return {
+            // item: monitor.getItem(),
+            // itemType: monitor.getItemType(),
+            // initialOffset: monitor.getInitialSourceClientOffset(),
+            // isDragging: monitor.isDragging(),
+        }
+    }
+})(CustomDragLayer)

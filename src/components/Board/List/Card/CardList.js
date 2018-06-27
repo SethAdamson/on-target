@@ -152,41 +152,6 @@ class CardList extends Component {
           cardList.push(<div key="placeholder" className="card-parent placeholder" />);
         }
 
-
-
-
-
-
-
-        // let cardDisplay = cards.filter(e => e.list_id === list_id).map((card, i) => {
-        //     if(isOver, canDrop){
-        //         cardDisplay.splice(drop_x, 0, <div className='placeholder'></div>);
-        //     }
-        //     return (
-                // <div className='card-parent' 
-                //     key={card.id} 
-                //     onClick={() => editFn({
-                //         id: card.id, 
-                //         desc: card.description, 
-                //         title: card.card_title, 
-                //         card_img: card.card_img, 
-                //         card_file: card.card_file,
-                //         list: {list_id: card.list_id, list_title: card.list_title }
-                //                 })}
-                //     >
-                //     <Card
-                //         id={card.id}
-                //         title={card.card_title}
-                //         desc={card.description}
-                //         list_id={card.list_id}
-                //         author_id={card.author_id}
-                //         card_x={i}
-                //         updateDropX = {this.updateDropX}
-                //     />
-                // </div> 
-        //     )
-        // })
-
         return connectDropTarget(
             <div className='cardlist-outside'>
                 {cardList}
