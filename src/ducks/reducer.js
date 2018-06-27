@@ -196,6 +196,9 @@ export function moveCardList(card_id, newList, lastList, lastCard_x, drop_x, boa
     let dragCard = cardsByList[lastList].splice(lastCard_x, 1);
     dragCard[0].list_id = newList;
     dragCard[0].list_location = drop_x;
+    if(!cardsByList[newList]){
+        cardsByList[newList] = [];
+    }
     cardsByList[newList].splice(drop_x, 0 , dragCard[0]);
     cardsByList[newList].map((e, i) => e.list_location = i );
     cardsByList[lastList].map((e, i) => e.list_location = i );

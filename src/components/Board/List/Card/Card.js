@@ -72,9 +72,6 @@ class Card extends Component {
     componentDidMount(){
         let {card_x, id} = this.props;
         axios.put(`/cards/update/${id}`, {card_x}).catch(e => console.log(e));
-        this.props.connectDragPreview(getEmptyImage(), {
-            captureDraggingState: true
-        });
     }
 
     // componentDidUpdate(props){
@@ -85,10 +82,10 @@ class Card extends Component {
     // }
 
     render(){
-        // console.log(this.props);
-        let{title, isDragging, connectDragSource, connectDropTarget, connectDragPreview} = this.props
+        let{title, isDragging, connectDragSource, connectDropTarget} = this.props
+        // console.log(isDragging);
         return connectDragSource(connectDropTarget(
-            <div className='card-content'>
+            <div className='card-content' >
                 <a className='card-title'>
                     {title}
                 </a> 
