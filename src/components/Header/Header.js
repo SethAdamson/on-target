@@ -20,7 +20,8 @@ class Header extends Component {
         super();
 
         this.state = {
-            search: '',
+            searchBar: '',
+            searchToggle: false,
             boardClick: false,
             contactClick: false,
         }
@@ -28,6 +29,8 @@ class Header extends Component {
         this.changeHeader = this.changeHeader.bind(this);
         this.boardClickToggle = this.boardClickToggle.bind(this);
         this.contactClickToggle = this.contactClickToggle.bind(this);
+        this.searchFocus = this.searchFocus.bind(this);
+        this.searchBlur = this.searchBlur.bind(this);
 
     }
 
@@ -48,9 +51,17 @@ class Header extends Component {
         this.setState({contactClick: !this.state.contactClick})
     }
 
+    searchFocus(){
+        this.setState({searchToggle: true})
+    }
+
+    searchBlur(){
+        this.setState({searchToggle: false})
+    }
+
     render(){
         let {currentBoard} = this.props;
-        let {boardClick, contactClick, search} = this.state;
+        let {boardClick, contactClick, searchBar, searchToggle} = this.state;
         return(
             <div className='head-parent image-head1'>
                 <div className='head-content'>
@@ -62,8 +73,8 @@ class Header extends Component {
                                 Boards
                             </p>
                         </button>
-                        <input name='search' className='board-search head-input' onChange={this.changeHeader}/>
-                        <Search search={search}/>
+                        <input name='searchBar' className='board-search head-input' onChange={this.changeHeader} onFocus={this.searchFocus} onBlur={this.searchBlur} />
+                        <Search search={searchBar} searchFocus={this.searchFocus} searchToggle={searchToggle}/>
                         <FontAwesome  className='search-icon' name="far fa-search"></FontAwesome>
                     </div> 
                     {/* <Link to='/home' style={{textDecoration: 'none'}}> */}
