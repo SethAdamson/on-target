@@ -14,7 +14,7 @@ module.exports= {
     },
     getLists: (req, res) => {
         const db = req.app.get('db');
-        const {id} = req.params
+        const {id} = req.user
 
         db.get_lists([id])
         .then(lists => {
@@ -28,7 +28,7 @@ module.exports= {
     },
     getCards: (req, res) => {
         const db = req.app.get('db');
-        const {id} = req.params
+        const {id} = req.user
 
         db.get_cards([id])
         .then(cards => {

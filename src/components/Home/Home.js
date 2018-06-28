@@ -3,8 +3,14 @@ import './Home.css';
 import Nav from './Nav/Nav';
 import Header from '../Header/Header';
 import {connect} from 'react-redux';
-import {getUser, getBoards, addBoard} from '../../ducks/reducer';
+import {getLists, 
+        getCards, 
+        getUser, 
+        getBoards,
+        addBoard
+} from '../../ducks/reducer';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
 
 class Home extends Component {
     constructor(){
@@ -21,8 +27,8 @@ class Home extends Component {
     }
 
     componentDidMount(){
-        this.props.getUser();
-        this.props.getBoards();
+        let {getUser, getBoards, getCards, getLists} = this.props;
+        axios.all([getUser(), getBoards(), getLists(), getCards()]);
     }
 
     handleHome(e){
@@ -104,4 +110,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, {getUser, getBoards, addBoard})(Home);
+export default connect(mapStateToProps, {getUser, getBoards, addBoard, getCards, getLists})(Home);

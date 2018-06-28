@@ -35,7 +35,7 @@ const listTarget = {
         let drop_x = component.state.listPlaceIdx;
         let item = monitor.getItem();
         let {board_id, list_x, list_id} = item;
-        let boardLists = [...props.lists];
+        let boardLists = props.lists.filter(list => list.board_id === board_id)
         let dragList = boardLists[list_x];
         document.getElementById(`list${item.list_id}`).style.display = 'block';
 
@@ -85,13 +85,12 @@ class BoardList extends Component{
     render(){
         let {lists, connectDropTarget, canDrop} = this.props;
         let {listPlaceIdx} = this.state;
-        console.log(listPlaceIdx);
-
+        
         let isPlaceHold = false;
         let listDisplay = [];
-
-
-        lists.forEach((list, i) => {
+        let filteredLists = lists.filter(list => list.board_id === this.props.board_id)
+        // console.log(filteredLists);
+        filteredLists.forEach((list, i) => {
           if (canDrop) {
             isPlaceHold = false;
             if (i === 0 && listPlaceIdx === -1) {

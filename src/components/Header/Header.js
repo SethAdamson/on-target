@@ -7,6 +7,12 @@ import {Link} from 'react-router-dom';
 import BoardNav from './BoardNav/BoardNav';
 import Contact from './Contact/Contact';
 import {withRouter} from 'react-router-dom';
+import axios from 'axios';
+import {getLists, 
+        getCards, 
+        getUser, 
+        getBoards,
+} from '../../ducks/reducer';
 
 class Header extends Component {
     constructor(){
@@ -22,6 +28,11 @@ class Header extends Component {
         this.boardClickToggle = this.boardClickToggle.bind(this);
         this.contactClickToggle = this.contactClickToggle.bind(this);
 
+    }
+
+    componentDidMount(){
+        let {getUser, getBoards, getCards, getLists} = this.props;
+        axios.all([getUser(), getBoards(), getLists(), getCards()]);
     }
 
     changeHeader(e){
@@ -83,4 +94,4 @@ function mapStateToProps(state){
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Header));
+export default withRouter(connect(mapStateToProps, {getUser, getBoards, getCards, getLists})(Header));
