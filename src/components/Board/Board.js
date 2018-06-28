@@ -50,7 +50,8 @@ class Board extends Component {
     }
 
     componentDidMount(){
-        // this.getInfo();
+        let {board} = this.props.match.params;
+        this.props.getSingleBoard(board);
     }
 
     componentDidUpdate(props){
@@ -113,9 +114,11 @@ class Board extends Component {
     }
 
     render(){
-        // let {backgroundColor, boardName} = this.props.location.state
+        let {singleBoard} = this.props;
         let thisBoard = this.props.boards.filter(board => board.id === +this.props.match.params.board);
-        let singleBoard = thisBoard[0];
+        if(thisBoard.length !== 0){
+            singleBoard = thisBoard[0];
+        }
         // console.log(singleBoard);
         let {title, cardEditting, editID, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation, listPlaceIdx, listCanDrop, listIsOver} = this.state;
         
