@@ -10,7 +10,7 @@ import {getLists,
         addBoard
 } from '../../ducks/reducer';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
+
 
 class Home extends Component {
     constructor(){
@@ -18,7 +18,6 @@ class Home extends Component {
 
         this.state = {
             newBoardName: '',
-            redirect: false,
         }
 
         this.handleHome = this.handleHome.bind(this);
@@ -27,8 +26,8 @@ class Home extends Component {
     }
 
     componentDidMount(){
-        let {getUser, getBoards, getCards, getLists} = this.props;
-        axios.all([getUser(), getBoards(), getLists(), getCards()]);
+        // let {getUser, getBoards, getCards, getLists} = this.props;
+        // axios.all([getUser(), getBoards(), getLists(), getCards()]);
     }
 
     handleHome(e){

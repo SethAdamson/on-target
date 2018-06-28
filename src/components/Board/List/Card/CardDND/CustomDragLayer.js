@@ -79,7 +79,7 @@ export default DragLayer(monitor => {
             item: monitor.getItem(),
             itemType: monitor.getItemType(),
             initialOffset: monitor.getInitialSourceClientOffset(),
-            currentOffset: setInterval(monitor.getSourceClientOffset, 100),
+            currentOffset: monitor.getSourceClientOffset(),
             isDragging: monitor.isDragging(),
         }
     } else {

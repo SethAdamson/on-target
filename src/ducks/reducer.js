@@ -44,7 +44,7 @@ export default function reducer(state=initialState, action){
             return Object.assign({}, state, {cards: action.payload})
         case GET_SINGLE_BOARD + FULFILLED:
             return Object.assign({}, state, {singleBoard: action.payload})
-        case UPDATE_BOARD + FULFILLED:
+        case UPDATE_BOARD:
             return Object.assign({}, state, {singleBoard: action.payload})
         case UPDATE_PROFILE + FULFILLED:
             return Object.assign({}, state, {user: action.payload})
@@ -113,11 +113,37 @@ export function getSingleBoard(id){
     }
 }
 
-export function updateBoard(id, val){
-    let newBoard = axios.put(`/change/boards/${id}`, val).then(res => res.data[0]).catch(e => console.log(e));
+export function updateBoard(id, val, boards){
+    let changedBoards = [];
+    if(val.bg_img){
+        changedBoards = boards.map(board => {
+            if(board.id === id){
+                board.background_img = val.bg_img
+            }
+            return board;
+        })
+    }
+    if(val.bg_color){
+        changedBoards = boards.map(board => {
+            if(board.id === id){
+                board.background_img = null;
+                board.background_color = val.bg_color;
+            }
+            return board;
+        })
+    }
+    if(val.name){
+        changedBoards = boards.map(board => {
+            if(board.id === id){
+                board.name = val.name
+            }
+            return board;
+        })
+    }
+    axios.put(`/change/boards/${id}`, val).then(res => res.data[0]).catch(e => console.log(e));
     return {
         type: UPDATE_BOARD,
-        payload: newBoard,
+        payload: changedBoards,
     }
 }
 

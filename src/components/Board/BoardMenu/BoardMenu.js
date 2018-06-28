@@ -53,11 +53,18 @@ class BoardMenu extends Component {
     }
 
     updateColor(val){
-            this.props.updateBoard(this.props.currentID, {bg_color: val});
+        let {boards} = this.props;
+        this.props.updateBoard(this.props.currentID, {bg_color: val}, boards);
     }
 
-    updateImage(val){
-            this.props.updateBoard(this.props.currentID, {bg_img: val});
+    updateImage(val){        
+        let {boards} = this.props;
+        this.props.updateBoard(this.props.currentID, {bg_img: val}, boards);
+        boards.map(board => {
+            if(board.id === this.props.currentID){
+                board.background_img = val
+            }
+        })
     }
 
     bgToggle(){

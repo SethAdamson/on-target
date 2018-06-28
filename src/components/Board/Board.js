@@ -50,7 +50,7 @@ class Board extends Component {
     }
 
     componentDidMount(){
-        this.getInfo();
+        // this.getInfo();
     }
 
     componentDidUpdate(props){
