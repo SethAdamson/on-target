@@ -5,7 +5,7 @@ import {findDOMNode} from 'react-dom';
 import {Types} from '../../../../constants';
 import axios from 'axios';
 import {getEmptyImage} from 'react-dnd-html5-backend';
-
+  
 const cardSource = {
     // canDrag(props){
     //     return props.isReady;
@@ -43,7 +43,7 @@ const cardTarget = {
         // console.log(drop_x);
         props.updateDropX(drop_x);
     }
-}
+};
 
 function sourceCollect(connect, monitor){
     return {
@@ -51,13 +51,13 @@ function sourceCollect(connect, monitor){
         connectDragPreview: connect.dragPreview(),
         isDragging: monitor.isDragging(),
     };
-}
+};
 
 function dropCollect(connect, monitor){
     return {
         connectDropTarget: connect.dropTarget(),
     };
-}
+};
 
 
 class Card extends Component {
@@ -71,10 +71,10 @@ class Card extends Component {
 
     componentDidMount(){
         let {card_x, id} = this.props;
-        axios.put(`/cards/update/${id}`, {card_x});
-        this.props.connectDragPreview(getEmptyImage(), {
-            captureDraggingState: true
-        });
+        // axios.put(`/cards/update/${id}`, {card_x}).catch(e => console.log(e));
+        // this.props.connectDragPreview(getEmptyImage(), {
+        //     captureDraggingState: true,
+        // })
     }
 
     // componentDidUpdate(props){
@@ -85,10 +85,10 @@ class Card extends Component {
     // }
 
     render(){
-        // console.log(this.props);
-        let{title, isDragging, connectDragSource, connectDropTarget, connectDragPreview} = this.props
+        let{title, connectDragSource, connectDropTarget} = this.props
+        // console.log(isDragging);
         return connectDragSource(connectDropTarget(
-            <div className='card-content'>
+            <div className='card-content' >
                 <a className='card-title'>
                     {title}
                 </a> 

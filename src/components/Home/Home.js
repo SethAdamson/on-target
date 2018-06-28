@@ -3,7 +3,12 @@ import './Home.css';
 import Nav from './Nav/Nav';
 import Header from '../Header/Header';
 import {connect} from 'react-redux';
-import {getUser, getBoards, addBoard} from '../../ducks/reducer';
+import {getLists, 
+        getCards, 
+        getUser, 
+        getBoards,
+        addBoard
+} from '../../ducks/reducer';
 import {Link} from 'react-router-dom';
 
 class Home extends Component {
@@ -12,7 +17,6 @@ class Home extends Component {
 
         this.state = {
             newBoardName: '',
-            redirect: false,
         }
 
         this.handleHome = this.handleHome.bind(this);
@@ -21,8 +25,8 @@ class Home extends Component {
     }
 
     componentDidMount(){
-        this.props.getUser();
-        this.props.getBoards();
+        // let {getUser, getBoards, getCards, getLists} = this.props;
+        // axios.all([getUser(), getBoards(), getLists(), getCards()]);
     }
 
     handleHome(e){
@@ -82,7 +86,8 @@ class Home extends Component {
                 <div className='home-content'>
                     <Nav />
                     <div className='create-board'>
-                        <h2 className='create-title'>Get your life On-Target today!</h2>
+                        <img src={'https://media.giphy.com/media/xT0xeK2kHV7n4qVGEg/source.gif'} className='home-gif' />
+                        <h2 className='create-title'>Get On-Target today!</h2>
                         <input name='newBoardName' className='home-create' onChange={this.handleHome}/>
                         <button className='home-create-button' onClick={this.addNewBoard}>Create Your Board</button>
                     </div>
@@ -103,4 +108,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, {getUser, getBoards, addBoard})(Home);
+export default connect(mapStateToProps, {getUser, getBoards, addBoard, getCards, getLists})(Home);

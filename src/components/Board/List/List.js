@@ -66,7 +66,7 @@ class List extends Component {
 
     componentDidMount(){
         let {list_x, list_id} = this.props;
-        axios.put(`/lists/update/${list_id}`, {list_x});
+        axios.put(`/lists/update/${list_id}`, {list_x}).catch(e => console.log(e));
     }
 
     changeListTitle(val){

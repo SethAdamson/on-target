@@ -1,0 +1,35 @@
+.contact-shown {
+    transition: .35s;
+    position: absolute;
+    top: 40px;
+    right: 0px;
+    width: 400px;
+    color: grey;
+    height: 600px;
+    overflow: hidden;
+    background-color: rgb(250,250,250);
+    border-radius: 2px;
+    box-shadow: -3px 3px 2px rgba(0, 0, 0, 0.25);
+}
+
+.contact-hidden {
+    transition: .35s;
+    position: absolute;
+    top: 40px;
+    right: -400px;
+    height: 600px;
+    width: 400px;
+    overflow: hidden;
+    background-color: rgb(250,250,250);
+    border: 0px;
+}
+
+.contact-section{
+    text-align: left;
+    margin: 20px;
+}
+
+.email-subject{
+    width: 86%;
+}
+

@@ -1,0 +1,34 @@
+.search-shown {
+    transition: .35s;
+    position: absolute;
+    top: 40px;
+    left: 50px;
+    width: 200px;
+    color: grey;
+    height: 400px;
+    overflow: hidden;
+    background-color: rgb(250,250,250);
+    border-radius: 2px;
+    box-shadow: -3px 3px 2px rgba(0, 0, 0, 0.25);
+}
+
+.search-hidden {
+    transition: .35s;
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    height: 0px;
+    width: 200px;
+    overflow: hidden;
+    background-color: rgb(250,250,250);
+    border: 0px;
+}
+
+.search-section{
+    text-align: left;
+    margin: 20px;
+}
+
+.email-subject{
+    width: 86%;
+}

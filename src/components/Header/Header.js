@@ -5,7 +5,15 @@ import FontAwesome from 'react-fontawesome';
 import targetWhite from '../../images/targetWhite.png';
 import {Link} from 'react-router-dom';
 import BoardNav from './BoardNav/BoardNav';
+import Contact from './Contact/Contact';
+import Search from './Search/Search';
 import {withRouter} from 'react-router-dom';
+import axios from 'axios';
+import {getLists, 
+        getCards, 
+        getUser, 
+        getBoards,
+} from '../../ducks/reducer';
 
 class Header extends Component {
     constructor(){
@@ -14,11 +22,18 @@ class Header extends Component {
         this.state = {
             search: '',
             boardClick: false,
+            contactClick: false,
         }
 
         this.changeHeader = this.changeHeader.bind(this);
         this.boardClickToggle = this.boardClickToggle.bind(this);
+        this.contactClickToggle = this.contactClickToggle.bind(this);
 
+    }
+
+    componentDidMount(){
+        let {getUser, getBoards, getCards, getLists} = this.props;
+        axios.all([getUser(), getBoards(), getLists(), getCards()]);
     }
 
     changeHeader(e){
@@ -29,13 +44,18 @@ class Header extends Component {
         this.setState({boardClick: !this.state.boardClick})
     }
 
+    contactClickToggle(){
+        this.setState({contactClick: !this.state.contactClick})
+    }
+
     render(){
         let {currentBoard} = this.props;
+        let {boardClick, contactClick, search} = this.state;
         return(
             <div className='head-parent image-head1'>
                 <div className='head-content'>
                     <div className='head-search'>
-                        <BoardNav currentBoard = {currentBoard} boardClick={this.state.boardClick} clickToggle={this.boardClickToggle} className='boardnav' />
+                        <BoardNav currentBoard = {currentBoard} boardClick={boardClick} clickToggle={this.boardClickToggle} className='boardnav' />
                         <button className='board-search' onClick={this.boardClickToggle}>
                             <p className='header-board-menu'>
                                 <FontAwesome className='head-target' name='fas fa-bullseye fa-lg'/>
@@ -43,6 +63,7 @@ class Header extends Component {
                             </p>
                         </button>
                         <input name='search' className='board-search head-input' onChange={this.changeHeader}/>
+                        <Search search={search}/>
                         <FontAwesome  className='search-icon' name="far fa-search"></FontAwesome>
                     </div> 
                     {/* <Link to='/home' style={{textDecoration: 'none'}}> */}
@@ -54,9 +75,10 @@ class Header extends Component {
                         <button className='board-search mini'>
                             <FontAwesome className='head-new' name='far fa-plus-square fa-lg' />
                         </button>
-                        <button className='board-search mini'>
+                        <button className='board-search mini' onClick={this.contactClickToggle}>
                             <FontAwesome className='head-note' name='far fa-at fa-lg' />
                         </button>
+                        <Contact contactClick={contactClick} contactToggle={this.contactClickToggle} />
                         <Link to={`/profile/${this.props.user.id}`}>
                             <img className='profile-img' src={this.props.user.profile_img} alt='profile' />
                         </Link>
@@ -74,4 +96,4 @@ function mapStateToProps(state){
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Header));
+export default withRouter(connect(mapStateToProps, {getUser, getBoards, getCards, getLists})(Header));

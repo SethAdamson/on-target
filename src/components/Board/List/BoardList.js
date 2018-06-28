@@ -35,14 +35,19 @@ const listTarget = {
         let drop_x = component.state.listPlaceIdx;
         let item = monitor.getItem();
         let {board_id, list_x, list_id} = item;
+        let boardLists = props.lists.filter(list => list.board_id === board_id)
+        let dragList = boardLists[list_x];
         document.getElementById(`list${item.list_id}`).style.display = 'block';
 
 
         if(list_x>drop_x){
             drop_x+=1;
         }
-        console.log('List Drop values', list_id, list_x, drop_x, board_id);
-        props.moveList(list_id, list_x, drop_x, board_id);
+        // console.log('List Drop values', list_id, list_x, drop_x, board_id, props.lists);
+        boardLists.splice(list_x, 1);
+        boardLists.splice(drop_x, 0 , dragList)
+        props.moveList(list_id, list_x, drop_x, board_id, boardLists);
+        component.setPlaceIdx(undefined);
     }
 };
 
@@ -62,7 +67,6 @@ class BoardList extends Component{
 
         this.state = {
             listPlaceIdx: undefined,
-            listDrop: undefined
         }
 
         this.setPlaceIdx = this.setPlaceIdx.bind(this);
@@ -79,34 +83,14 @@ class BoardList extends Component{
     }
 
     render(){
-        let {lists, connectDropTarget, canDrop, isOver} = this.props;
-        let {listPlaceIdx, listDrop} = this.state;
-        // console.log(listPlaceIdx, listDrop);
-
+        let {lists, connectDropTarget, canDrop} = this.props;
+        let {listPlaceIdx} = this.state;
+        
         let isPlaceHold = false;
         let listDisplay = [];
-
-
-        lists.forEach((list, i) => {
-        //     listDisplay.push(
-        //         <div className='list-parent' key={list.list_id} id={list.list_id}>
-        //             <List 
-        //             list_id={list.list_id}                                                                                                                                                                                                                                      
-        //             list_title={list.list_title}
-        //             author_id={list.author_id}
-        //             team_id={list.team_id}
-        //             board_id={this.props.board_id}
-        //             editFn={this.props.editFn}
-        //             list_x={i}
-        //             setPlaceIdx={this.setPlaceIdx}
-        //             setDropValue={this.setDropValue}
-        //             />
-        //         </div>)
-        //     if(listDrop){
-        //         listDisplay.splice(listDrop, 0, <div key="placeholder" className="list-parent list-placeholder" />)
-        //     }
-
-        // })
+        let filteredLists = lists.filter(list => list.board_id === this.props.board_id)
+        // console.log(filteredLists);
+        filteredLists.forEach((list, i) => {
           if (canDrop) {
             isPlaceHold = false;
             if (i === 0 && listPlaceIdx === -1) {

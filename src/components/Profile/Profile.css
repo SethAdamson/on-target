@@ -10,12 +10,12 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     padding: 50px 100px;
 }
 
 .profile-section {
     width: 600px;
+    margin: 0 50px;
 }
 
 .profile-display {
@@ -32,4 +32,13 @@
 
 .profile-info {
     margin: 10px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.profile-list{
+    display: flex;
+    flex-direction: column;
 }

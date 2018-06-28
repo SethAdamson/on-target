@@ -1,9 +1,6 @@
 .board-parent {
     height: 100vh;
     width: 100%;
-}
-
-.board-image {
     background-size: 100% 100%;
 }
 

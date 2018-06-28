@@ -50,7 +50,8 @@ class Board extends Component {
     }
 
     componentDidMount(){
-        this.getInfo();
+        let {board} = this.props.match.params;
+        this.props.getSingleBoard(board);
     }
 
     componentDidUpdate(props){
@@ -63,7 +64,6 @@ class Board extends Component {
         let {board} = this.props.match.params;
         let {getUser, getBoards, getCards, getLists, getSingleBoard} = this.props;
         axios.all([getUser(), getBoards(), getLists(board), getCards(board), getSingleBoard(board)]);
-        
     }
 
     changeBoardName(val){
@@ -114,33 +114,23 @@ class Board extends Component {
     }
 
     render(){
-        // let {backgroundColor, boardName} = this.props.location.state
-        let {lists, singleBoard} = this.props;
+        let {singleBoard} = this.props;
+        let thisBoard = this.props.boards.filter(board => board.id === +this.props.match.params.board);
+        if(thisBoard.length !== 0){
+            singleBoard = thisBoard[0];
+        }
+        // console.log(singleBoard);
         let {title, cardEditting, editID, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation, listPlaceIdx, listCanDrop, listIsOver} = this.state;
         
         let bgstyle = {};
-        if(singleBoard.background_img){
-            bgstyle = {backgroundImage: `url(${singleBoard.background_img})`};
-        } else {
-            bgstyle = {backgroundColor: singleBoard.background_color};
+        if(singleBoard){
+            if(singleBoard.background_img){
+                bgstyle = {backgroundImage: `url(${singleBoard.background_img})`};
+            } else {
+                bgstyle = {backgroundColor: singleBoard.background_color};
+            }
         }
 
-        // let listDisplay = lists.map((list, i) => {
-        //     return (
-        //         <div className='list-parent' key={list.list_id}>
-        //             <List 
-        //             list_id={list.list_id}                                                                                                                                                                                                                                      
-        //             list_title={list.list_title}
-        //             author_id={list.author_id}
-        //             team_id={list.team_id}
-        //             board_id={singleBoard.id}
-        //             editFn={this.editCard}
-        //             list_x={i}
-        //             setPlaceIdx={this.setPlaceIdx}
-        //             />
-        //         </div> 
-        //     )
-        // })
         return(
             <div className={singleBoard.background_img ? 'board-parent board-image' : 'board-parent'} style={bgstyle}>
                 {cardEditting ?

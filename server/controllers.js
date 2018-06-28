@@ -14,7 +14,7 @@ module.exports= {
     },
     getLists: (req, res) => {
         const db = req.app.get('db');
-        const {id} = req.params
+        const {id} = req.user
 
         db.get_lists([id])
         .then(lists => {
@@ -28,7 +28,7 @@ module.exports= {
     },
     getCards: (req, res) => {
         const db = req.app.get('db');
-        const {id} = req.params
+        const {id} = req.user
 
         db.get_cards([id])
         .then(cards => {
@@ -255,7 +255,7 @@ module.exports= {
         const db = req.app.get('db');
         const {id} = req.params;
         const {lastList_x, drop_x, board_id} = req.body;
-        console.log('move list ctrl', id, req.body);
+        // console.log('move list ctrl', id, req.body);
 
         if(lastList_x<drop_x){
             db.move_list_increase([id, lastList_x, drop_x, board_id])

@@ -5,6 +5,7 @@ import {DropTarget} from 'react-dnd';
 import {Types, CARD_HEIGHT, CARD_MARGIN, OFFSET_HEIGHT} from '../../../../constants';
 import {connect} from 'react-redux';
 import {moveCardSame, moveCardList} from '../../../../ducks/reducer';
+import _ from 'lodash';
 
 function getPlaceIndex(y, scrollY) {
     // shift placeholder if y position more than card height / 2
@@ -38,8 +39,7 @@ const cardListDropTarget = {
         const nextList = props.list_id;
         let drop_x = component.state.placeIdx;
         let {id} = item;
-        // const nextCard_x = 
-
+        let boardCards = [...props.cards];
 
         if(monitor.didDrop()){
             return;
@@ -47,14 +47,17 @@ const cardListDropTarget = {
         if(lastList !== nextList){
             drop_x += 1;
         }
+        if(lastCard_x > drop_x){
+            drop_x +=1;
+        }
         if(lastList === nextList && lastCard_x === drop_x){
             return;
         } else if (lastList !== nextList){
-            props.moveCardList(id, nextList, lastList, lastCard_x, drop_x, props.board_id);
+            props.moveCardList(id, nextList, lastList, lastCard_x, drop_x, props.board_id, boardCards);
         } else if(lastList === nextList){
-            props.moveCardSame(id, lastCard_x, drop_x, lastList, props.board_id);
+            props.moveCardSame(id, lastCard_x, drop_x, lastList, props.board_id, boardCards);
         }
-        // console.log(id, nextList, lastList, lastCard_x, drop_x, props.board_id);
+        console.log(boardCards);
 
     }
 };
@@ -96,9 +99,10 @@ class CardList extends Component {
 
         let isPlaceHold = false;
         let cardList = [];
+        let cardsToSort = _.orderBy(cards, 'list_location');
 
 
-        cards.filter(e => e.list_id === list_id).forEach((card, i) => {
+        cardsToSort.filter(e => e.list_id === list_id).forEach((card, i) => {
           if (isOver && canDrop) {
             isPlaceHold = false;
             if (i === 0 && placeIdx === -1) {
@@ -147,41 +151,6 @@ class CardList extends Component {
         if (isOver && canDrop && cardList.length === 0) {
           cardList.push(<div key="placeholder" className="card-parent placeholder" />);
         }
-
-
-
-
-
-
-
-        // let cardDisplay = cards.filter(e => e.list_id === list_id).map((card, i) => {
-        //     if(isOver, canDrop){
-        //         cardDisplay.splice(drop_x, 0, <div className='placeholder'></div>);
-        //     }
-        //     return (
-                // <div className='card-parent' 
-                //     key={card.id} 
-                //     onClick={() => editFn({
-                //         id: card.id, 
-                //         desc: card.description, 
-                //         title: card.card_title, 
-                //         card_img: card.card_img, 
-                //         card_file: card.card_file,
-                //         list: {list_id: card.list_id, list_title: card.list_title }
-                //                 })}
-                //     >
-                //     <Card
-                //         id={card.id}
-                //         title={card.card_title}
-                //         desc={card.description}
-                //         list_id={card.list_id}
-                //         author_id={card.author_id}
-                //         card_x={i}
-                //         updateDropX = {this.updateDropX}
-                //     />
-                // </div> 
-        //     )
-        // })
 
         return connectDropTarget(
             <div className='cardlist-outside'>

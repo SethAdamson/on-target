@@ -5,7 +5,9 @@ const express = require('express')
     , bodyParser = require('body-parser')
     , passport = require('passport')
     , Auth0Strategy = require('passport-auth0')
-    , ctrl = require('./controllers');
+    , ctrl = require('./controllers')
+    , nodemailer = require('nodemailer')
+    , smtpTransport = require('nodemailer-smtp-transport');
 const app = express();
 
 //----------------DotEnv--------------------//
@@ -17,10 +19,15 @@ const {
     CLIENT_ID,
     CLIENT_SECRET,
     CALLBACK_URL,
-    CONNECTION_STRING
+    CONNECTION_STRING,
+    APP_ADDRESS,
+    APP_PASSWORD,
+    REACT_APP_FRONTEND_URL
 } = process.env;
 
 //----------------Middleware--------------------//
+
+app.use( express.static( `${__dirname}/../build` ) );
 
 app.use(bodyParser.json());
 massive(CONNECTION_STRING).then(db => {
@@ -80,18 +87,18 @@ passport.deserializeUser((id, done) => {
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: `http://localhost:3000/#/home`
+    successRedirect: `${REACT_APP_FRONTEND_URL}#/home`
 }));
 app.get('/auth/logout', (req, res) => {
     req.logout();
-    res.redirect(`http://localhost:3000/#/`)
+    res.redirect(`${REACT_APP_FRONTEND_URL}#/`)
 });
 app.get('/auth/user', (req, res) => {
     if(req.user){
         res.status(200).send(req.user);
     } else {
         res.status(401).send('Unauthorized');
-        // res.redirect(`http://localhost:3000/#/`);
+        // res.redirect(`${REACT_APP_FRONTEND_URL}/#/`);
     }
 });
 
@@ -113,6 +120,31 @@ app.delete('/remove/card/:board/:card', ctrl.removeItem);
 app.delete('/remove/list/:board/:list', ctrl.removeItem);
 app.delete('/remove/board/:board', ctrl.removeItem);
 
+app.post('/send/email', function(req, res, next){
+    let {user, message, emailSubject} = req.body;
+    const transporter = nodemailer.createTransport(smtpTransport({
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      auth: {
+        user: APP_ADDRESS,
+        pass: APP_PASSWORD
+      }
+    }));
+    const mailOptions = {
+      from: `${user.email}`,
+      to: APP_ADDRESS,
+      subject: `${emailSubject}`,
+      text: `${message}`,
+      replyTo: `${user.email}`
+    }
+    transporter.sendMail(mailOptions, function(err, res) {
+      if (err) {
+        console.error('there was an error: ', err);
+      } else {
+        console.log('here is the res: ', res)
+      }
+    })
+});
 
 
 app.listen(SERVER_PORT, () => {

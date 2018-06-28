@@ -18,21 +18,26 @@ class BoardMenu extends Component {
             homeRedirect: false,
             colors: [                
                 {name: 'baseGreen', color:'#1ee6aa'},
-                {name: 'red', color:'#c80000'},
-                {name: 'purple', color:'#6400c8'},
+                {name: 'red', color:'#c83232'},
+                {name: 'purple', color:'#8232c8'},
                 {name: 'sky', color:'#0096c8'},
                 {name: 'darkGreen', color:'#14684f'},
-                {name: 'yellow', color:'#fae600'},
-                {name: 'orange', color:'#fa9600'},
-                {name: 'blue', color:'#1919ff'},
-                {name: 'pink', color:'#ff00ff'},
+                {name: 'yellow', color:'#e6e664'},
+                {name: 'orange', color:'#c87d19'},
+                {name: 'blue', color:'#234bdc'},
+                {name: 'pink', color:'#c84bc8'},
             ],
 
             images: [
-                {name:'dog', img:'http://www.ultrahdfreewallpapers.com/uploads/large/animals/dog-hd-wallpaper-0018.jpg'},
-                {name: 'giraffe', img:'https://newevolutiondesigns.com/images/freebies/animals-background-6.jpg'},
-                {name: 'waterDrop', img:'http://www.kinyu-z.net/data/wallpapers/76/969432.jpg'},
-                // {name: 'beach', img:'http://www.intrawallpaper.com/static/images/Hawaii-Beach-Wallpaper-HD_8pA2vrZ.jpg'},
+                {name: 'dog', img:'http://www.ultrahdfreewallpapers.com/uploads/large/animals/dog-hd-wallpaper-0018.jpg'},
+                {name: 'waterDrop', img:'http://www.ultrahdfreewallpapers.com/uploads/large/3d-and-abstract/3d-hd-wallpaper-0933.jpg'},
+                {name: 'winter', img:'http://www.ultrahdfreewallpapers.com/uploads/large/nature/4k-nature-wallpaper-0055.jpg'},
+                {name: 'lion', img:'http://www.ultrahdfreewallpapers.com/uploads/large/animals/lion-hd-wallpaper-363.jpg'},
+                {name: 'desert', img:'http://www.ultrahdfreewallpapers.com/uploads/large/nature/4k-nature-wallpaper-0005.jpg'},
+                {name: 'mountain', img:'http://www.ultrahdfreewallpapers.com/uploads/large/nature/nature-1080p-wallpaper-0011.jpg'},
+                {name: 'beach', img:'http://www.ultrahdfreewallpapers.com/uploads/large/nature/nature-hd-background-0031.jpg'},
+                {name: 'usa', img:'http://www.ultrahdfreewallpapers.com/uploads/large/flags/usa-flag-wallpaper-001.jpg'},
+                {name: 'eagle', img:'http://www.ultrahdfreewallpapers.com/uploads/large/birds/eagle-hd-wallpaper-download-0024.jpg'},
             ]
         }
 
@@ -48,11 +53,18 @@ class BoardMenu extends Component {
     }
 
     updateColor(val){
-            this.props.updateBoard(this.props.currentID, {bg_color: val});
+        let {boards} = this.props;
+        this.props.updateBoard(this.props.currentID, {bg_color: val}, boards);
     }
 
-    updateImage(val){
-            this.props.updateBoard(this.props.currentID, {bg_img: val});
+    updateImage(val){        
+        let {boards} = this.props;
+        this.props.updateBoard(this.props.currentID, {bg_img: val}, boards);
+        boards.map(board => {
+            if(board.id === this.props.currentID){
+                board.background_img = val
+            }
+        })
     }
 
     bgToggle(){
