@@ -1,5 +1,5 @@
 .home-parent {
-    background-color: rgb(240, 240, 240);
+    background: linear-gradient(to left, #d6d6d6, #f7f7f7, #d6d6d6);
     height: 100vh;
     width: 100%;
     position: relative;
@@ -9,7 +9,7 @@
 .home-header {
     height: 40px;
     width: 100%;
-    background-color: #1ee6aa;
+    background: linear-gradient(to left, #508676, #20ffbc, #28ffbf, #508676);
     position: fixed;
     z-index: 10;
 }
@@ -29,10 +29,25 @@ ul {
     padding: 50px 100px;
 }
 
+.home-gif {
+    border-radius: 5px;
+}
+
+.create-title {
+    color: white;
+    position: relative;
+    top: -275px;
+    text-shadow: 2px 2px 3px rgb(90, 90, 90); 
+}
+
 .create-board {
     width: 45%;
+    height: 500px;
     display: flex;
     flex-direction: column;
+    background-color: rgb(250, 250, 250);
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 5px;
 }
 
 .home-list {

@@ -8,12 +8,21 @@ import {RIEInput} from 'riek';
 import _ from 'lodash';
 
 class Profile extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
 
         this.state = {
-
+            editting: false,
+            fName: props.user.first_name,
+            lName: props.user.last_name,
+            usernameLocal: props.user.username,
+            emailLocal: props.user.email,
+            imgLocal: props.user.profile_img
         }
+
+        this.editToggle = this.editToggle.bind(this);
+        this.handleProfile = this.handleProfile.bind(this);
+
     }
 
     componentDidMount(){
@@ -21,8 +30,23 @@ class Profile extends Component {
         this.props.getBoards();
     }
 
+    editToggle(){
+        this.setState({editting: !this.state.editting});
+    }
+
+    handleProfile(e){
+        this.setState({[e.target.name]: e.target.value})
+    }
+
+    updateProfile(){
+        let {id} = this.props.user;
+        let {fName, lName, usernameLocal, emailLocal} = this.state;
+        this.props.updateProfile(id, fName, lName, usernameLocal, emailLocal);
+    }
+
     render(){
-        let {profile_img, first_name, last_name, username, email} = this.props.user;
+        let {editting, nameLocal, usernameLocal, emailLocal,  fName, lName, imgLocal} = this.state;
+        console.log(this.props, usernameLocal, emailLocal, fName, lName);
         return(
             <div className='profile-parent'>
                 <div className='home-header'>
@@ -34,28 +58,44 @@ class Profile extends Component {
                         <h1 className='profile-title'> 
                             Profile
                         </h1>
-                    <div className='profile-display'>
-                        <img src={profile_img} alt='Profile' className='profile-picture' />
-                        <div className='profile-info'>
-                            <div className='profile-input'>
-                                Name:
-                                {`${first_name} ${last_name}`}
-                                {/* <RIEInput value={`${first_name} ${last_name}`}
-                                    propName='text' 
-                                    className='profile-name-input'
-                                    change={this.changeProfileName} 
-                                    validate={_.isString}/> */}
-                            </div>    
-                            <div className='profile-input'>
-                                Username:
-                                {username}
-                            </div>    
-                            <div className='profile-input'>
-                                Email:
-                                {email}
-                            </div>    
+                        <div className='profile-display'>
+                            <img src={imgLocal} alt='Profile' className='profile-picture' />
+                            <div className='profile-info'>
+                                <div className='profile-list'>
+                                    <h4>Name:</h4>
+                                    {editting ?
+                                        <div className='profile-name-input'>
+                                            <input types='text' name='fName' className='profile-input' value={fName} onChange={this.handleProfile}/>
+                                            <input types='text' name='lName' className='profile-input' value={lName} onChange={this.handleProfile}/>
+                                        </div> 
+                                    :
+                                        <div className='profile-list-name'>{`${fName} ${lName}`}</div> 
+                                    }
+                                </div>    
+                                <div className='profile-list'>
+                                    <h4>Username:</h4>
+                                    {editting ?
+                                        <input types='text' name='usernameLocal'  className='profile-input' value={usernameLocal} onChange={this.handleProfile}/>
+                                    :
+                                        <div className='profile-list-name'>{usernameLocal}</div> 
+                                    }
+                                </div>    
+                                <div className='profile-list'>
+                                    <h4>Email:</h4>
+                                    {editting ?
+                                        <input types='text' name='emailLocal' className='profile-input' value={emailLocal} onChange={this.handleProfile}/>
+                                    :
+                                        <div className='profile-list-name'>{emailLocal}</div> 
+                                    }
+                                </div>
+                                {editting ?
+                                        <button className='profile-edit' onClick={this.editToggle}>Save Changes</button>
+                                    :
+                                        <button className='profile-edit' onClick={this.editToggle}>Edit Profile</button> 
+                                    } 
+                                   
+                            </div> 
                         </div> 
-                    </div> 
                     </div> 
                 </div> 
             </div> 

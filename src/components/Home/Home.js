@@ -82,7 +82,8 @@ class Home extends Component {
                 <div className='home-content'>
                     <Nav />
                     <div className='create-board'>
-                        <h2 className='create-title'>Get your life On-Target today!</h2>
+                        <img src={'https://media.giphy.com/media/xT0xeK2kHV7n4qVGEg/source.gif'} className='home-gif' />
+                        <h2 className='create-title'>Get On-Target today!</h2>
                         <input name='newBoardName' className='home-create' onChange={this.handleHome}/>
                         <button className='home-create-button' onClick={this.addNewBoard}>Create Your Board</button>
                     </div>

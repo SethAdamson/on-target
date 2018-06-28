@@ -29,14 +29,14 @@ class BoardMenu extends Component {
             ],
 
             images: [
-                {name:'dog', img:'http://www.ultrahdfreewallpapers.com/uploads/large/animals/dog-hd-wallpaper-0018.jpg'},
+                {name: 'dog', img:'http://www.ultrahdfreewallpapers.com/uploads/large/animals/dog-hd-wallpaper-0018.jpg'},
                 {name: 'waterDrop', img:'http://www.ultrahdfreewallpapers.com/uploads/large/3d-and-abstract/3d-hd-wallpaper-0933.jpg'},
                 {name: 'winter', img:'http://www.ultrahdfreewallpapers.com/uploads/large/nature/4k-nature-wallpaper-0055.jpg'},
                 {name: 'lion', img:'http://www.ultrahdfreewallpapers.com/uploads/large/animals/lion-hd-wallpaper-363.jpg'},
                 {name: 'desert', img:'http://www.ultrahdfreewallpapers.com/uploads/large/nature/4k-nature-wallpaper-0005.jpg'},
                 {name: 'mountain', img:'http://www.ultrahdfreewallpapers.com/uploads/large/nature/nature-1080p-wallpaper-0011.jpg'},
                 {name: 'beach', img:'http://www.ultrahdfreewallpapers.com/uploads/large/nature/nature-hd-background-0031.jpg'},
-                {name: 'tropics', img:'http://www.ultrahdfreewallpapers.com/uploads/large/nature/nature-hd-background-0034.jpg'},
+                {name: 'usa', img:'http://www.ultrahdfreewallpapers.com/uploads/large/flags/usa-flag-wallpaper-001.jpg'},
                 {name: 'eagle', img:'http://www.ultrahdfreewallpapers.com/uploads/large/birds/eagle-hd-wallpaper-download-0024.jpg'},
             ]
         }

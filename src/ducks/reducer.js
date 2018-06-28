@@ -29,6 +29,7 @@ const REMOVE_BOARD = 'REMOVE_BOARD';
 const MOVE_CARD_SAME = 'MOVE_CARD_SAME';
 const MOVE_CARD_LIST = 'MOVE_CARD_LIST';
 const MOVE_LIST = 'MOVE_LIST';
+const UPDATE_PROFILE = 'UPDATE_PROFILE';
 
 
 export default function reducer(state=initialState, action){
@@ -45,6 +46,8 @@ export default function reducer(state=initialState, action){
             return Object.assign({}, state, {singleBoard: action.payload})
         case UPDATE_BOARD + FULFILLED:
             return Object.assign({}, state, {singleBoard: action.payload})
+        case UPDATE_PROFILE + FULFILLED:
+            return Object.assign({}, state, {user: action.payload})
         case UPDATE_LIST_TITLE + FULFILLED:
             return Object.assign({}, state, {lists: action.payload})
         case ADD_CARD + FULFILLED:
@@ -218,5 +221,13 @@ export function moveList(list_id, lastList_x, drop_x, board_id, boardLists){
     return {
         type: MOVE_LIST,
         payload: boardLists,
+    }
+}
+
+export function updateProfile(user_id, fName, lName, username, email){
+    let newProfile = axios.put(`/update/profile/${user_id}`, {fName, lName, username, email}).then(res => res.data).catch(e => console.log(e));
+    return {
+        type: UPDATE_PROFILE,
+        payload: newProfile,
     }
 }

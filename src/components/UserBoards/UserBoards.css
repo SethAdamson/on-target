@@ -10,13 +10,12 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     padding: 50px 100px;
 }
 
 .userboard-list-background {
-    height: 100px;
-    width: 200px;
+    height: 125px;
+    width: 250px;
     margin: 15px;
     background-size: cover;
     display: block;
@@ -32,6 +31,12 @@
     color: grey;
     margin: 15px;
     font-size: 20px;
+}
+
+.userboard-list-title{
+    color: white;
+    font-size: 20px;
+    text-shadow: 2px 2px 3px rgb(90, 90, 90);
 }
 
 .userboard-display {
