@@ -21,10 +21,13 @@ const {
     CALLBACK_URL,
     CONNECTION_STRING,
     APP_ADDRESS,
-    APP_PASSWORD
+    APP_PASSWORD,
+    REACT_APP_FRONTEND_URL
 } = process.env;
 
 //----------------Middleware--------------------//
+
+app.use( express.static( `${__dirname}/../build` ) );
 
 app.use(bodyParser.json());
 massive(CONNECTION_STRING).then(db => {
@@ -84,18 +87,18 @@ passport.deserializeUser((id, done) => {
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: `http://localhost:3000/#/home`
+    successRedirect: `${REACT_APP_FRONTEND_URL}#/home`
 }));
 app.get('/auth/logout', (req, res) => {
     req.logout();
-    res.redirect(`http://localhost:3000/#/`)
+    res.redirect(`${REACT_APP_FRONTEND_URL}#/`)
 });
 app.get('/auth/user', (req, res) => {
     if(req.user){
         res.status(200).send(req.user);
     } else {
         res.status(401).send('Unauthorized');
-        // res.redirect(`http://localhost:3000/#/`);
+        // res.redirect(`${REACT_APP_FRONTEND_URL}/#/`);
     }
 });
 

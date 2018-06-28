@@ -6,6 +6,7 @@ import targetWhite from '../../images/targetWhite.png';
 import {Link} from 'react-router-dom';
 import BoardNav from './BoardNav/BoardNav';
 import Contact from './Contact/Contact';
+import Search from './Search/Search';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 import {getLists, 
@@ -49,7 +50,7 @@ class Header extends Component {
 
     render(){
         let {currentBoard} = this.props;
-        let {boardClick, contactClick} = this.state;
+        let {boardClick, contactClick, search} = this.state;
         return(
             <div className='head-parent image-head1'>
                 <div className='head-content'>
@@ -62,6 +63,7 @@ class Header extends Component {
                             </p>
                         </button>
                         <input name='search' className='board-search head-input' onChange={this.changeHeader}/>
+                        <Search search={search}/>
                         <FontAwesome  className='search-icon' name="far fa-search"></FontAwesome>
                     </div> 
                     {/* <Link to='/home' style={{textDecoration: 'none'}}> */}
