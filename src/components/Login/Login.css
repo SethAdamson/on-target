@@ -24,15 +24,9 @@
     height: 95%;
     width: 95%;
     border-radius: 20px;
+    display: flex;
+    justify-content: center;
     overflow: hidden;
-}
-
-.login-video-player {
-    height: 120%;
-    width: 120%;
-    position: relative;
-    top: -10%;
-    left: -10%;
 }
 
 .login-menu-hidden {
