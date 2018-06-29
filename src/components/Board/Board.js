@@ -105,7 +105,8 @@ class Board extends Component {
 
     addNewList(){
         let {newListTitle} = this.state;
-        this.props.addList({newListTitle, board_id :this.props.singleBoard.id})
+        let boardLocation = this.props.lists.filter(l => l.board_id === this.props.singleBoard.id).length;
+        this.props.addList({newListTitle, board_id :this.props.singleBoard.id, boardLocation})
         this.cancelNewList();
     }
 
@@ -119,7 +120,7 @@ class Board extends Component {
         if(thisBoard.length !== 0){
             singleBoard = thisBoard[0];
         }
-        // console.log(singleBoard);
+        // console.log(this.props.lists);
         let {title, cardEditting, editID, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation, listPlaceIdx, listCanDrop, listIsOver} = this.state;
         
         let bgstyle = {};

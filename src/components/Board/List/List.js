@@ -28,12 +28,10 @@ const listSource = {
         return {list_id, title, list_x, board_id};
     },
     endDrag(props, monitor, component){
-        if(!monitor.didDrop()) {
-            return;
-        }
         const item = monitor.getItem();
-        const dropResult = monitor.getDropResult();
-        // console.log(item, dropResult);
+        if(!monitor.didDrop()) {
+            document.getElementById(`list${item.list_id}`).style.display = 'block';
+        }
     }
 };
 
@@ -84,8 +82,9 @@ class List extends Component {
 
     addNewCard(){
         let {newCardTitle} = this.state;
-        let {list_id, author_id, board_id} = this.props;
-        this.props.addCard({newCardTitle, list_id, author_id, board_id})
+        let {list_id, author_id, board_id, cards} = this.props;
+        let cardLocation = cards.filter(card => card.list_id === list_id).length;
+        this.props.addCard({newCardTitle, list_id, author_id, board_id, cardLocation})
         this.cancelNew();
     }
 
@@ -134,12 +133,12 @@ class List extends Component {
     }
 }
 
-// function mapStateToProps(state){
-//     return {
-//         cards: state.cards
-//     }
-// }
+function mapStateToProps(state){
+    return {
+        cards: state.cards
+    }
+}
 
 let dndList = DragSource(Types.LIST, listSource, listSourceCollect)(List);
 
-export default connect(null, {updateListTitle, addCard, removeList})(dndList);
+export default connect(mapStateToProps, {updateListTitle, addCard, removeList})(dndList);

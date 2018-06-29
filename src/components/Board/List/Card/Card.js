@@ -3,6 +3,8 @@ import './Card.css';
 import {DragSource, DropTarget} from 'react-dnd';
 import {findDOMNode} from 'react-dom';
 import {Types} from '../../../../constants';
+import {connect} from 'react-redux';
+import {getCards} from '../../../../ducks/reducer';
 import axios from 'axios';
 import {getEmptyImage} from 'react-dnd-html5-backend';
   
@@ -21,14 +23,10 @@ const cardSource = {
         return {id, title, card_x, list_id, clientHeight, clientWidth};
     },
     endDrag(props, monitor, component){
-        if(!monitor.didDrop()) {
-            return;
-        }
         const item = monitor.getItem();
-        const dropResult = monitor.getDropResult();
-        // console.log(item, dropResult);
-        
-        // CardActions.moveCardToList(item.id, dropResult.listId);
+        if(!monitor.didDrop()) {
+            document.getElementById(`card${item.id}`).style.display = 'block';
+        }
     }
 };
 
@@ -98,4 +96,4 @@ class Card extends Component {
 }
 
 let sourcing = DragSource(Types.CARD, cardSource, sourceCollect)(Card);
-export default DropTarget(Types.CARD, cardTarget, dropCollect)(sourcing);
+export default connect(null, {getCards})(DropTarget(Types.CARD, cardTarget, dropCollect)(sourcing));

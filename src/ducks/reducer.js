@@ -165,6 +165,7 @@ export function addCard(val){
 
 export function addList(val){
     let newList = axios.post(`/add/lists`, val).then(res => res.data).catch(e => console.log(e));
+    console.log(newList);
     return {
         type: ADD_LIST,
         payload: newList,

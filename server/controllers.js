@@ -133,9 +133,9 @@ module.exports= {
     },
     addCard: (req, res) => {
         const db = req.app.get('db');
-        const {newCardTitle, list_id, author_id, board_id} = req.body;
+        const {newCardTitle, list_id, author_id, board_id, cardLocation} = req.body;
 
-        db.add_card([newCardTitle, list_id, author_id, board_id])
+        db.add_card([newCardTitle, list_id, cardLocation, author_id, board_id])
         .then(cards => {
             res.status(200).send(cards)
         })
@@ -146,9 +146,9 @@ module.exports= {
     },
     addList: (req, res) => {
         const db = req.app.get('db');
-        const {newListTitle, board_id} = req.body;
+        const {newListTitle, boardLocation, board_id} = req.body;
 
-        db.add_list([newListTitle, board_id])
+        db.add_list([newListTitle, boardLocation, board_id])
         .then(lists => {
             res.status(200).send(lists)
         })

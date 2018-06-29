@@ -4,7 +4,7 @@ import {findDOMNode} from 'react-dom';
 import {DropTarget} from 'react-dnd';
 import {Types, CARD_HEIGHT, CARD_MARGIN, OFFSET_HEIGHT} from '../../../../constants';
 import {connect} from 'react-redux';
-import {moveCardSame, moveCardList} from '../../../../ducks/reducer';
+import {moveCardSame, moveCardList, getCards} from '../../../../ducks/reducer';
 import _ from 'lodash';
 
 function getPlaceIndex(y, scrollY) {
@@ -57,7 +57,7 @@ const cardListDropTarget = {
         } else if(lastList === nextList){
             props.moveCardSame(id, lastCard_x, drop_x, lastList, props.board_id, boardCards);
         }
-        console.log(boardCards);
+        console.log(id, nextList, lastList, lastCard_x, drop_x, props.board_id, boardCards);
 
     }
 };
@@ -67,7 +67,7 @@ function cardListDropCollect(connect, monitor){
         connectDropTarget: connect.dropTarget(),
         isOver: monitor.isOver(),
         canDrop: monitor.canDrop(),
-        item:monitor.getItem()
+        item: monitor.getItem(),
     }
 };
 
@@ -88,19 +88,14 @@ class CardList extends Component {
         this.setState({drop_x: val})
     }
 
-    componentDidMount(){
-    }
-
     render(){
-        // console.log(this.props.cards);
+        // console.log(this.props);
         let {cards, list_id, editFn, connectDropTarget, isOver, canDrop} = this.props;
         let {drop_x, placeIdx} = this.state;
-        // console.log(isOver, canDrop, drop_x, placeIdx);
-
+        
         let isPlaceHold = false;
         let cardList = [];
-        let cardsToSort = _.orderBy(cards, 'list_location');
-
+        let cardsToSort = _.orderBy(cards, 'list_location');        
 
         cardsToSort.filter(e => e.list_id === list_id).forEach((card, i) => {
           if (isOver && canDrop) {
@@ -133,6 +128,8 @@ class CardList extends Component {
                         author_id={card.author_id}
                         card_x={i}
                         updateDropX = {this.updateDropX}
+                        findCard = {this.findCard}
+                        dropOutside = {this.dropOutside}
                     />
                 </div> 
             );
@@ -168,4 +165,4 @@ function mapStateToProps(state){
 
 const DropCards = DropTarget(Types.CARD, cardListDropTarget, cardListDropCollect)(CardList);
 
-export default connect(mapStateToProps, {moveCardSame, moveCardList})(DropCards);
+export default connect(mapStateToProps, {moveCardSame, moveCardList, getCards})(DropCards);
