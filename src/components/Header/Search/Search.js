@@ -13,8 +13,11 @@ class Search extends Component {
     }
 
     render(){
-        let {search, searchToggle} = this.props;
+        let {search, searchToggle, searchFocus} = this.props;
         console.log(this.props, this.state)
+        if(search){
+            searchFocus();
+        }
         return (
             <div className={searchToggle ? 'search-shown' : 'search-hidden'}>
                 <div className='search-content'>

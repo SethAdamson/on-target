@@ -12,5 +12,5 @@ board_id
 from boards
 
 join lists on boards.id = lists.board_id
-where boards.id = $1
+where boards.author_id = $1
 order by board_location;

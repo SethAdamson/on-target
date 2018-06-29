@@ -90,9 +90,11 @@ module.exports= {
         const db = req.app.get('db');
         const {id} = req.params;
         const {title, board_id} = req.body;
+        const user_id = req.user.id
+
         // console.log(req.body, id);
 
-        db.update_list_title([title, id, board_id])
+        db.update_list_title([title, id, user_id])
         .then(lists => {
             res.status(200).send(lists)
         })
@@ -134,8 +136,10 @@ module.exports= {
     addCard: (req, res) => {
         const db = req.app.get('db');
         const {newCardTitle, list_id, author_id, board_id, cardLocation} = req.body;
+        const {id} = req.user;
 
-        db.add_card([newCardTitle, list_id, cardLocation, author_id, board_id])
+
+        db.add_card([newCardTitle, list_id, cardLocation, author_id, id])
         .then(cards => {
             res.status(200).send(cards)
         })
@@ -147,8 +151,9 @@ module.exports= {
     addList: (req, res) => {
         const db = req.app.get('db');
         const {newListTitle, boardLocation, board_id} = req.body;
+        const {id} = req.user;
 
-        db.add_list([newListTitle, boardLocation, board_id])
+        db.add_list([newListTitle, boardLocation, board_id, id])
         .then(lists => {
             res.status(200).send(lists)
         })
@@ -180,9 +185,11 @@ module.exports= {
     removeItem: (req, res) => {
         const db = req.app.get('db');
         const {board} = req.params;
+        const {id} = req.user
+
 
         if(req.params.card){
-            db.remove_card([board, req.params.card])
+            db.remove_card([id, req.params.card])
             .then(cards => {
                 res.status(200).send(cards)
             })
@@ -191,7 +198,7 @@ module.exports= {
                 res.status(500).send(e)
             })
         } else if (req.params.list){
-            db.remove_list([board, req.params.list])
+            db.remove_list([id, req.params.list])
             .then(lists => {
                 res.status(200).send(lists)
             })
@@ -200,7 +207,7 @@ module.exports= {
                 res.status(500).send(e)
             })
         } else {
-            db.remove_board([board, req.user.id])
+            db.remove_board([board, id])
             .then(boards => {
                 res.status(200).send(boards)
             })

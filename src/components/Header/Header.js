@@ -56,12 +56,13 @@ class Header extends Component {
     }
 
     searchBlur(){
-        this.setState({searchToggle: false})
+        this.setState({searchToggle: false, searchBar: ''})
     }
 
     render(){
         let {currentBoard} = this.props;
         let {boardClick, contactClick, searchBar, searchToggle} = this.state;
+        console.log(searchToggle);
         return(
             <div className='head-parent image-head1'>
                 <div className='head-content'>
@@ -73,7 +74,7 @@ class Header extends Component {
                                 Boards
                             </p>
                         </button>
-                        <input name='searchBar' className='board-search head-input' onChange={this.changeHeader} onFocus={this.searchFocus} onBlur={this.searchBlur} />
+                        <input name='searchBar' className='board-search head-input' onChange={this.changeHeader} onBlur={this.searchBlur} value={searchBar}/>
                         <Search search={searchBar} searchFocus={this.searchFocus} searchToggle={searchToggle}/>
                         <FontAwesome  className='search-icon' name="far fa-search"></FontAwesome>
                     </div> 

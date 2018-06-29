@@ -14,4 +14,4 @@ card_file
 from cards
 
 join lists on cards.list_id = lists.id
-where board_id = $1;
+where author_id = $1;
