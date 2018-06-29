@@ -7,11 +7,13 @@
     justify-content: center;
     align-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .login-content {
     height: 70%;
     width: 70%;
+    max-width: 120vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,33 +29,37 @@
     display: flex;
     justify-content: center;
     overflow: hidden;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bolder;
 }
 
 .login-menu-hidden {
-    height: 200px;
+    height: 1px;
     width: 300px;
+    top: -50px;
     position: absolute;
-    top: -350px;
     transition: .5s;
     background: linear-gradient(to left, #508676, #20ffbc, #28ffbf, #508676);
 }
 
 .login-menu-shown {
-    height: 200px;
+    height: 100px;
     width: 300px;
     position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    top: 50px;
-    right: 50px;
+    bottom: 150px;
+    overflow: hidden;
+    right: center;
     transition: .5s;
     border-radius: 5px;
     box-shadow: rgba(22, 54, 44, 0.4) 0 0px 0px 2px inset;
     background: linear-gradient(to left, #50867696, #20ffbc8f, #28ffbf7e, #508676);
 }
 
-.login-logo {
+/* .login-logo {
     width: 100%;
     margin: 30px 0;
     font-family: 'Stardos Stencil', cursive;
@@ -63,19 +69,25 @@
     justify-content: center;
     align-items: center;
     align-content: center;
-}
+} */
 
-.login-img {
+/* .login-img {
     width:70px;
     height:70px;
-}
+} */
 
-.login-title {
+/* .login-title {
     margin: 0;
     color: white;
     text-decoration: none;
     font-size: 50px;
     text-shadow: 2px 0px 0px rgb(205, 205, 205);
+} */
+
+.login-button-hidden{
+    height: 1px;
+    width: 180px;
+    transition: .5s;
 }
 
 .login-button {
@@ -85,17 +97,18 @@
     -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     display: block;
-    margin: 30px 50px;
-    max-width: 180px;
+    margin: auto;
+    width: 180px;
     text-decoration: none;
     border-radius: 5px;
-    padding: 20px 30px;
+    padding: 15px 25px;
     background-color: rgb(255, 255, 255);
-    color: rgb(32, 102, 81);
+    color: rgba(32, 102, 81, 0.795);
     box-shadow: rgba(0, 0, 0, 0.4) 0 0px 0px 1px inset;
+    transition: .5s;
 }
 
 .login-button:hover {
-    color: rgba(255, 255, 255, 0.85);
-    box-shadow: #1ee6aa 0 0px 0px 40px inset;
+    color: rgb(255, 255, 255);
+    box-shadow: #979797 0 0px 0px 40px inset;
 }

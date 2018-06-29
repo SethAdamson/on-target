@@ -22,7 +22,7 @@ export default class Login extends Component {
     }
 
     loginInterval(){
-        setTimeout(this.showLogin, 4000);
+        setTimeout(this.showLogin, 3000);
     }
 
     render(){
@@ -35,16 +35,16 @@ export default class Login extends Component {
                         <video className='login-video-player' autoplay='true' loop muted>
                             <source src={loginVideo} type='video/mp4'/>
                         </video>
+                        <div className={loginDisplay ? 'login-menu-shown' : 'login-menu-hidden'}>
+                            {/* <h2 className='login-logo'>
+                                <img className='login-img' src={targetWhite} alt='logo' />
+                                <h1 className='login-title'>n-Target</h1>
+                            </h2> */}
+                            <a href={process.env.REACT_APP_LOGIN} className={loginDisplay ? 'login-button' : 'login-button-hidden'}>
+                                Login
+                            </a>
+                        </div>  
                     </div>
-                    <div className={loginDisplay ? 'login-menu-shown' : 'login-menu-hidden'}>
-                        <h2 className='login-logo'>
-                            <img className='login-img' src={targetWhite} alt='logo' />
-                            <h1 className='login-title'>n-Target</h1>
-                        </h2>
-                        <a href={process.env.REACT_APP_LOGIN} className='login-button'>
-                            Login
-                        </a>
-                    </div>  
                 </div> 
             </div> 
         )
