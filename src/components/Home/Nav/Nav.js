@@ -8,19 +8,19 @@ function Nav(props) {
     return(
         <div className='nav-content'>
             <ul className='navbar'>
-                <Link to='/home' style={{textDecoration: 'none'}}>
+                <Link to='/home' style={{textDecoration: 'none', color: 'grey'}}>
                     <span className='nav-list'>
                         <FontAwesome className='nav-icon' name='far fa-home fa-lg'/>
                         <li className='nav-button nav-home'>Home</li>
                     </span>
                 </Link>
-                <Link to='/myboards' style={{textDecoration: 'none'}}>
+                <Link to='/myboards' style={{textDecoration: 'none', color: 'grey'}}>
                     <span className='nav-list'>
                         <FontAwesome className='nav-icon' name='fas fa-bullseye fa-lg'/>
                         <li className='nav-button nav-home'>Boards</li>
                     </span>
                 </Link>
-                <Link to={`/profile/${props.user.id}`} style={{textDecoration: 'none'}}>
+                <Link to={`/profile/${props.user.id}`} style={{textDecoration: 'none', color: 'grey'}}>
                     <span className='nav-list'>
                         <FontAwesome className='nav-icon' name='fas fa-user-circle fa-lg'/>
                         <li className='nav-button nav-home'>Profile</li>

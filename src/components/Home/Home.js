@@ -65,7 +65,7 @@ class Home extends Component {
                                 boardName: board.name,
                             }
                         }} 
-                    style={{textDecoration: 'none'}} 
+                    style={{textDecoration: 'none', color: 'grey'}} 
                     key={board.id}>
                     
                     <div className='boards-list'>
@@ -88,7 +88,9 @@ class Home extends Component {
                     <div className='create-board'>
                         <img src={'https://media.giphy.com/media/xT0xeK2kHV7n4qVGEg/source.gif'} className='home-gif' />
                         <h2 className='create-title'>Get On-Target today!</h2>
-                        <input name='newBoardName' className='home-create' onChange={this.handleHome}/>
+                        {/* <h2 className='home-createboard'>Get started here</h2> */}
+                        <h3 className='home-createboard'>Create a new board.</h3>
+                        <input name='newBoardName' className='home-create' onChange={this.handleHome} placeholder='Enter Title Here'/>
                         <button className='home-create-button' onClick={this.addNewBoard}>Create Your Board</button>
                     </div>
                     <div className='home-list'>
