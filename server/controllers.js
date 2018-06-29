@@ -221,9 +221,10 @@ module.exports= {
         const db = req.app.get('db');
         const {id} = req.params;
         const {newList, lastList, lastCard_x, drop_x, board_id} = req.body;
+        const user_id = req.user.id
         // console.log(id, req.body);
 
-        db.move_card_list([id, newList, lastList, lastCard_x, drop_x, board_id])
+        db.move_card_list([id, newList, lastList, lastCard_x, drop_x, user_id])
         .then(cards => {
             res.status(200).send(cards)
         })
@@ -236,10 +237,11 @@ module.exports= {
         const db = req.app.get('db');
         const {id} = req.params;
         const {lastCard_x, drop_x, list_id, board_id} = req.body;
+        const user_id = req.user.id
         // console.log(id, req.body);
 
         if(lastCard_x<drop_x){
-            db.move_card_down([id, lastCard_x, drop_x, list_id, board_id])
+            db.move_card_down([id, lastCard_x, drop_x, list_id, user_id])
             .then(cards => {
                 res.status(200).send(cards)
             })
@@ -248,7 +250,7 @@ module.exports= {
                 res.status(500).send(e)
             })
         } else if (lastCard_x>drop_x){
-            db.move_card_up([id, lastCard_x, drop_x, list_id, board_id])
+            db.move_card_up([id, lastCard_x, drop_x, list_id, user_id])
             .then(cards => {
                 res.status(200).send(cards)
             })

@@ -24,5 +24,5 @@ card_file
 from cards
 
 join lists on cards.list_id = lists.id
-where board_id = $6
+where author_id = $6
 order by list_location;

@@ -3,61 +3,258 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Sign In to On-Target with Auth0</title>
+  <title>Sign In with Auth0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Stardos+Stencil" rel="stylesheet">
 </head>
+  <style>
+    body, html {
+      height: 100%;
+      background: linear-gradient(to left, #242424, #505050, #242424);
+      background-image: url('https://s3-us-west-1.amazonaws.com/on-target-media/woodBG-1.jpg');
+      background-size: cover;
+      color: white;
+      font-family: 'Fjalla One', sans-serif;
+    }
+
+    .login-container {
+      position: relative;
+      height: 100%;
+    }
+
+    .login-box {
+      position: absolute;
+      top: 50%;
+      height: 40%;
+      width: 40%;
+      transform: translateY(-50%);
+      padding: 15px;
+      background: linear-gradient(to left, #50867696, #20ffbc8f, #28ffbf7e, #508676);
+      box-shadow: 0px 5px 5px #50867696;
+      border-radius: 5px;
+      border: 1px solid #494949d8;
+    }
+
+    .login-logo {
+      margin: 30px 0;
+      font-family: 'Stardos Stencil', cursive;
+      height: 34px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+    }
+
+    .login-title {
+      margin: 0;
+      color: white;
+      text-decoration: none;
+      font-size: 70px;
+      text-shadow: 2px 0px 0px rgb(205, 205, 205);
+    }
+
+    .login-header img {
+      width: 75px;
+    }
+
+    .login-img {
+      width:100px;
+      height:100px;
+      position: relative;
+      top: -5px;
+    }
+
+    .not-display{
+      display: none;
+    }
+
+    button{
+      background: white;
+    }
+
+    .btn-danger{
+      background:#1AAB8A;
+      color:#fff;
+      border:none;
+      position:relative;
+      height:60px;
+      font-size:1.6em;
+      padding:0 2em;
+      cursor:pointer;
+      transition:800ms ease all;
+      outline:none;
+    }
+
+    .btn-danger:hover{
+      background: linear-gradient(to bottom, #b8b8b8ce, #696969ce, #b8b8b8d5);
+      color:rgb(255, 255, 255);
+    }
+
+    .btn-danger:before,.btn-danger:after{
+      content:'';
+      position:absolute;
+      top:0;
+      right:0;
+      height:4px;
+      width:0;
+      background: rgb(26, 112, 79);
+      transition:400ms ease all;
+    }
+
+    .btn-danger:after{
+      background: white;
+      right:inherit;
+      top:inherit;
+      left:0;
+      bottom:0;
+    }
+
+    .btn-danger:hover:before,.btn-danger:hover:after{
+      width:100%;
+      transition:800ms ease all;
+    }
+
+    .btn-danger {
+      color: rgb(36, 121, 74);
+      background-color: #f5f5f5;
+      border-color: #e0e0e0;
+    }
+
+    .login-header {
+      text-align: center;
+    }
+
+    #error-message {
+      display: none;
+    }
+  </style>
 <body>
+  <div class="login-container">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-4 login-box">
+      <div class="login-header">
+        <main class='login-logo'>
+          <img class='login-img' src='https://s3-us-west-1.amazonaws.com/on-target-media/targetWhite.png' alt='logo' />
+          <h1 class='login-title'>n-Target</h1>
+        </main>
+        <h3>Welcome</h3>
+        <h5>PLEASE LOG IN WITH YOUR GMAIL ACCOUNT</h5>
+      </div>
+      <div id="error-message" class="alert alert-danger"></div>
+      <form onsubmit="return false;" method="post">
+        <div class="form-group not-display">
+         <label for="name">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Enter your email">
+        </div>
+        <div class="form-group not-display">
+          <label for="name">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Enter your password">
+        </div>
+        <button
+          type="submit"
+          id="btn-login"
+          class="btn btn-primary btn-block not-display">
+            Log In
+        </button>
+        <button
+          type="button"
+          id="btn-signup"
+          class="btn btn-default btn-block not-display">
+            Sign Up
+        </button>
+        <hr>
+        <button
+          type="button"
+          id="btn-google"
+          class="btn btn-default btn-danger btn-block">
+            Log In with Google
+        </button>
+      </form>
+    </div>
+  </div>
 
   <!--[if IE 8]>
   <script src="//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.5/ie8.js"></script>
   <![endif]-->
 
   <!--[if lte IE 9]>
-  <script src="https://cdn.auth0.com/js/base64.js"></script>
-  <script src="https://cdn.auth0.com/js/es5-shim.min.js"></script>
+  <script src="https://cdn.auth0.com/js/polyfills/1.0/base64.min.js"></script>
+  <script src="https://cdn.auth0.com/js/polyfills/1.0/es5-shim.min.js"></script>
   <![endif]-->
 
-  <script src="https://cdn.auth0.com/js/lock/11.3/lock.min.js"></script>
+  <script src="https://cdn.auth0.com/js/auth0/9.2/auth0.min.js"></script>
+  <script src="https://cdn.auth0.com/js/polyfills/1.0/object-assign.min.js"></script>
   <script>
-    // Decode utf8 characters properly
-    var config = JSON.parse(decodeURIComponent(escape(window.atob('@@config@@'))));
-    config.extraParams = config.extraParams || {};
-    var connection = config.connection;
-    var prompt = config.prompt;
-    var languageDictionary;
-    var language;
-    
-    if (config.dict && config.dict.signin && config.dict.signin.title) {
-      languageDictionary = { title: config.dict.signin.title };
-    } else if (typeof config.dict === 'string') {
-      language = config.dict;
-    }
-    var loginHint = config.extraParams.login_hint;
-    
-    var lock = new Auth0Lock(config.clientID, config.auth0Domain, {
-      auth: {
-        redirectUrl: config.callbackURL,
-        responseType: (config.internalOptions || {}).response_type ||
-          (config.callbackOnLocationHash ? 'token' : 'code'),
-        params: config.internalOptions
-      },
-      assetsUrl:  config.assetsUrl,
-      allowedConnections: connection ? [connection] : null,
-      rememberLastLogin: !prompt,
-      language: language,
-      languageDictionary: languageDictionary,
-      theme: {
-        logo:            './targetWhite.png',
-        primaryColor:    'green'
-      },
-      prefill: loginHint ? { email: loginHint, username: loginHint } : null,
-      closable: false,
-      defaultADUsernameFromEmailPrefix: false,
-      // uncomment if you want small buttons for social providers
-      // socialButtonStyle: 'small'
-    });
+    window.addEventListener('load', function() {
 
-    lock.show();
+      var config = JSON.parse(
+        decodeURIComponent(escape(window.atob('@@config@@')))
+      );
+
+      var params = Object.assign({
+        domain: config.auth0Domain,
+        clientID: config.clientID,
+        redirectUri: config.callbackURL,
+        responseType: 'code'
+      }, config.internalOptions);
+
+      var webAuth = new auth0.WebAuth(params);
+
+      var databaseConnection = 'Username-Password-Authentication';
+
+      function login(e) {
+        e.preventDefault();
+        var username = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        webAuth.login({
+          realm: databaseConnection,
+          username: username,
+          password: password
+        }, function(err) {
+          if (err) displayError(err);
+        });
+      }
+
+      function signup() {
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+        webAuth.redirect.signupAndLogin({
+          connection: databaseConnection,
+          email: email,
+          password: password
+        }, function(err) {
+          if (err) displayError(err);
+        });
+      }
+
+      function loginWithGoogle() {
+        webAuth.authorize({
+          connection: 'google-oauth2'
+        }, function(err) {
+          if (err) displayError(err);
+        });
+      }
+
+      function displayError(err) {
+        var errorMessage = document.getElementById('error-message');
+        errorMessage.innerHTML = err.description;
+        errorMessage.style.display = 'block';
+      }
+
+      document.getElementById('btn-login').addEventListener('click', login);
+      document.getElementById('btn-google').addEventListener('click', loginWithGoogle);
+      document.getElementById('btn-signup').addEventListener('click', signup);
+    });
   </script>
 </body>
 </html>

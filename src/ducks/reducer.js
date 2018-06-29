@@ -215,7 +215,7 @@ export function moveCardSame(card_id, lastCard_x, drop_x, list_id, board_id, boa
     cardsByList[list_id].map((e, i) => e.list_location = i);
     let newCards = [].concat(...Object.values(cardsByList));
 
-    console.log(cardsByList, dragCard[0], newCards);
+    // console.log(boardCards, cardsByList, dragCard[0], newCards);
 
     let moveCardSame = axios.put(`/move/card/${card_id}`, {lastCard_x, drop_x, list_id, board_id}).then(res => res.data).catch(e => console.log(e));
     return {
@@ -237,7 +237,7 @@ export function moveCardList(card_id, newList, lastList, lastCard_x, drop_x, boa
     cardsByList[lastList].map((e, i) => e.list_location = i );
     let newCards = [].concat(...Object.values(cardsByList));
 
-    console.log(cardsByList, dragCard[0], newCards);
+    // console.log(cardsByList, dragCard[0], newCards);
 
     let moveCardList = axios.put(`/move/cardlist/${card_id}`, {newList, lastList, lastCard_x, drop_x, board_id}).then(res => res.data).catch(e => console.log(e));
     return {

@@ -69,7 +69,7 @@ passport.use(new Auth0Strategy({
                 done(null, createdUser[0].id);
             });
         }
-    })
+    }).catch(e => console.log(e))
 }));
 
 passport.serializeUser((id, done) => {
@@ -79,7 +79,7 @@ passport.deserializeUser((id, done) => {
     const db = app.get('db');
     db.find_session_user([id]).then(user => {
         done(null, user[0]);
-    })
+    }).catch(e => console.log(e))
 });
 
 //-----------------------------------------------------------//
