@@ -1,8 +1,9 @@
 .login-parent {
     height: 100vh;
     width: 100%;
-    background-color: #1ee6aa;
     display: flex;
+    background-color: #242424;
+    background-size: cover;
     justify-content: center;
     align-content: center;
     align-items: center;
@@ -14,13 +15,53 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    background-color: #1ab385;
     border-radius: 20px;
+    background: linear-gradient(to left, #242424, #505050, #242424);
+    box-shadow: inset 0 0 5px rgb(0, 0, 0); 
+}
+
+.login-video {
+    height: 95%;
+    width: 95%;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.login-video-player {
+    height: 120%;
+    width: 120%;
+    position: relative;
+    top: -10%;
+    left: -10%;
+}
+
+.login-menu-hidden {
+    height: 200px;
+    width: 300px;
+    position: absolute;
+    top: -350px;
+    transition: .5s;
+    background: linear-gradient(to left, #508676, #20ffbc, #28ffbf, #508676);
+}
+
+.login-menu-shown {
+    height: 200px;
+    width: 300px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 50px;
+    right: 50px;
+    transition: .5s;
+    border-radius: 5px;
+    box-shadow: rgba(22, 54, 44, 0.4) 0 0px 0px 2px inset;
+    background: linear-gradient(to left, #50867696, #20ffbc8f, #28ffbf7e, #508676);
 }
 
 .login-logo {
     width: 100%;
+    margin: 30px 0;
     font-family: 'Stardos Stencil', cursive;
     height: 34px;
     display: flex;
@@ -31,25 +72,36 @@
 }
 
 .login-img {
-    width:200px;
-    height:200px;
+    width:70px;
+    height:70px;
 }
 
 .login-title {
     margin: 0;
     color: white;
     text-decoration: none;
-    font-size: 140px;
-    text-shadow: 5px 0px 0px rgb(205, 205, 205);
+    font-size: 50px;
+    text-shadow: 2px 0px 0px rgb(205, 205, 205);
 }
 
 .login-button {
-    width:200px;
-    height:100px;
-    font-family: 'Fjalla One', sans-serif;
-    font-size: 36px;
-    background-color: #137e5e;
-    border: 2px solid white;
-    color: white;
-    border-radius: 25px;
+    -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    display: block;
+    margin: 30px 50px;
+    max-width: 180px;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 20px 30px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(32, 102, 81);
+    box-shadow: rgba(0, 0, 0, 0.4) 0 0px 0px 1px inset;
+}
+
+.login-button:hover {
+    color: rgba(255, 255, 255, 0.85);
+    box-shadow: #1ee6aa 0 0px 0px 40px inset;
 }
