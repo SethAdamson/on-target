@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Login.css';
-import targetWhite from '../../images/targetWhite.png'
+import targetWhite from '../../media/targetWhite.png'
 import loginVideo from '../../media/loginVideo.mp4';
 import woodBG1 from '../../media/woodBG-1.jpg';
 

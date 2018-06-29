@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './Header.css';
 import {connect} from 'react-redux';
 import FontAwesome from 'react-fontawesome';
-import targetWhite from '../../images/targetWhite.png';
+import targetWhite from '../../media/targetWhite.png';
 import {Link} from 'react-router-dom';
 import BoardNav from './BoardNav/BoardNav';
 import Contact from './Contact/Contact';
