@@ -32,7 +32,7 @@ export default class Login extends Component {
             <div className='login-parent' style={{backgroundImage: `url(${woodBG1})`}} onClick={this.showLogin}>
                 <div className='login-content'>
                     <div className='login-video'>
-                        <video className='login-video-player' autoplay='true' loop muted>
+                        <video className='login-video-player' autoPlay='true' loop muted>
                             <source src={loginVideo} type='video/mp4'/>
                         </video>
                         <div className={loginDisplay ? 'login-menu-shown' : 'login-menu-hidden'}>

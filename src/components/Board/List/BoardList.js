@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import List from './List';
 import {findDOMNode} from 'react-dom';
 import {connect} from 'react-redux';
-import {moveList} from '../../../ducks/reducer';
+import {moveListDB, moveListRender} from '../../../ducks/reducer';
 import {DropTarget} from 'react-dnd';
 import {Types, OFFSET_WIDTH, LIST_WIDTH, LIST_MARGIN} from '../../../constants';
 
@@ -46,7 +46,8 @@ const listTarget = {
         // console.log('List Drop values', list_id, list_x, drop_x, board_id, props.lists);
         boardLists.splice(list_x, 1);
         boardLists.splice(drop_x, 0 , dragList)
-        props.moveList(list_id, list_x, drop_x, board_id, boardLists);
+        props.moveListRender(boardLists);
+        props.moveListDB(list_id, list_x, drop_x, board_id);
         component.setPlaceIdx(undefined);
     }
 };
@@ -142,4 +143,4 @@ function mapStateToProps(state){
 
 let dndBoardList = DropTarget(Types.LIST, listTarget, listDropCollect)(BoardList);
 
-export default connect(mapStateToProps,{moveList})(dndBoardList);
+export default connect(mapStateToProps,{moveListDB, moveListRender})(dndBoardList);

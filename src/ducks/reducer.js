@@ -28,6 +28,7 @@ const REMOVE_LIST = 'REMOVE_LIST';
 const REMOVE_BOARD = 'REMOVE_BOARD';
 const MOVE_CARD_SAME = 'MOVE_CARD_SAME';
 const MOVE_CARD_LIST = 'MOVE_CARD_LIST';
+const MOVE_LIST_DB = 'MOVE_LIST_DB';
 const MOVE_LIST = 'MOVE_LIST';
 const UPDATE_PROFILE = 'UPDATE_PROFILE';
 
@@ -67,6 +68,8 @@ export default function reducer(state=initialState, action){
         case MOVE_CARD_LIST + FULFILLED:
             return Object.assign({}, state, {cards: action.payload})
         case MOVE_LIST:
+            return Object.assign({}, state, {lists: action.payload})
+        case MOVE_LIST_DB + FULFILLED:
             return Object.assign({}, state, {lists: action.payload})
         default:
             return state;
@@ -243,11 +246,18 @@ export function moveCardList(card_id, newList, lastList, lastCard_x, drop_x, boa
     }
 }
 
-export function moveList(list_id, lastList_x, drop_x, board_id, boardLists){
-    axios.put(`/move/list/${list_id}`, {lastList_x, drop_x, board_id}).then(res => res.data).catch(e => console.log(e));
+export function moveListRender(boardLists){
     return {
         type: MOVE_LIST,
         payload: boardLists,
+    }
+}
+
+export function moveListDB(list_id, lastList_x, drop_x, board_id){
+    let movedLists = axios.put(`/move/list/${list_id}`, {lastList_x, drop_x, board_id}).then(res => res.data).catch(e => console.log(e));
+    return {
+        type: MOVE_LIST_DB,
+        payload: movedLists,
     }
 }
 
