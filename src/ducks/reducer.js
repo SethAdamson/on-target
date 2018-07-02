@@ -123,6 +123,7 @@ export function getSingleBoard(id){
 }
 
 export function updateBoard(id, val, boards){
+    console.log(id, val.name);
     let changedBoards = [];
     if(val.bg_img){
         changedBoards = boards.map(board => {
@@ -131,6 +132,7 @@ export function updateBoard(id, val, boards){
             }
             return board;
         })
+        axios.put(`/change/boards/${id}`, val).then(res => res.data[0]).catch(e => console.log(e));
     }
     if(val.bg_color){
         changedBoards = boards.map(board => {
@@ -140,16 +142,12 @@ export function updateBoard(id, val, boards){
             }
             return board;
         })
+        axios.put(`/change/boards/${id}`, val).then(res => res.data[0]).catch(e => console.log(e));
     }
     if(val.name){
-        changedBoards = boards.map(board => {
-            if(board.id === id){
-                board.name = val.name
-            }
-            return board;
-        })
+        changedBoards = axios.put(`/change/boards/${id}`, val).then(res => res.data[0]).catch(e => console.log(e));
     }
-    axios.put(`/change/boards/${id}`, val).then(res => res.data[0]).catch(e => console.log(e));
+    console.log(changedBoards);
     return {
         type: UPDATE_BOARD,
         payload: changedBoards,

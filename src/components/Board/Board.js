@@ -123,7 +123,7 @@ class Board extends Component {
         if(thisBoard.length !== 0){
             singleBoard = thisBoard[0];
         }
-        // console.log(this.props.lists);
+        console.log(this.props.boards);
         let {title, cardEditting, editID, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation, editList, listPlaceIdx, listCanDrop, listIsOver} = this.state;
         
         let bgstyle = {};
