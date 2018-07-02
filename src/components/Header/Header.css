@@ -83,15 +83,15 @@
 }
 
 .title-logo {
-    width:40px;
-    height:40px;
+    height: 100%;
 }
 
 .logo-title {
     margin: 0;
     color: white;
     text-decoration: none;
-    text-shadow: 1.5px 0px 0px rgb(205, 205, 205);
+    width: 100%;
+    height: 100%;
 }
 
 .head-nav {

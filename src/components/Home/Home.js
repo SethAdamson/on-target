@@ -10,6 +10,8 @@ import {getLists,
         addBoard
 } from '../../ducks/reducer';
 import {Link} from 'react-router-dom';
+import homeVideo from '../../media/HomeVideo.mp4';
+import LogoTarget from '../../media/LogoTarget.png';
 
 class Home extends Component {
     constructor(){
@@ -86,10 +88,10 @@ class Home extends Component {
                 <div className='home-content'>
                     <Nav />
                     <div className='create-board'>
-                        <img src={'https://media.giphy.com/media/xT0xeK2kHV7n4qVGEg/source.gif'} className='home-gif' />
-                        <h2 className='create-title'>Get On-Target today!</h2>
-                        {/* <h2 className='home-createboard'>Get started here</h2> */}
-                        <h3 className='home-createboard'>Create a new board.</h3>
+                        <video className='home-video' autoPlay='true' muted>
+                            <source src={homeVideo} type='video/mp4'/>
+                        </video>
+                        <h2 className='create-title'>Get <img src={LogoTarget} alt='logo' className='logo-home-create' /> today!</h2>
                         <input name='newBoardName' className='home-create' onChange={this.handleHome} placeholder='Enter Title Here'/>
                         <button className='home-create-button' onClick={this.addNewBoard}>Create Your Board</button>
                     </div>

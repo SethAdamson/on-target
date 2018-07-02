@@ -2,6 +2,7 @@
     width: 25%;
     position: relative;
     z-index: 2;
+    color: #2b2b2b;
 }
 
 .navbar {
@@ -15,9 +16,18 @@
 
 .nav-list {
     display: flex;
+    width: 50%;
+    height: 40px;
     margin: 10px;
-    position: relative;
-    z-index: 2;
+    align-items: center; 
+    font-family: 'Khula', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bolder;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 1px rgba(128, 128, 128, 0.25);
+    padding: 0 10px; 
 }
 
 .nav-home {

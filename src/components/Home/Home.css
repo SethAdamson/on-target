@@ -1,5 +1,5 @@
 .home-parent {
-    background: linear-gradient(to left, #d6d6d6, #f7f7f7, #d6d6d6);
+    background: white;
     height: 100vh;
     width: 100%;
     position: relative;
@@ -33,48 +33,86 @@ ul {
     border-radius: 5px;
 }
 
-.create-title {
-    color: white;
-    /* position: relative;
-    height: 0;
-    top: -275px; */
-    left: center;
-    text-shadow: 2px 2px 3px rgb(90, 90, 90); 
-}
-
 .create-board {
     width: 45%;
-    height: 500px;
+    max-width: 550px;
+    max-height: 95%;
     display: flex;
     flex-direction: column;
-    background-color: rgb(250, 250, 250);
-    box-shadow: inset 0 0 5px grey; 
+    overflow: hidden;
+    align-items: center;
+    background-color: #2b2b2b;
+    box-shadow: 0px 0px 5px 1px grey; 
     border-radius: 5px;
+    font-family: 'Khula', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 200;
+    letter-spacing: 2px;
+    color: white;
 }
 
-.home-createboard{
+.home-video{
+    width: 107%;
+}
+
+.create-title {
+    width: 90%;
+    left: center;
+    font-weight: 200;
+    letter-spacing: 4px;
     margin: 5px 0;
+}
+
+.logo-home-create {
+    width: 50%;
+    position: relative;
+    bottom: -5px;
 }
 
 .home-create {
     margin: 10px auto;
-    width: 75%;
+    width: 50%;
+    height: 3em;
+    font-family: 'Khula', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     text-align: center;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgb(255, 255, 255);
     border-radius: 5px;
+    color: #2b2b2b;
 }
 
 .home-create-button {
     margin: 10px auto;
     height: 8%;
-    width: 50%;
+    width: 40%;
+    font-family: 'Khula', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 1000;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.4);
     border-radius: 5px;
-    background: linear-gradient(to left, #535353, #7e7e7e, #535353);
-    color: white;
     border: 0;
-    box-shadow: inset 0 0 5px rgb(26, 26, 26);
+    box-shadow: inset 0 0 5px #2b2b2b;
+}
+
+.home-create-button {
+    -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    display: block;
+    text-decoration: none;
+    background-color: #F0DAC5;
+    color: #2b2b2b;
+    transition: .5s;
+}
+
+.home-create-button:hover {
+    color: rgb(255, 255, 255);
+    box-shadow: #33e7b3 0 0px 0px 40px inset;
 }
 
 .home-list {
@@ -84,28 +122,38 @@ ul {
 }
 
 .home-list-title {
+    font-family: 'Khula', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bolder;
     text-align: left;
-    font-size: 12px;
-    color: grey;
+    font-size: 14px;
+    color: #2b2b2b;
     margin: 10px;
 }
 
 .boards-list{
-    position: relative;
+    font-family: 'Khula', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     z-index: 2;
     display: flex;
     margin: 10px;
     align-items: center;
     justify-content: space-between;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 1px rgba(128, 128, 128, 0.25); 
 }
 
 .home-background-piece {
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 40px;
     margin: 0;
     background-size: cover;
     display: block;
     border-radius: 5px;
+    box-shadow: 0px 0px 5px 1px grey; 
 }
 
 .boards-list-name {

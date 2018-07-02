@@ -14,6 +14,7 @@ import {getLists,
         getUser, 
         getBoards,
 } from '../../ducks/reducer';
+import LogoTarget from '../../media/LogoTarget.png';
 
 class Header extends Component {
     constructor(){
@@ -80,8 +81,7 @@ class Header extends Component {
                     </div> 
                     {/* <Link to='/home' style={{textDecoration: 'none'}}> */}
                     <a className='head-title' href='/#/home' style={{textDecoration: 'none'}}>
-                        <img className='title-logo' src={targetWhite} alt='logo' />
-                        <h1 className='logo-title'>n-Target</h1>
+                        <img className='title-logo' src={LogoTarget} alt='logo' />
                     </a> 
                     <div className='head-nav'>
                         <button className='board-search mini'>
