@@ -52,6 +52,7 @@
 
 .edit-card {
     position: fixed;
+    z-index: 10;
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
@@ -63,6 +64,7 @@
 .edit-content {
     width: 50%;
     position: relative;
+    z-index: 10;
     top: center;
     padding: 15px;
     color: grey;

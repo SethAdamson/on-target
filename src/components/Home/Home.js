@@ -10,7 +10,7 @@ import {getLists,
         addBoard
 } from '../../ducks/reducer';
 import {Link} from 'react-router-dom';
-import homeVideoG from '../../media/HomeVideo-Grey.mp4';
+import homeVideoG from '../../media/homeVideo-Grey.mp4';
 import LogoTarget from '../../media/LogoTarget.png';
 
 class Home extends Component {

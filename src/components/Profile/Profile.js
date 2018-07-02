@@ -60,7 +60,7 @@ class Profile extends Component {
                             <img src={imgLocal} alt='Profile' className='profile-picture' />
                             <div className='profile-info'>
                                 <div className='profile-list'>
-                                    <h4>Name:</h4>
+                                    <h4 className='profile-section-title'>Name:</h4>
                                     {editting ?
                                         <div className='profile-name-input'>
                                             <input types='text' name='fName' className='profile-input' value={fName} onChange={this.handleProfile}/>
@@ -71,7 +71,7 @@ class Profile extends Component {
                                     }
                                 </div>    
                                 <div className='profile-list'>
-                                    <h4>Username:</h4>
+                                    <h4 className='profile-section-title'>Username:</h4>
                                     {editting ?
                                         <input types='text' name='usernameLocal'  className='profile-input' value={usernameLocal} onChange={this.handleProfile}/>
                                     :
@@ -79,7 +79,7 @@ class Profile extends Component {
                                     }
                                 </div>    
                                 <div className='profile-list'>
-                                    <h4>Email:</h4>
+                                    <h4 className='profile-section-title'>Email:</h4>
                                     {editting ?
                                         <input types='text' name='emailLocal' className='profile-input' value={emailLocal} onChange={this.handleProfile}/>
                                     :
@@ -87,11 +87,13 @@ class Profile extends Component {
                                     }
                                 </div>
                                 {editting ?
-                                        <button className='profile-edit' onClick={this.editToggle}>Save Changes</button>
+                                        <button className='home-create-button profile-edit' onClick={this.editToggle}>Save Changes</button>
                                     :
-                                        <button className='profile-edit' onClick={this.editToggle}>Edit Profile</button> 
+                                        <button className='home-create-button profile-edit' onClick={this.editToggle}>Edit Profile</button> 
                                     } 
-                                   
+                                <a href={process.env.REACT_APP_LOGOUT} className='logout-tag' >
+                                    <button className='home-create-button logout'>Log Out</button>
+                                </a>
                             </div> 
                         </div> 
                     </div> 

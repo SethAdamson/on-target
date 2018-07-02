@@ -14,6 +14,7 @@ class BoardMenu extends Component {
             bgSelect: false,
             colorSelect: false,
             imgSelect: false,
+            styles: false,
             deleteSelect: false,
             homeRedirect: false,
             colors: [                
@@ -38,6 +39,19 @@ class BoardMenu extends Component {
                 {name: 'beach', img:'http://www.ultrahdfreewallpapers.com/uploads/large/nature/nature-hd-background-0031.jpg'},
                 {name: 'usa', img:'http://www.ultrahdfreewallpapers.com/uploads/large/flags/usa-flag-wallpaper-001.jpg'},
                 {name: 'eagle', img:'http://www.ultrahdfreewallpapers.com/uploads/large/birds/eagle-hd-wallpaper-download-0024.jpg'},
+            ],
+
+            styles: [
+                {name: 'blue-paper', img:'https://s3-us-west-1.amazonaws.com/on-target-media/Backgrounds/BG-1.jpg'},
+                {name: 'green-paper', img:'https://s3-us-west-1.amazonaws.com/on-target-media/Backgrounds/BG-2.jpg'},
+                {name: 'red-paper', img:'https://s3-us-west-1.amazonaws.com/on-target-media/Backgrounds/BG-3.jpg'},
+                {name: 'orange-stripe', img:'https://s3-us-west-1.amazonaws.com/on-target-media/Backgrounds/BG-4.jpg'},
+                {name: 'camo', img:'https://s3-us-west-1.amazonaws.com/on-target-media/Backgrounds/BG-5.jpg'},
+                {name: 'purple-cloud', img:'https://s3-us-west-1.amazonaws.com/on-target-media/Backgrounds/BG-6.jpg'},
+                {name: 'grey-cloud', img:'https://s3-us-west-1.amazonaws.com/on-target-media/Backgrounds/BG-7.jpg'},
+                {name: 'orange-hex', img:'https://s3-us-west-1.amazonaws.com/on-target-media/Backgrounds/BG-8.jpg'},
+                {name: 'green-hex', img:'https://s3-us-west-1.amazonaws.com/on-target-media/Backgrounds/BG-9.jpg'},
+
             ]
         }
 
@@ -49,6 +63,7 @@ class BoardMenu extends Component {
         this.deleteToggle = this.deleteToggle.bind(this);
         this.removeBoard = this.removeBoard.bind(this);
         this.menuToggle = this.menuToggle.bind(this);
+        this.styleToggle = this.styleToggle.bind(this);
 
     }
 
@@ -72,11 +87,15 @@ class BoardMenu extends Component {
     }
 
     colorToggle(){
-        this.setState({colorSelect: !this.state.colorSelect, imgSelect: false})
+        this.setState({colorSelect: !this.state.colorSelect, imgSelect: false, styleSelect: false})
     }
 
     imgToggle(){
-        this.setState({imgSelect: !this.state.imgSelect, colorSelect: false})
+        this.setState({imgSelect: !this.state.imgSelect, colorSelect: false, styleSelect: false})
+    }
+
+    styleToggle(){
+        this.setState({styleSelect: !this.state.styleSelect, colorSelect: false, imgSelect: false})
     }
 
     deleteToggle(){
@@ -99,7 +118,7 @@ class BoardMenu extends Component {
     }
 
     render() {
-        let {colors, images,bgSelect, colorSelect, imgSelect, deleteSelect, homeRedirect} = this.state;
+        let {colors, images, styles, styleSelect, bgSelect, colorSelect, imgSelect, deleteSelect, homeRedirect} = this.state;
         let {currentName} = this.props
         let displayColors = colors.map((bgcolor, i) => {
             let style = {
@@ -121,10 +140,22 @@ class BoardMenu extends Component {
             }
             return(
                 <span className='boardmenu-choice' 
-                    value={images.name}  
+                    value={image.name}  
                     style={style}
                     key={i} 
                     onClick={() => this.updateImage(image.img)}></span>
+            )
+        })
+        let displayStyles = styles.map((styling, i) => {
+            let style = {
+                backgroundImage: `url(${styling.img})`,
+            }
+            return(
+                <span className='boardmenu-choice' 
+                    value={styling.name}  
+                    style={style}
+                    key={i} 
+                    onClick={() => this.updateImage(styling.img)}></span>
             )
         })
 
@@ -140,10 +171,10 @@ class BoardMenu extends Component {
                         <FontAwesome className='delete'  name='far fa-times fa-lg' onClick={this.menuToggle}/>
                     </div>
                     <hr />
-                    <h2 className='boardmenu-title' onClick={this.bgToggle}>Change Background</h2>
+                    <h2 className='boardmenu-section-title' onClick={this.bgToggle}>Change Background</h2>
                     {bgSelect ?
                         <div className='background-menu'>
-                            <h3 className='boardmenu-section' onClick={this.colorToggle}>
+                            <h3 className='boardmenu-section grow' onClick={this.colorToggle}>
                                 Colors
                             </h3>
                             {colorSelect ? 
@@ -151,9 +182,9 @@ class BoardMenu extends Component {
                                     {displayColors}
                                 </div>
                             :
-                                <br />
+                                <br className='display-none'/>
                             }
-                            <h3 className='boardmenu-section' onClick={this.imgToggle}>
+                            <h3 className='boardmenu-section grow' onClick={this.imgToggle}>
                                 Photos
                             </h3>
                             {imgSelect ? 
@@ -161,23 +192,33 @@ class BoardMenu extends Component {
                                     {displayImages}              
                                 </div> 
                             :
-                                <br />
+                                <br className='display-none'/>
+                            }
+                            <h3 className='boardmenu-section grow' onClick={this.styleToggle}>
+                                Styles
+                            </h3>
+                            {styleSelect ? 
+                                <div className='options-table'>
+                                    {displayStyles}              
+                                </div> 
+                            :
+                                <br className='display-none'/>
                             }
                             <hr />
                         </div>
                     : 
                         <hr />
                     }
-                    <h2 className='boardmenu-title' name='bgSelect' onClick={this.deleteToggle}>Delete Board</h2>
+                    <h2 className='boardmenu-section-title' name='bgSelect' onClick={this.deleteToggle}>Delete Board</h2>
                     {deleteSelect ?
-                        <h3 className='boardmenu-section'>
+                        <h3 className='boardmenu-section grow delete-board' onClick={this.removeBoard}>
                             Delete "{currentName}" and all contents? 
-                            <FontAwesome className='delete-icon'  name='far fa-trash fa-lg' onClick={this.removeBoard} />
+                            <FontAwesome className='delete-icon'  name='far fa-trash fa-lg'  />
                         </h3>
                     :
-                        <br />
+                        <br className='display-none'/>
                     }
-                    <hr />
+                    <hr className='bottom-hr'/>
                 </div> 
             </div> 
         )

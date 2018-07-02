@@ -32,6 +32,7 @@ class Header extends Component {
         this.contactClickToggle = this.contactClickToggle.bind(this);
         this.searchFocus = this.searchFocus.bind(this);
         this.searchBlur = this.searchBlur.bind(this);
+        this.timoutBlur = this.timoutBlur.bind(this);
 
     }
 
@@ -60,6 +61,10 @@ class Header extends Component {
         this.setState({searchToggle: false, searchBar: ''})
     }
 
+    timoutBlur(){
+        setTimeout(this.searchBlur, 100);
+    }
+
     render(){
         let {currentBoard} = this.props;
         let {boardClick, contactClick, searchBar, searchToggle} = this.state;
@@ -75,7 +80,7 @@ class Header extends Component {
                                 Boards
                             </p>
                         </button>
-                        <input name='searchBar' className='board-search head-input' onChange={this.changeHeader} onBlur={this.searchBlur} value={searchBar}/>
+                        <input name='searchBar' className='board-search head-input' onChange={this.changeHeader} onBlur={this.timoutBlur} value={searchBar}/>
                         <Search search={searchBar} searchFocus={this.searchFocus} searchToggle={searchToggle}/>
                         <FontAwesome  className='search-icon' name="far fa-search"></FontAwesome>
                     </div> 

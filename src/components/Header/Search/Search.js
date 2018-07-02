@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import './Search.css';
 import {connect} from 'react-redux';
+import _ from 'lodash';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 class Search extends Component {
@@ -18,23 +20,64 @@ class Search extends Component {
         let boardsFilter = [];
         let listsFilter = [];
         let cardsFilter = [];
+        let searchLower = search.toLowerCase();
         if(search){
             searchFocus();
-            boardsFilter = boards.filter(b => b.name === search);
-            listsFilter = lists.filter(l => l.list_title === search);
-            cardsFilter = cards.filter(c => c.card_title === search);
+            boardsFilter = boards.filter(b => {
+                if(_.includes(b.name.toLowerCase(), searchLower)){
+                    return b;
+                }
+            });
+            listsFilter = lists.filter(l => {
+                if(_.includes(l.list_title.toLowerCase(), searchLower)){
+                    return l;
+                }
+            });
+            cardsFilter = cards.filter(c => {
+                if(_.includes(c.card_title.toLowerCase(), searchLower)){
+                    return c;
+                }
+            });
         }
 
-        let boardsDisplay = boardsFilter.map(b => <div key={b.id}>{b.name}</div> );
-        let listsDisplay = listsFilter.map(l => <div key={l.list_id}>{l.list_title}</div>);
-        let cardsDisplay = cardsFilter.map(c => <div key={c.id}>{c.card_title}</div>);
+        console.log(boardsFilter, cardsFilter, listsFilter);
+
+        let boardsDisplay = boardsFilter.map(b => {
+            return (
+                <Link to={`/boards/${b.author_id}/${b.id}`} key={b.id} style={{ textDecoration: 'none', color: 'grey'}}>
+                    <div classname='search-list-name' key={b.id}>{b.name}</div>
+                </Link>
+            )
+        });
+        let listsDisplay = listsFilter.map(l => {
+            return(
+                <Link to={`/boards/${l.author_id}/${l.board_id}`} key={l.list_id} style={{ textDecoration: 'none', color: 'grey' }}>
+                    <div classname='search-list-name' key={l.list_id}>{l.list_title}</div>
+                </Link>
+            )
+        });
+        let cardsDisplay = cardsFilter.map(c =>{
+            return (
+                <Link classname='search-list-name' to={`/boards/${c.author_id}/${c.board_id}`} key={c.id} style={{ textDecoration: 'none', color: 'grey' }}>
+                    <div classname='search-list-name' key={c.id}>{c.card_title}</div>
+                </Link>
+            )
+        });
+
+        console.log(boardsDisplay, cardsDisplay, listsDisplay);
 
         return (
             <div className={searchToggle ? 'search-shown' : 'search-hidden'}>
                 <div className='search-content'>
-                    <h4 className='search-title'>Boards: {boardsDisplay}</h4>
-                    <h4 className='search-title'>Lists: {listsDisplay}</h4>
-                    <h4 className='search-title'>Cards: {cardsDisplay}</h4>
+                    <h4 className='search-title'>Boards:</h4>
+                    <hr />
+                    <div className='search-list'>{boardsDisplay}</div> 
+                    <h4 className='search-title'>Lists:</h4>
+                    <hr />
+                    <div className='search-list'>{listsDisplay}</div> 
+                    <h4 className='search-title'>Cards:</h4>
+                    <hr />
+                    <div className='search-list'>{cardsDisplay}</div> 
                 </div> 
             </div> 
         )

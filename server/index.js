@@ -91,13 +91,14 @@ app.get('/auth/callback', passport.authenticate('auth0', {
 }));
 app.get('/auth/logout', (req, res) => {
     req.logout();
-    res.redirect(`${REACT_APP_FRONTEND_URL}#/`)
+    res.redirect(`https://on-target.auth0.com/v2/logout?returnTo=${encodeURIComponent(REACT_APP_FRONTEND_URL)}`)
 });
 app.get('/auth/user', (req, res) => {
     if(req.user){
         res.status(200).send(req.user);
     } else {
         res.status(401).send('Unauthorized');
+        res.redirect(REACT_APP_FRONTEND_URL);
         // res.redirect(`${REACT_APP_FRONTEND_URL}/#/`);
     }
 });
