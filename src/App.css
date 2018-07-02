@@ -22,6 +22,12 @@
   transform: scale(1.08);
 }
 
+textarea {
+  font-family: 'Khula', sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 5px;
+}
 
 .pulse {
   display: inline-block;

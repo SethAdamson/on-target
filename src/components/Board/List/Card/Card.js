@@ -3,6 +3,7 @@ import './Card.css';
 import {DragSource, DropTarget} from 'react-dnd';
 import {findDOMNode} from 'react-dom';
 import {Types} from '../../../../constants';
+import FontAwesome from 'react-fontawesome';
 import {connect} from 'react-redux';
 import {getCards} from '../../../../ducks/reducer';
 import axios from 'axios';
@@ -83,13 +84,16 @@ class Card extends Component {
     // }
 
     render(){
-        let{title, connectDragSource, connectDropTarget} = this.props
+        let{title, connectDragSource, connectDropTarget, desc} = this.props
         // console.log(isDragging);
         return connectDragSource(connectDropTarget(
             <div className='card-content' >
-                <a className='card-title'>
-                    {title}
-                </a> 
+                    <h6 className='card-title'>{title}</h6>
+                    {desc ?
+                        <FontAwesome className='card-desc-icon'  name='fas fa-caret-square-o-down' />
+                    :
+                        <hr className='display-none' />
+                    }
             </div> 
         ))
     }

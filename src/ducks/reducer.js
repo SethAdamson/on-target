@@ -20,6 +20,8 @@ const GET_CARDS = 'GET_CARDS';
 const GET_SINGLE_BOARD = 'GET_SINGLE_BOARD';
 const UPDATE_BOARD = 'UPDATE_BOARD_TITLE';
 const UPDATE_LIST_TITLE = "UPDATE_LIST_TITLE";
+const UPDATE_CARD_TITLE = "UPDATE_CARD_TITLE";
+const UPDATE_CARD_DESC = "UPDATE_CARD_DESC";
 const ADD_CARD = 'ADD_CARD';
 const ADD_BOARD = 'ADD_BOARD';
 const ADD_LIST = 'ADD_LIST';
@@ -51,6 +53,10 @@ export default function reducer(state=initialState, action){
             return Object.assign({}, state, {user: action.payload})
         case UPDATE_LIST_TITLE + FULFILLED:
             return Object.assign({}, state, {lists: action.payload})
+        case UPDATE_CARD_TITLE + FULFILLED:
+            return Object.assign({}, state, {cards: action.payload})
+        case UPDATE_CARD_DESC + FULFILLED:
+            return Object.assign({}, state, {cards: action.payload})
         case ADD_CARD + FULFILLED:
             return Object.assign({}, state, {cards: action.payload})
         case ADD_LIST + FULFILLED:
@@ -155,6 +161,22 @@ export function updateListTitle(id, val){
     return {
         type: UPDATE_LIST_TITLE,
         payload: newTitle,
+    }
+}
+
+export function updateCardTitle(id, val){
+    let newTitle = axios.put(`/change/cards/${id}`, val).then(res => res.data).catch(e => console.log(e));
+    return {
+        type: UPDATE_CARD_TITLE,
+        payload: newTitle,
+    }
+}
+
+export function updateCardDesc(id, newDesc){
+    let updateDesc = axios.put(`/cards/desc/${id}`, {newDesc}).then(res => res.data).catch(e => console.log(e));
+    return {
+        type: UPDATE_CARD_DESC,
+        payload: updateDesc,
     }
 }
 

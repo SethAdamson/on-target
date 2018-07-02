@@ -108,6 +108,8 @@ app.get('/cards/:id', ctrl.getCards);
 app.get('/boards/:id', ctrl.getSingleBoard);
 app.put('/change/boards/:id', ctrl.updateBoard);
 app.put('/change/lists/:id', ctrl.updateListTitle);
+app.put('/change/cards/:id', ctrl.updateCardTitle);
+app.put('/cards/desc/:id', ctrl.updateCardDesc)
 app.put('/cards/update/:id', ctrl.updateCardLocation);
 app.put('/lists/update/:id', ctrl.updateListLocation);
 app.put('/move/cardlist/:id', ctrl.moveCardList);

@@ -34,7 +34,6 @@ class Board extends Component {
             editFile: '',
             editList: '',
             editLocation: '',
-            newDesc: '',
             addingList: false,
             newListTitle: '',
             colorMenu: false,
@@ -69,7 +68,8 @@ class Board extends Component {
     }
 
     changeBoardName(val){
-        this.props.updateBoard(this.props.singleBoard.id, {name: val.text});
+        let {board} = this.props.match.params;
+        this.props.updateBoard(board, {name: val.text}, this.props.boards);
     }
 
     handleBoard(e){

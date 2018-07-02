@@ -103,6 +103,40 @@ module.exports= {
             res.status(500).send(e)
         })
     },
+    updateCardTitle: (req, res) => {
+        const db = req.app.get('db');
+        const {id} = req.params;
+        const {title} = req.body;
+        const user_id = req.user.id
+
+        // console.log(req.body, id);
+
+        db.update_card_title([title, id, user_id])
+        .then(cards => {
+            res.status(200).send(cards)
+        })
+        .catch((e) => {
+            console.log(e); 
+            res.status(500).send(e)
+        })
+    },
+    updateCardDesc: (req, res) => {
+        const db = req.app.get('db');
+        const {id} = req.params;
+        const {newDesc} = req.body;
+        const user_id = req.user.id
+
+        // console.log(req.body, id);
+
+        db.update_card_desc([newDesc, id, user_id])
+        .then(cards => {
+            res.status(200).send(cards)
+        })
+        .catch((e) => {
+            console.log(e); 
+            res.status(500).send(e)
+        })
+    },
     updateCardLocation: (req, res) => {
         const db = req.app.get('db');
         const {id} = req.params;
