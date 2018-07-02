@@ -35,12 +35,13 @@ class Contact extends Component {
             <div className={this.props.contactClick ? 'contact-shown' : 'contact-hidden'}>
                 <div className='contact-content'>
                     <h2 className='contact-title'>We want to hear from you!</h2>
-                    <hr />
+                    <hr className='hr-contact'/>
                     <h3 className='contact-section'>Subject:</h3>
                     <input name='emailSubject' className='email-subject' onChange={this.handleContact}/>
                     <h3 className='contact-section'>Message:</h3>
                     <textarea name='message' className='email-message' rows='10' cols='45' onChange={this.handleContact} />
-                    <button className='send-email' onClick={this.sendEmail}>Send Email</button>
+                    <button className='home-create-button send-email' onClick={this.sendEmail}>Send Email</button>
+                    <button className='home-create-button' onClick={this.props.contactToggle}>Cancel</button>
                 </div> 
             </div> 
         )

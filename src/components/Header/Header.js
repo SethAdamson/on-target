@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import './Header.css';
 import {connect} from 'react-redux';
 import FontAwesome from 'react-fontawesome';
-import targetWhite from '../../media/targetWhite.png';
 import {Link} from 'react-router-dom';
 import BoardNav from './BoardNav/BoardNav';
+import NewBoard from './NewBoard/NewBoard';
 import Contact from './Contact/Contact';
 import Search from './Search/Search';
 import {withRouter} from 'react-router-dom';
@@ -16,6 +16,7 @@ import {getLists,
 } from '../../ducks/reducer';
 import LogoTarget from '../../media/LogoTarget.png';
 
+
 class Header extends Component {
     constructor(){
         super();
@@ -25,11 +26,13 @@ class Header extends Component {
             searchToggle: false,
             boardClick: false,
             contactClick: false,
+            newBoardClick: false,
         }
 
         this.changeHeader = this.changeHeader.bind(this);
         this.boardClickToggle = this.boardClickToggle.bind(this);
         this.contactClickToggle = this.contactClickToggle.bind(this);
+        this.newBoardToggle = this.newBoardToggle.bind(this);
         this.searchFocus = this.searchFocus.bind(this);
         this.searchBlur = this.searchBlur.bind(this);
         this.timoutBlur = this.timoutBlur.bind(this);
@@ -53,6 +56,10 @@ class Header extends Component {
         this.setState({contactClick: !this.state.contactClick})
     }
 
+    newBoardToggle(){
+        this.setState({newBoardClick: !this.state.newBoardClick})
+    }
+
     searchFocus(){
         this.setState({searchToggle: true})
     }
@@ -67,7 +74,7 @@ class Header extends Component {
 
     render(){
         let {currentBoard} = this.props;
-        let {boardClick, contactClick, searchBar, searchToggle} = this.state;
+        let {boardClick, contactClick, newBoardClick, searchBar, searchToggle} = this.state;
         console.log(searchToggle);
         return(
             <div className='head-parent image-head1'>
@@ -80,7 +87,7 @@ class Header extends Component {
                                 Boards
                             </p>
                         </button>
-                        <input name='searchBar' className='board-search head-input' onChange={this.changeHeader} value={searchBar}/>
+                        <input name='searchBar' className='board-search head-input' onChange={this.changeHeader} onBlur={this.timoutBlur} value={searchBar}/>
                         <Search search={searchBar} searchFocus={this.searchFocus} searchToggle={searchToggle}/>
                         <FontAwesome  className='search-icon' name="far fa-search"></FontAwesome>
                     </div> 
@@ -89,9 +96,10 @@ class Header extends Component {
                         <img className='title-logo' src={LogoTarget} alt='logo' />
                     </a> 
                     <div className='head-nav'>
-                        <button className='board-search mini'>
+                        <button className='board-search mini' onClick={this.newBoardToggle}>
                             <FontAwesome className='head-new' name='far fa-plus-square fa-lg' />
                         </button>
+                        <NewBoard newBoardClick={newBoardClick} newBoardToggle={this.newBoardToggle} />
                         <button className='board-search mini' onClick={this.contactClickToggle}>
                             <FontAwesome className='head-note' name='far fa-at fa-lg' />
                         </button>
