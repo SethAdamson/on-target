@@ -80,7 +80,7 @@ class Header extends Component {
                                 Boards
                             </p>
                         </button>
-                        <input name='searchBar' className='board-search head-input' onChange={this.changeHeader} onBlur={this.timoutBlur} value={searchBar}/>
+                        <input name='searchBar' className='board-search head-input' onChange={this.changeHeader} value={searchBar}/>
                         <Search search={searchBar} searchFocus={this.searchFocus} searchToggle={searchToggle}/>
                         <FontAwesome  className='search-icon' name="far fa-search"></FontAwesome>
                     </div> 

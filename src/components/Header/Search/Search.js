@@ -45,21 +45,21 @@ class Search extends Component {
         let boardsDisplay = boardsFilter.map(b => {
             return (
                 <Link to={`/boards/${b.author_id}/${b.id}`} key={b.id} style={{ textDecoration: 'none', color: 'grey'}}>
-                    <div classname='search-list-name' key={b.id}>{b.name}</div>
+                    <div className='search-list-name grow' key={b.id}>{b.name}</div>
                 </Link>
             )
         });
         let listsDisplay = listsFilter.map(l => {
             return(
                 <Link to={`/boards/${l.author_id}/${l.board_id}`} key={l.list_id} style={{ textDecoration: 'none', color: 'grey' }}>
-                    <div classname='search-list-name' key={l.list_id}>{l.list_title}</div>
+                    <div className='search-list-name grow' key={l.list_id}>{l.list_title}</div>
                 </Link>
             )
         });
         let cardsDisplay = cardsFilter.map(c =>{
             return (
-                <Link classname='search-list-name' to={`/boards/${c.author_id}/${c.board_id}`} key={c.id} style={{ textDecoration: 'none', color: 'grey' }}>
-                    <div classname='search-list-name' key={c.id}>{c.card_title}</div>
+                <Link to={`/boards/${c.author_id}/${c.board_id}`} key={c.id} style={{ textDecoration: 'none', color: 'grey' }}>
+                    <div className='search-list-name grow' key={c.id}>{c.card_title}</div>
                 </Link>
             )
         });
