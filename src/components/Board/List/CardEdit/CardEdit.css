@@ -28,7 +28,17 @@
     text-transform: uppercase;
 }
 
+.newdesc-btn {
+    width: 40%;
+    margin: 10px auto;
+    font-family: 'Khula', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
 .edit-description {
+    display: flex;
+    flex-direction: column;
     text-align: left;
     margin: 10px 20px;
     font-family: 'Khula', sans-serif;

@@ -56,7 +56,7 @@ class NewBoard extends Component {
                         Create a new Board
                         <FontAwesome className='delete newboard-delete'  name='far fa-times fa-lg' onClick={this.props.newBoardToggle}/>
                     </h2>
-                    <input name='newBoardName' className='home-create newboard-title' onChange={this.handleNewBoard}/>
+                    <input name='newBoardName' className='home-create newboard-title' placeholder='Enter Title Here' onChange={this.handleNewBoard}/>
                     <button className='home-create-button send-email' onClick={this.newBoard}>Create</button>
                 </div> 
             </div> 

@@ -29,6 +29,10 @@ textarea {
   border-radius: 5px;
 }
 
+a {
+  cursor: pointer;
+}
+
 .pulse {
   display: inline-block;
   -webkit-transform: translateZ(0);

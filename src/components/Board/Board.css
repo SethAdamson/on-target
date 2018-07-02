@@ -76,6 +76,7 @@
 .boardmenu-button {
     color: white;
     margin: 15px;
+    cursor: pointer;
 }
 
 .menu-icon {
