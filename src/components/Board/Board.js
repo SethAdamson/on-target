@@ -32,6 +32,8 @@ class Board extends Component {
             editDesc: '',
             editImg: '',
             editFile: '',
+            editList: '',
+            editLocation: '',
             newDesc: '',
             addingList: false,
             newListTitle: '',
@@ -83,7 +85,8 @@ class Board extends Component {
             editTitle: obj.title,
             editImg: obj.card_img,
             editFile: obj.card_file,
-            editLocation: obj.list
+            editList: obj.list,
+            editLocation: obj.list_location
         })
     }
 
@@ -121,7 +124,7 @@ class Board extends Component {
             singleBoard = thisBoard[0];
         }
         // console.log(this.props.lists);
-        let {title, cardEditting, editID, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation, listPlaceIdx, listCanDrop, listIsOver} = this.state;
+        let {title, cardEditting, editID, editDesc, editTitle, addingList, colorMenu, editFile, editImg, editLocation, editList, listPlaceIdx, listCanDrop, listIsOver} = this.state;
         
         let bgstyle = {};
         if(singleBoard){
@@ -142,6 +145,7 @@ class Board extends Component {
                         cancelCardEdit={this.cancelCardEdit}
                         stopPropCard={this.stopPropCard}
                         editLocation={editLocation}
+                        editList={editList}
                         editImg={editImg}
                         editFile={editFile}
                         removeCard={this.props.removeCard}
@@ -169,16 +173,16 @@ class Board extends Component {
                         <BoardList board_id={singleBoard.id} editFn={this.editCard}/>
                         {addingList ? 
                             <div>
-                                <input name='newListTitle' className='new-list-input' onChange={this.handleBoard}/>
-                                <a className='delete-footer'>
-                                    <button className='add-list-button' onClick={this.addNewList}>Add List</button> 
-                                    <FontAwesome className='delete'  name='far fa-times fa-lg' onClick={this.cancelNewList}/>
+                                <a className='add-list list-title'>
+                                    <input name='newListTitle' className='new-list-input' onChange={this.handleBoard}/>
+                                    <button className='add-button add-btn-list' onClick={this.addNewList}>Add</button> 
+                                    <FontAwesome className=' add exit'  name='far fa-times fa-lg' onClick={this.cancelNewList}/>
                                 </a>
                             </div> 
                             :
-                            <a className='add-list' onClick={this.addingList}>
+                            <a className='add-list add-list-outer' onClick={this.addingList}>
                                 <FontAwesome className='add' name="far fa-plus" />
-                                Add New List
+                                <h4 className='list-title-input'>Add New List</h4>
                             </a>
                         }
                     </div> 

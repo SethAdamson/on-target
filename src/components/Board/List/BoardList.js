@@ -109,6 +109,7 @@ class BoardList extends Component{
                     author_id={list.author_id}
                     team_id={list.team_id}
                     board_id={this.props.board_id}
+                    board_location={list.board_location}
                     editFn={this.props.editFn}
                     list_x={i}
                     setPlaceIdx={this.setPlaceIdx}

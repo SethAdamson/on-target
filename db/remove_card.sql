@@ -1,6 +1,10 @@
 delete from cards 
 where id = $2;
 
+update cards
+set list_location = list_location-1
+where list_location > $3 and id !=$2 and list_id=$4;
+
 select
 cards.id,
 cards.title as card_title,

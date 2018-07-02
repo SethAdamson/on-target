@@ -114,7 +114,8 @@ class CardList extends Component {
                     onClick={() => editFn({
                         id: card.id, 
                         desc: card.description, 
-                        title: card.card_title, 
+                        title: card.card_title,
+                        editLocation: card.list_location, 
                         card_img: card.card_img, 
                         card_file: card.card_file,
                         list: {list_id: card.list_id, list_title: card.list_title }

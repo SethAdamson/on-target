@@ -185,11 +185,12 @@ module.exports= {
     removeItem: (req, res) => {
         const db = req.app.get('db');
         const {board} = req.params;
-        const {id} = req.user
+        const {id} = req.user;
+        const {list_id, list_location, board_location} = req.body;
 
 
         if(req.params.card){
-            db.remove_card([id, req.params.card])
+            db.remove_card([id, req.params.card, list_location, list_id])
             .then(cards => {
                 res.status(200).send(cards)
             })
@@ -198,7 +199,7 @@ module.exports= {
                 res.status(500).send(e)
             })
         } else if (req.params.list){
-            db.remove_list([id, req.params.list])
+            db.remove_list([id, req.params.list, board_location, board])
             .then(lists => {
                 res.status(200).send(lists)
             })

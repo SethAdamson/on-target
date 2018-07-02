@@ -183,16 +183,16 @@ export function addBoard(val){
     }
 }
 
-export function removeCard(board_id, card_id){
-    let updatedCards = axios.delete(`/remove/card/${board_id}/${card_id}`).then(res => res.data).catch(e => console.log(e));
+export function removeCard(board_id, card_id, list_location, list_id){
+    let updatedCards = axios.delete(`/remove/card/${board_id}/${card_id}`, {list_location, list_id}).then(res => res.data).catch(e => console.log(e));
     return {
         type: REMOVE_CARD,
         payload: updatedCards,
     }
 }
 
-export function removeList(board_id, list_id){
-    let updatedLists = axios.delete(`/remove/list/${board_id}/${list_id}`).then(res => res.data).catch(e => console.log(e));
+export function removeList(board_id, list_id, board_location){
+    let updatedLists = axios.delete(`/remove/list/${board_id}/${list_id}`, {board_location}).then(res => res.data).catch(e => console.log(e));
     return {
         type: REMOVE_LIST,
         payload: updatedLists,

@@ -93,8 +93,8 @@ class List extends Component {
     }
 
     removeList(){
-        let {list_id, board_id} = this.props
-        this.props.removeList(board_id, list_id);
+        let {list_id, board_id, board_location} = this.props
+        this.props.removeList(board_id, list_id, board_location);
     }
 
     render(){
@@ -117,7 +117,7 @@ class List extends Component {
                         <div>
                             <form className='add-new add-input'>
                                 <input name='newCardTitle' className='list-new-card' onChange={this.changeCard}/>   
-                                <button className='add-card-button' onClick={newCardTitle ? this.addNewCard : this.cancelNew}>Add</button> 
+                                <button className='add-button add-btn-card' onClick={newCardTitle ? this.addNewCard : this.cancelNew}>Add</button> 
                                 <FontAwesome className='add exit'  name='far fa-times fa-lg' onClick={this.cancelNew}/>
                             </form>
                         </div> 

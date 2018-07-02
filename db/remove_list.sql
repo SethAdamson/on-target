@@ -1,6 +1,10 @@
 delete from lists
 where id = $2;
 
+update lists
+set board_location = board_location-1
+where board_location > $3 and id !=$1 and board_id=$4;
+
 select 
 author_id,
 team_id,

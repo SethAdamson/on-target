@@ -3,9 +3,9 @@ import './CardEdit.css';
 import FontAwesome from 'react-fontawesome';
 
 export default function CardEdit(props) {
-    let {board_id, editDesc, editTitle, editID, handleBoard, cancelCardEdit, stopPropCard, editLocation, removeCard} = props;
+    let {board_id, editDesc, editTitle, editID, handleBoard, cancelCardEdit, stopPropCard, editLocation, editList, removeCard} = props;
     function rmvCard(){
-        removeCard(board_id, editID);
+        removeCard(board_id, editID, editLocation, editList.list_id);
         cancelCardEdit();
     }
     return (
@@ -14,7 +14,7 @@ export default function CardEdit(props) {
                 <div className='edit-title'>
                     <FontAwesome className='cardedit-exit'  name='far fa-times fa-lg' onClick={cancelCardEdit}/>
                     <h1 className='cardedit-title'>{editTitle}</h1>
-                    <h3 className='cardedit-location'>{editLocation.list_title}</h3>
+                    <h3 className='cardedit-location'>{editList.list_title}</h3>
                 </div> 
                 <div className='description'>
                     {editDesc ? 
