@@ -3,10 +3,63 @@
   background-color: #f7f7f7;
   position: relative;
   font-family: 'Khula', sans-serif;
+  letter-spacing: 2px;
+}
+
+.grow {
+  -webkit-transition:all .2s ease-in-out;
+  -moz-transition:all .2s ease-in-out;
+  -ms-transition:all .2s ease-in-out;
+  -o-transition:all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+}
+
+.grow:hover{
+  -webkit-transform:scale(1.08);
+  -moz-transform:scale(1.08);
+  -ms-transform:scale(1.08);
+  -o-transform:scale(1.08);
+  transform: scale(1.08);
+}
+
+
+.pulse {
+  display: inline-block;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.pulse:hover {
+  -webkit-animation-name: pulse;
+  animation-name: pulse;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+@-webkit-keyframes pulse {
+  50% {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
+  }
 }
 
 button {
   cursor: pointer;
+  font-family: 'Khula', sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .App-logo {

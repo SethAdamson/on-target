@@ -24,11 +24,11 @@ class BoardNav extends Component {
                 bgstyle = {backgroundColor: board.background_color};
             }
             return (
-                <Link to={`/boards/${this.props.user.id}/${board.id}`} key={board.id}>
-                    <div className={`board-display`}  onClick={this.props.clickToggle}>
-                            <span className='home-background-piece' style={bgstyle}>
+                <Link to={`/boards/${this.props.user.id}/${board.id}`} key={board.id} style={{textDecoration: 'none', color: 'grey'}}>
+                    <div className={`boards-list board-display grow`}  onClick={this.props.clickToggle}>
+                            <span className='home-background-piece smaller-pic' style={bgstyle}>
                             </span>
-                            <h3 className='boards-list-name'>
+                            <h3 className='boards-list-name smaller-name'>
                                 {board.name}
                             </h3>
                     </div> 
@@ -38,6 +38,7 @@ class BoardNav extends Component {
         return (
             <div className={this.props.boardClick ? 'boardnav-shown' : 'boardnav-hidden'}>
                 <div className='boardnav-content'>
+                    <h2 className='boardnav-title'>Active Boards</h2>
                     {display}
                 </div> 
             </div> 

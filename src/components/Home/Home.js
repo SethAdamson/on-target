@@ -10,7 +10,7 @@ import {getLists,
         addBoard
 } from '../../ducks/reducer';
 import {Link} from 'react-router-dom';
-import homeVideo from '../../media/HomeVideo.mp4';
+import homeVideoG from '../../media/HomeVideo-Grey.mp4';
 import LogoTarget from '../../media/LogoTarget.png';
 
 class Home extends Component {
@@ -70,7 +70,7 @@ class Home extends Component {
                     style={{textDecoration: 'none', color: 'grey'}} 
                     key={board.id}>
                     
-                    <div className='boards-list'>
+                    <div className='boards-list grow'>
                         <span className='home-background-piece' style={bgstyle}>
                         </span>
                         <h3 className='boards-list-name'>
@@ -89,7 +89,7 @@ class Home extends Component {
                     <Nav />
                     <div className='create-board'>
                         <video className='home-video' autoPlay='true' muted>
-                            <source src={homeVideo} type='video/mp4'/>
+                            <source src={homeVideoG} type='video/mp4'/>
                         </video>
                         <h2 className='create-title'>Get <img src={LogoTarget} alt='logo' className='logo-home-create' /> today!</h2>
                         <input name='newBoardName' className='home-create' onChange={this.handleHome} placeholder='Enter Title Here'/>

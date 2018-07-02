@@ -105,7 +105,7 @@ ul {
     transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     display: block;
     text-decoration: none;
-    background-color: #F0DAC5;
+    background-color: rgb(222, 222, 222);
     color: #2b2b2b;
     transition: .5s;
 }
@@ -136,7 +136,6 @@ ul {
     font-family: 'Khula', sans-serif;
     letter-spacing: 2px;
     text-transform: uppercase;
-    z-index: 2;
     display: flex;
     margin: 10px;
     align-items: center;

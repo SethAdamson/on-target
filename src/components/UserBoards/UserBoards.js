@@ -34,7 +34,7 @@ class UserBoards extends Component {
             return (
                 <Link to={`/boards/${this.props.user.id}/${board.id}`} key={board.id} style={{ textDecoration: 'none' }}>
                     <div className={`userboard-display`}  onClick={this.props.clickToggle}>
-                            <span className='userboard-list-background' style={bgstyle}>
+                            <span className='userboard-list-background pulse' style={bgstyle}>
                                 <h3 className='userboard-list-title'>
                                     {board.name}
                                 </h3>

@@ -99,7 +99,7 @@ class List extends Component {
 
     render(){
         let {list_id, list_title, editFn, connectDragSource, board_id} = this.props;
-        let {adding} = this.state;
+        let {adding, newCardTitle} = this.state;
         // console.log(this.props);
         return connectDragSource(
                 <div className='list-content'>
@@ -115,11 +115,11 @@ class List extends Component {
                     <div className='card-list-add' >
                         {adding ? 
                         <div>
-                            <input name='newCardTitle' className='list-new-card' onChange={this.changeCard}/>
-                            <a className='delete-footer'>
-                                <button className='add-card-button' onClick={this.addNewCard}>Add Card</button> 
-                                <FontAwesome className='exit'  name='far fa-times fa-lg' onClick={this.cancelNew}/>
-                            </a>
+                            <form className='add-new add-input'>
+                                <input name='newCardTitle' className='list-new-card' onChange={this.changeCard}/>   
+                                <button className='add-card-button' onClick={newCardTitle ? this.addNewCard : this.cancelNew}>Add</button> 
+                                <FontAwesome className='add exit'  name='far fa-times fa-lg' onClick={this.cancelNew}/>
+                            </form>
                         </div> 
                         :
                         <a className='add-new' onClick={this.addingCard}>
