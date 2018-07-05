@@ -123,7 +123,7 @@ export function getSingleBoard(id){
 }
 
 export function updateBoard(id, val, boards){
-    console.log(id, val.name);
+    // console.log(id, val.name);
     let changedBoards = [];
     if(val.bg_img){
         changedBoards = boards.map(board => {
@@ -147,7 +147,7 @@ export function updateBoard(id, val, boards){
     if(val.name){
         changedBoards = axios.put(`/change/boards/${id}`, val).then(res => res.data[0]).catch(e => console.log(e));
     }
-    console.log(changedBoards);
+    // console.log(changedBoards);
     return {
         type: UPDATE_BOARD,
         payload: changedBoards,
@@ -188,7 +188,7 @@ export function addCard(val){
 
 export function addList(val){
     let newList = axios.post(`/add/lists`, val).then(res => res.data).catch(e => console.log(e));
-    console.log(newList);
+    // console.log(newList);
     return {
         type: ADD_LIST,
         payload: newList,

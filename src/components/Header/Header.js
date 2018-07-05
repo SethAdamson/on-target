@@ -75,7 +75,7 @@ class Header extends Component {
     render(){
         let {currentBoard} = this.props;
         let {boardClick, contactClick, newBoardClick, searchBar, searchToggle} = this.state;
-        console.log(searchToggle);
+        // console.log(searchToggle);
         return(
             <div className='head-parent image-head1'>
                 <div className='head-content'>

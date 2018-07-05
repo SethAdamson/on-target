@@ -30,7 +30,7 @@ class Contact extends Component {
     }
 
     render(){
-        console.log(this.props, this.state)
+        // console.log(this.props, this.state)
         return (
             <div className={this.props.contactClick ? 'contact-shown' : 'contact-hidden'}>
                 <div className='contact-content'>

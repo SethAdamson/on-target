@@ -40,7 +40,7 @@ class Search extends Component {
             });
         }
 
-        console.log(boardsFilter, cardsFilter, listsFilter);
+        // console.log(boardsFilter, cardsFilter, listsFilter);
 
         let boardsDisplay = boardsFilter.map(b => {
             return (
@@ -57,6 +57,7 @@ class Search extends Component {
             )
         });
         let cardsDisplay = cardsFilter.map(c =>{
+            // console.log(`/boards/${c.author_id}/${c.board_id}`);
             return (
                 <Link to={`/boards/${c.author_id}/${c.board_id}`} key={c.id} style={{ textDecoration: 'none', color: 'grey' }}>
                     <div className='search-list-name grow' key={c.id}>{c.card_title}</div>
@@ -64,7 +65,7 @@ class Search extends Component {
             )
         });
 
-        console.log(boardsDisplay, cardsDisplay, listsDisplay);
+        // console.log(boardsDisplay, cardsDisplay, listsDisplay);
 
         return (
             <div className={searchToggle ? 'search-shown' : 'search-hidden'}>

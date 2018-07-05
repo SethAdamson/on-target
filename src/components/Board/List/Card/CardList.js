@@ -57,7 +57,7 @@ const cardListDropTarget = {
         } else if(lastList === nextList){
             props.moveCardSame(id, lastCard_x, drop_x, lastList, props.board_id, boardCards);
         }
-        console.log(id, nextList, lastList, lastCard_x, drop_x, props.board_id, boardCards);
+        // console.log(id, nextList, lastList, lastCard_x, drop_x, props.board_id, boardCards);
 
     }
 };

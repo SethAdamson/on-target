@@ -44,7 +44,7 @@ class Profile extends Component {
 
     render(){
         let {editting, nameLocal, usernameLocal, emailLocal,  fName, lName, imgLocal} = this.state;
-        console.log(this.props, usernameLocal, emailLocal, fName, lName);
+        // console.log(this.props, usernameLocal, emailLocal, fName, lName);
         return(
             <div className='profile-parent'>
                 <div className='home-header'>

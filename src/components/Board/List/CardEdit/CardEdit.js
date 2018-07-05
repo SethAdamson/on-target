@@ -5,8 +5,6 @@ import {RIEInput} from 'riek';
 import _ from 'lodash';
 import {connect} from 'react-redux';
 import {updateCardTitle, updateCardDesc} from '../../../../ducks/reducer';
-import axios from 'axios';
-
 
 class CardEdit extends Component {
     constructor(props){
@@ -48,7 +46,7 @@ class CardEdit extends Component {
     render (){
         let {board_id, editDesc, editTitle, editID, cancelCardEdit, stopPropCard, editLocation, editList, removeCard} = this.props;
         let {newDesc, newAttach} = this.state;
-        console.log(newDesc);
+        // console.log(newDesc);
         return (
             <div className='edit-card' onClick={cancelCardEdit}> 
                 <section className='edit-content' onClick={(e) => stopPropCard(e)}>

@@ -29,20 +29,20 @@ class NewBoard extends Component {
         let {newBoardName} = this.state;
         let {user, addBoard} = this.props;
         addBoard({newBoardName, author_id: user.id}).then(res => {
-            console.log(res);
+            // console.log(res);
             let newID = 0;
             res.value.forEach(e => {
                 if(e.id > newID){
                     newID = e.id;
                 }
             })
-            console.log(user.id, newID);
+            // console.log(user.id, newID);
             this.setState({redirect: true, pathUser: user.id, pathBoard: newID})
         })   
     }
 
     render(){
-        console.log(this.props, this.state)
+        // console.log(this.props, this.state)
         let {redirect, pathBoard, pathUser} = this.state;
         if(redirect){
             return(
