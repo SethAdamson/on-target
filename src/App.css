@@ -6,6 +6,10 @@
   letter-spacing: 2px;
 }
 
+.nonresponsive {
+  display: none;
+}
+
 .grow {
   -webkit-transition:all .2s ease-in-out;
   -moz-transition:all .2s ease-in-out;
@@ -95,4 +99,34 @@ button {
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@media(max-width: 1200px){
+  .routes {
+    display: none;
+  }
+
+  .nonresponsive {
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .app-target {
+    margin-top: 20vh;
+    width: 80vw;
+  }
+
+  .mobile-title {
+    width: 80%;
+    text-align: center;
+    color: white;
+    margin: 20px auto;
+
+    font-family: 'Khula', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
 }
